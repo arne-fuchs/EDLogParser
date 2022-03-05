@@ -40,26 +40,26 @@ Composition (built as followed: "Composition":{ "Ice":0.000000, "Rock":0.668933,
 -> Display, that Discovery-Scan has been initialised
 -> To be displayed: BodyCount,NonBodyCount
 
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO79_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Gefährlich]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO78_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Hoch]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO79_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Gefährlich]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO78_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Hoch]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }<br>
 { "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Deepfrost Port" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Chretien Terminal", "IsStation":true }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"=DAIMYO= W1T-01Z", "IsStation":true }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"McArthur Dock" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"TIO-750 Aquarius-class Tanker" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO14_TITLE;", "SignalName_Localised":"Rohstoff-Abbau-Standort" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_High:#index=1;", "SignalName_Localised":"Kampfbereich [Hohe Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Piaget Orbital" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_High:#index=1;", "SignalName_Localised":"Kampfbereich [Hohe Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Planck Heights" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Yeats Remembrance Theatre" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO78_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Hoch]" }
-{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO42_TITLE;", "SignalName_Localised":"Navigationsboje" }
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Chretien Terminal", "IsStation":true }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"=DAIMYO= W1T-01Z", "IsStation":true }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"McArthur Dock" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"TIO-750 Aquarius-class Tanker" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO14_TITLE;", "SignalName_Localised":"Rohstoff-Abbau-Standort" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_High:#index=1;", "SignalName_Localised":"Kampfbereich [Hohe Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Low:#index=1;", "SignalName_Localised":"Kampfbereich [Geringe Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Piaget Orbital" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_High:#index=1;", "SignalName_Localised":"Kampfbereich [Hohe Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$Warzone_PointRace_Med:#index=1;", "SignalName_Localised":"Kampfbereich [Mittlere Intensität]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Planck Heights" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"Yeats Remembrance Theatre" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO78_TITLE;", "SignalName_Localised":"Rohstoffabbau-Standort [Hoch]" }<br>
+{ "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO42_TITLE;", "SignalName_Localised":"Navigationsboje" }<br>
 -> Display, that  signal source has been detected
 -> To be displayed: SignalName,SignalName_Localised(If available)
