@@ -1,14 +1,6 @@
 # EDLogParser
 Reads the log and gives the commander additional information
 
-Location of net logs: 
-Elite Dangerous/Products/elite-dangerous-odyssey-64/Logs/netLog.DATE.log<br />
-Log names build like the following: netLog.DATE.log where DATE is parsed like YYDDMM\*. * is unkown time.
-
-What it need to be displayed:
-{19:05:45GMT 4478.021s} UploadJournal: upload 4 lines of journal (20017)<br />
--> Display how many new lines in the journal has been added
-
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
 Log names build like the following: netLog.DATE.log where DATE is parsed like YYDDMM\*. * is unkown time.
