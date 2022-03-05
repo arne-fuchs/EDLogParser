@@ -31,7 +31,7 @@ StarSystem,SystemAllegiance,SystemEconomy,SystemEconomy_Localised,SystemSecondEc
 -> To be displayed (always): BodyName,WasDiscovered,WasMapped,DistanceFromArrivalLS <br>
 If it is a star display: StarType
 
-If it is a Body display: <br<<<asdasdasdsa
+If it is a Body display: <br>
 TidalLock,TerraformState,PlanetClass,Atmosphere,AtmosphereType,Volcanism,MassEM,SurfaceGravity,SurfaceTemperature,Landable<br>
 Materials (built as followed: "Materials":[ { "Name":"iron", "Name_Localised":"Eisen", "Percent":22.797493 }, { "Name":"nickel", "Percent":17.243069 }, { "Name":"sulphur", "Name_Localised":"Schwefel", "Percent":16.189022 }, { "Name":"carbon", "Name_Localised":"Kohlenstoff", "Percent":13.613291 }, { "Name":"manganese", "Name_Localised":"Mangan", "Percent":9.415132 }, { "Name":"phosphorus", "Name_Localised":"Phosphor", "Percent":8.715462 }, { "Name":"vanadium", "Percent":5.598270 }, { "Name":"zirconium", "Percent":2.647259 }, { "Name":"niobium", "Name_Localised":"Niob", "Percent":1.558087 }, { "Name":"tellurium", "Name_Localised":"Tellur", "Percent":1.227377 }, { "Name":"mercury", "Name_Localised":"Quecksilber", "Percent":0.995529 } ])<br>
 Composition (built as followed: "Composition":{ "Ice":0.000000, "Rock":0.668933, "Metal":0.331067 })
