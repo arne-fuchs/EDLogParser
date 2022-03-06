@@ -55,3 +55,6 @@ Composition (built as followed: "Composition":{ "Ice":0.000000, "Rock":0.668933,
 { "timestamp":"2022-02-02T14:59:39Z", "event":"FSSSignalDiscovered", "SystemAddress":13865093899689, "SignalName":"$MULTIPLAYER_SCENARIO42_TITLE;", "SignalName_Localised":"Navigationsboje" }<br>
 -> Display, that  signal source has been detected
 -> To be displayed: SignalName,SignalName_Localised(If available)
+
+{ "timestamp":"2022-03-06T13:16:30Z", "event":"FSSAllBodiesFound", "SystemName":"Boekh QT-H b40-16", "SystemAddress":35715469360985, "Count":11 }
+-> Notifying that the system has been fully scanned
