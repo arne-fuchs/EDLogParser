@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 import java.util.Optional;
+import org.json.simple.JSONObject;
 
 public class JournalLogParser implements ActionListener {
 
@@ -23,18 +24,10 @@ public class JournalLogParser implements ActionListener {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyddMMHHmmss");
             //TODO only for development this path
             File directory = new File("./ressources");
-            System.out.println(Arrays.toString(Objects.requireNonNull(directory.list())));
 
-            //Do not touch dangerous zone
-            Optional<Date> optionalDate = Arrays.stream(Objects.requireNonNull(directory.list((dir, name) -> name.contains("Journal")))).map(s -> {
-                try {
-                    String parsedNumber = s.split("\\.")[1];
-                    return simpleDateFormat.parse(parsedNumber);
-                } catch (ParseException ex) {
-                    ex.printStackTrace();
-                }
-                return null;
-            }).sorted().findFirst();
+
+            //Do not touch dangerous stream
+            Optional<Date> optionalDate = Arrays.stream(Objects.requireNonNull(directory.list((dir, name) -> name.contains("Journal")))).map(this::extractDate).sorted().findFirst();
 
             if(optionalDate.isEmpty())
                 throw new Exception("Couldn't find any log file");
@@ -43,11 +36,22 @@ public class JournalLogParser implements ActionListener {
             String line;
             while((line = bufferedReader.readLine()) != null){
                 //TODO Extract information that is needed
+
                 logOutput.append(line);
                 logOutput.append("\n");
             }
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    public Date extractDate(String dateString){
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyddMMHHmmss");
+        try {
+            return simpleDateFormat.parse(dateString.split("\\.")[1]);
+        } catch (ParseException ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
 }

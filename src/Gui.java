@@ -20,6 +20,7 @@ public class Gui {
 
         //Create terminal for output
         JTextArea logOutput = new JTextArea();
+
         //Creating LogParser and giving it the textArea, where it can write into
         JournalLogParser journalLogParser = new JournalLogParser(logOutput);
         //Creating Button to read file
