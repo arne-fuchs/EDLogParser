@@ -1,8 +1,12 @@
 # EDLogParser
 Reads the log and gives the commander additional information
+
 #IN DEVELOPMENT
+
 ##Release will be announced
+
 ##For feature request please use the issues tab
+
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
 Log names build like the following: netLog.DATE.log where DATE is parsed like YYDDMM\*. * is unkown time.
