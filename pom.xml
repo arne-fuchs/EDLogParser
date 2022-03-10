@@ -6,7 +6,7 @@
 
     <groupId>de.paesserver</groupId>
     <artifactId>EDLogParser</artifactId>
-    <version>1.5</version>
+    <version>0.1</version>
     <!-- https://mvnrepository.com/artifact/org.iota/jota -->
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
