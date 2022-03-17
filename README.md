@@ -5,6 +5,16 @@ Reads the log and gives the commander additional information
 
 ##Release will be announced
 
+##Planned Features:
+###LogParser
+Tool to read the logs and give the user information
+
+###NavRoute Market Analyzer
+Tool to read current market stats and market stats on the route to give the user best buy/sell opportunities.
+
+###Shopping List
+List of materials the user can set, which he needs for upgrades. List may update automatically.
+
 ##For feature request please use the issues tab
 
 Location of journal logs:
