@@ -1,20 +1,24 @@
 package de.paesserver.journalLog;
 
+import de.paesserver.structure.System;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
+import java.awt.*;
 import java.util.HashMap;
 
 public class JSONInterpreter {
 
-    private final HashMap<String,JTextArea> textAreaHashMap;
+    private final HashMap<String, Component> componentHashMap;
 
-    public JSONInterpreter(HashMap<String, JTextArea> textAreaHashMap){
-        this.textAreaHashMap = textAreaHashMap;
+    public JSONInterpreter(HashMap<String, Component> componentHashMap){
+        this.componentHashMap = componentHashMap;
     }
 
-    public void computeJSONObject(JSONObject jsonObject,SystemInfo systemInfo){
+    public void computeJSONObject(JSONObject jsonObject, System system){
 
         String event = (String) jsonObject.get("event");
 
@@ -23,47 +27,67 @@ public class JSONInterpreter {
             case "Location":
             case "FSDJump":
                 //TODO Implement location
-                textAreaHashMap.get("logOutput").setText("---LOG---\t\t\t\t\t\t\n");
-                textAreaHashMap.get("bodiesOutput").setText("---BODIES---\t\t\t\t\t\t\n");
-                textAreaHashMap.get("nonBodiesOutput").setText("---SIGNALS---\t\t\t\t\t\t\n");
-                systemInfo.resetSuffix();
-
-                systemInfo.systemName.suffix = (String) jsonObject.get("StarSystem");
-                systemInfo.allegiance.suffix = (String) jsonObject.get("SystemAllegiance");
-                systemInfo.economy.suffix = (String) jsonObject.get("SystemEconomy_Localised");
-                systemInfo.secondEconomy.suffix = (String) jsonObject.get("SystemSecondEconomy_Localised");
-                systemInfo.government.suffix = (String) jsonObject.get("SystemGovernment_Localised");
-                systemInfo.security.suffix = (String) jsonObject.get("SystemSecurity_Localised");
-                systemInfo.population.suffix = jsonObject.get("Population").toString();
-                systemInfo.updateText();
+                ((DefaultMutableTreeNode)system.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
+                system.setSuffix("systemName", (String) jsonObject.get("StarSystem"));
+                system.setSuffix("allegiance", (String) jsonObject.get("SystemAllegiance"));
+                system.setSuffix("economy", (String) jsonObject.get("SystemEconomy_Localised"));
+                system.setSuffix("secondEconomy", (String) jsonObject.get("SystemSecondEconomy_Localised"));
+                system.setSuffix("government", (String) jsonObject.get("SystemGovernment_Localised"));
+                system.setSuffix("security", (String) jsonObject.get("SystemSecurity_Localised"));
+                system.setSuffix("population", jsonObject.get("Population").toString());
+                system.updateText();
                 break;
             case "StartJump":
-                //TODO Implement StartJump
-                textAreaHashMap.get("logOutput").append("Jump has been initialised"+ "\n");
+                if(jsonObject.get("JumpType").equals("Supercruise"))
+                    ((JTextArea)componentHashMap.get("logOutput")).append("Entered Supercruise"+ "\n");
+                if(jsonObject.get("JumpType").equals("Hyperspace")){
+                    ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
+                    ((JTree)componentHashMap.get("bodiesOutput")).removeAll();
+                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
+                    system.resetSuffix();
+                    system.updateText();
+                    ((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
+                }
                 break;
 
+            case "SupercruiseExit":
+                ((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
+                break;
+            case "MaterialCollected":
+                ((JTextArea)componentHashMap.get("logOutput")).append("Material collected: " + jsonObject.get("Name_Localised")  + "\n");
+                ((JTextArea)componentHashMap.get("logOutput")).append("Count: " + jsonObject.get("Count")  + "\n");
+                break;
+            case "Bounty":
+                //TODO More details about bounty:
+                //{ "timestamp":"2022-03-16T16:33:27Z", "event":"Bounty", "Rewards":[ { "Faction":"HOTCOL", "Reward":271012 } ], "Target":"empire_trader", "Target_Localised":"Imperial Clipper", "TotalReward":271012, "VictimFaction":"HOTCOL" }
+                //{ "timestamp":"2022-03-16T16:36:11Z", "event":"Bounty", "Rewards":[ { "Faction":"HOTCOL", "Reward":174749 }, { "Faction":"Colonia Co-operative", "Reward":59843 } ], "Target":"diamondback", "Target_Localised":"Diamondback Scout", "TotalReward":234592, "VictimFaction":"Matlehi Silver Mob" }
+                ((JTextArea)componentHashMap.get("logOutput")).append("Bounty collected: " + jsonObject.get("Target_Localised")  + "\n");
+                ((JTextArea)componentHashMap.get("logOutput")).append("Total Reward: " + jsonObject.get("TotalReward")  + "\n");
+                break;
             //SCAN ACTIVITIES
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
-                textAreaHashMap.get("logOutput").append("Discovery-Scan has been initialised\n");
-                systemInfo.bodiesCount.suffix = jsonObject.get("BodyCount").toString();
-                systemInfo.nonBodiesCount.suffix = jsonObject.get("NonBodyCount").toString();
-                systemInfo.updateText();
+                ((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
+                system.setSuffix("bodiesCount", jsonObject.get("BodyCount").toString());
+                system.setSuffix("nonBodiesCount", jsonObject.get("NonBodyCount").toString());
+                system.updateText();
                 break;
             case "FSSAllBodiesFound":
                 //TODO Implement FSSAllBodiesFound
-                textAreaHashMap.get("logOutput").append("All bodies discovered"+ "\n");
+                ((JTextArea)componentHashMap.get("logOutput")).append("All bodies discovered"+ "\n");
                 break;
             case "Scan":
                 //TODO Implement Scan
-                textAreaHashMap.get("bodiesOutput").append(jsonObject.get("BodyName") + "\n");
+                DefaultMutableTreeNode body = new DefaultMutableTreeNode(jsonObject.get("BodyName").toString());
+                ((DefaultMutableTreeNode)system.systemTreeNode.getRoot()).add(body);
+                ((JTree)componentHashMap.get("bodiesOutput")).expandRow(0);
                 break;
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered
                 if(jsonObject.containsKey("SignalName_Localised"))
-                    textAreaHashMap.get("nonBodiesOutput").append(jsonObject.get("SignalName_Localised")+"\n");
+                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName_Localised")+"\n");
                 else
-                    textAreaHashMap.get("nonBodiesOutput").append(jsonObject.get("SignalName")+"\n");
+                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName")+"\n");
                 break;
             default:
         }

@@ -1,12 +1,15 @@
-package de.paesserver.journalLog;
+package de.paesserver.structure;
+
+import org.json.simple.JSONObject;
 
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.util.ArrayList;
 
-public class SystemInfo {
+public class System {
     private final JTextArea textArea;
 
-    public StringPair systemName = new StringPair("System");
+    public StringPair systemName = new StringPair("System Name");
     public StringPair bodiesCount = new StringPair("Bodies");
     public StringPair nonBodiesCount = new StringPair("Non-Bodies");
     public StringPair allegiance = new StringPair("Allegiance");
@@ -14,12 +17,15 @@ public class SystemInfo {
     public StringPair security = new StringPair("Security");
     public StringPair population = new StringPair("Population");
     public StringPair economy = new StringPair("Economy");
-    public StringPair secondEconomy = new StringPair("Sec. Economy");
+    public StringPair secondEconomy = new StringPair("Second Economy");
+
+    public DefaultMutableTreeNode systemTreeNode;
 
     private final ArrayList<StringPair> systemDataList;
 
-    public SystemInfo(JTextArea textArea){
+    public System(JTextArea textArea,DefaultMutableTreeNode systemTreeNode){
         this.textArea = textArea;
+        this.systemTreeNode = systemTreeNode;
 
         systemDataList = new ArrayList<>();
         systemDataList.add(systemName);
@@ -44,7 +50,25 @@ public class SystemInfo {
         systemDataList.forEach(stringPair -> stringPair.suffix = "n/a");
     }
 
+    public void setSuffix(String key,String suffix){
+        switch (key){
+            case "systemName": systemName.suffix = suffix; break;
+            case "bodiesCount": bodiesCount.suffix = suffix; break;
+            case "nonBodiesCount": nonBodiesCount.suffix = suffix; break;
+            case "allegiance": allegiance.suffix = suffix; break;
+            case "government": government.suffix = suffix; break;
+            case "security": security.suffix = suffix; break;
+            case "population": population.suffix = suffix; break;
+            case "economy": economy.suffix = suffix; break;
+            case "secondEconomy": secondEconomy.suffix = suffix; break;
+            default:
+                java.lang.System.out.println("Couldn't find stringPair: " + key);
+        }
+    }
 
+    public void addObject(JSONObject jsonObject){
+
+    }
 }
 class StringPair{
     final String prefix;

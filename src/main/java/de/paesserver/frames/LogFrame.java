@@ -1,15 +1,13 @@
 package de.paesserver.frames;
 
-import de.paesserver.journalLog.JournalLogParser;
-import de.paesserver.journalLog.JSONInterpreter;
 import de.paesserver.journalLog.JournalLogRunner;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class LogFrame implements MenuListener {
@@ -22,11 +20,12 @@ public class LogFrame implements MenuListener {
     @Override
     public void menuSelected(MenuEvent e) {
         //Create terminal for output
-        HashMap<String,JTextArea> textAreaHashMap = new HashMap<>();
+        HashMap<String,Component> textAreaHashMap = new HashMap<>();
         GridBagConstraints constraints;
 
         //System info
         JTextArea systemInfo =  new JTextArea();
+        systemInfo.setEditable(false);
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
@@ -39,6 +38,12 @@ public class LogFrame implements MenuListener {
 
         //Log
         JTextArea logOutput =  new JTextArea();
+        logOutput.setAutoscrolls(true);
+        logOutput.setEditable(false);
+        logOutput.setPreferredSize(new Dimension(1,1));
+        logOutput.setMaximumSize(new Dimension(1,1));
+        logOutput.setMinimumSize(new Dimension(1,1));
+        logOutput.setSize(new Dimension(1,1));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
@@ -50,7 +55,8 @@ public class LogFrame implements MenuListener {
         textAreaHashMap.put("logOutput",logOutput);
 
         //Planets
-        JTextArea bodiesOutput =  new JTextArea();
+        DefaultMutableTreeNode system = new DefaultMutableTreeNode("System");
+        system.setAllowsChildren(true);
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
@@ -59,11 +65,18 @@ public class LogFrame implements MenuListener {
         constraints.gridx = 1;
         constraints.gridy = 1;
         constraints.gridheight = 2;
-        container.add(bodiesOutput,constraints);
-        textAreaHashMap.put("bodiesOutput",bodiesOutput);
+        JTree tree = new JTree(system);
+        container.add(tree,constraints);
+        textAreaHashMap.put("bodiesOutput",tree);
 
         //Signals
         JTextArea nonBodiesOutput =  new JTextArea();
+        nonBodiesOutput.setAutoscrolls(true);
+        nonBodiesOutput.setEditable(false);
+        nonBodiesOutput.setPreferredSize(new Dimension(1,1));
+        nonBodiesOutput.setMaximumSize(new Dimension(1,1));
+        nonBodiesOutput.setMinimumSize(new Dimension(1,1));
+        nonBodiesOutput.setSize(new Dimension(1,1));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
@@ -77,7 +90,7 @@ public class LogFrame implements MenuListener {
 
         //Creating LogParser and giving it the textArea, where it can write into
         if(journalLogRunner == null){
-            journalLogRunner = new JournalLogRunner(textAreaHashMap);
+            journalLogRunner = new JournalLogRunner(textAreaHashMap,system);
             Thread thread = new Thread(journalLogRunner);
             thread.start();
         }else{
