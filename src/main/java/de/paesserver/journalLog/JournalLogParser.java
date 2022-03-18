@@ -8,7 +8,9 @@ import java.util.*;
 
 public class JournalLogParser{
 
-    final SimpleDateFormat journalDateFormat = new SimpleDateFormat("yyMMddHHmmss");
+    final SimpleDateFormat journalDateFormat = new SimpleDateFormat("yyyy-MM-dd-HHmmss");
+    final SimpleDateFormat prefixJournalDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    final SimpleDateFormat suffixJournalDateFormat = new SimpleDateFormat("HHmmss");
     private BufferedReader bufferedReader;
     String directoryPath = "./";
 
@@ -46,15 +48,16 @@ public class JournalLogParser{
 
         //Do not touch dangerous stream
         Optional<Date> optionalDate =
-                Arrays.stream(Objects.requireNonNull(directory.list((dir, name) -> name.contains("Journal"))))
+                Arrays.stream(Objects.requireNonNull(directory.list((dir, name) -> name.startsWith("Journal") && name.contains("T"))))
                         .map(this::extractDateFromJournalName)
                         .max(Date::compareTo);
 
         if(optionalDate.isEmpty())
             throw new FileNotFoundException("Couldn't find any log file");
 
+        System.out.println("Choosing journal file: Journal." + prefixJournalDateFormat.format(optionalDate.get()) + "T" + suffixJournalDateFormat.format(optionalDate.get()) + ".01.log");
         //setup reader to read latest log
-        return new File("./Journal." + journalDateFormat.format(optionalDate.get()) + ".01.log");
+        return new File("./Journal." + prefixJournalDateFormat.format(optionalDate.get()) + "T" + suffixJournalDateFormat.format(optionalDate.get()) + ".01.log");
     }
 
     /**
@@ -98,14 +101,15 @@ public class JournalLogParser{
 
     /**
      * Returns date which is present in the name of the journal log name
-     * The date format is as followed: yyMMddHHmmss
+     * Date format since Odyssey Update 11: yyyy-MM-ddTHHmmss
+     * The date format was as followed: yyMMddHHmmss
      * The journal log name is build as followed: Journal.[date].[part].log
      * @param dateString Name from the journal log file
      * @return Date
      */
     public Date extractDateFromJournalName(String dateString){
         try {
-            return journalDateFormat.parse(dateString.split("\\.")[1]);
+            return journalDateFormat.parse(dateString.split("\\.")[1].split("T")[0] + "-" + dateString.split("\\.")[1].split("T")[1]);
         } catch (ParseException ex) {
             ex.printStackTrace();
         }
