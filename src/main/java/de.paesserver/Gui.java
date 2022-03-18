@@ -1,12 +1,21 @@
 package de.paesserver;
 
-import de.paesserver.frames.Frame;
+import com.formdev.flatlaf.FlatDarkLaf;
+import de.paesserver.frames.MainFrame;
+
+import javax.swing.*;
+
 
 public class Gui {
     public Gui(){
         //Creating Frame
-        Frame frame = new Frame("EDLogParser");
-        frame.setSize(800,600);
-        frame.setVisible(true);
+        try {
+            UIManager.setLookAndFeel( new FlatDarkLaf());
+        } catch( Exception ex ) {
+            System.err.println( "Failed to initialize LaF" );
+        }
+        MainFrame mainFrame = new MainFrame("EDLogParser");
+        mainFrame.setSize(1000,800);
+        mainFrame.setVisible(true);
     }
 }
