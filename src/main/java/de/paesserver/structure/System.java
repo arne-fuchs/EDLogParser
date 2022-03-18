@@ -61,12 +61,11 @@ public class System {
             case "population": population.suffix = suffix; break;
             case "economy": economy.suffix = suffix; break;
             case "secondEconomy": secondEconomy.suffix = suffix; break;
-            default:
-                java.lang.System.out.println("Couldn't find stringPair: " + key);
+            default: java.lang.System.out.println("Couldn't find stringPair: " + key);
         }
     }
 
-    public void addObject(JSONObject jsonObject){
+    public void insert(JSONObject jsonObject){
 
     }
 }

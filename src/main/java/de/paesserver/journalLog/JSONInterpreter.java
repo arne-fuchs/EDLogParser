@@ -49,7 +49,6 @@ public class JSONInterpreter {
                     ((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
                 }
                 break;
-
             case "SupercruiseExit":
                 ((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
                 break;
@@ -64,6 +63,7 @@ public class JSONInterpreter {
                 ((JTextArea)componentHashMap.get("logOutput")).append("Bounty collected: " + jsonObject.get("Target_Localised")  + "\n");
                 ((JTextArea)componentHashMap.get("logOutput")).append("Total Reward: " + jsonObject.get("TotalReward")  + "\n");
                 break;
+
             //SCAN ACTIVITIES
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
