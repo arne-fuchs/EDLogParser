@@ -1,17 +1,20 @@
 package de.paesserver.frames;
 
 import de.paesserver.journalLog.JournalLogParser;
-import de.paesserver.journalLog.JournelLogInterpreter;
+import de.paesserver.journalLog.JSONInterpreter;
+import de.paesserver.journalLog.JournalLogRunner;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import java.awt.*;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 public class LogFrame implements MenuListener {
     Container container;
-    JournelLogInterpreter journalLogInterpreter;
+    JournalLogRunner journalLogRunner;
     public LogFrame(Container container){
         this.container = container;
     }
@@ -73,12 +76,12 @@ public class LogFrame implements MenuListener {
         textAreaHashMap.put("nonBodiesOutput",nonBodiesOutput);
 
         //Creating LogParser and giving it the textArea, where it can write into
-        if(journalLogInterpreter == null){
-            journalLogInterpreter = new JournelLogInterpreter(textAreaHashMap);
-            Thread thread = new Thread(journalLogInterpreter);
+        if(journalLogRunner == null){
+            journalLogRunner = new JournalLogRunner(textAreaHashMap);
+            Thread thread = new Thread(journalLogRunner);
             thread.start();
         }else{
-            journalLogInterpreter.setHalt(false);
+            journalLogRunner.setHalt(false);
         }
 
         //Reset Button
@@ -90,10 +93,17 @@ public class LogFrame implements MenuListener {
         constraints.gridwidth = 3;
 
         resetButton.addActionListener(a -> {
-            journalLogInterpreter.getJournelLogParser().stop();
-            journalLogInterpreter = new JournalLogParser(textAreaHashMap);
-            Thread thread = new Thread(journalLogInterpreter);
-            thread.start();
+            try {
+                File log = journalLogRunner.parser.getLatestLogInWorkingDirectory();
+                journalLogRunner.setHalt(true);
+                journalLogRunner.parser.closeReader();
+                if(journalLogRunner.parser.setBufferedReaderForFile(log))
+                    journalLogRunner.setHalt(false);
+                else
+                    throw new Exception("There was an error starting the buffered reader");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         });
 
         container.add(resetButton,constraints);
@@ -101,11 +111,11 @@ public class LogFrame implements MenuListener {
     }
 
     public void stopThread(){
-        journalLogInterpreter.stop();
+        journalLogRunner.stop();
     }
 
     public void haltThread(boolean b){
-        journalLogInterpreter.setHalt(b);
+        journalLogRunner.setHalt(b);
     }
 
 
