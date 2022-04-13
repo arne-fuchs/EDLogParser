@@ -64,6 +64,7 @@
                     <include>Journal.220202144926.01.log</include>
                     <include>Journal.220221185127.01.log</include>
                     <include>Journal.2022-03-16T154859.01.log</include>
+                    <include>Journal.2022-04-12T205640.01.log</include>
                 </includes>
                 <!-- relative to target/classes
                      i.e. ${project.build.outputDirectory} -->
