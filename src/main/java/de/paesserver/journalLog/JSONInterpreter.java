@@ -1,8 +1,9 @@
 package de.paesserver.journalLog;
 
 import de.paesserver.frames.SystemPane;
-import de.paesserver.structure.System;
-import de.paesserver.structure.SystemMutableTreeNode;
+import de.paesserver.structure.*;
+import de.paesserver.structure.StarSystem;
+import de.paesserver.structure.body.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -28,17 +29,18 @@ public class JSONInterpreter {
             case "Location":
             case "FSDJump":
                 //TODO Implement location
-                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
-                System system = new System(jsonObject);
-                SystemMutableTreeNode systemMutableTreeNode = new SystemMutableTreeNode(system);
+                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).removeAllChildren();
+                //((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
+                StarSystem starSystem = new StarSystem(jsonObject);
+                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).add(new SystemMutableTreeNode(starSystem));
 
-                systemPane.setSuffix("systemName", (String) jsonObject.get("StarSystem"));
-                systemPane.setSuffix("allegiance", (String) jsonObject.get("SystemAllegiance"));
-                systemPane.setSuffix("economy", (String) jsonObject.get("SystemEconomy_Localised"));
-                systemPane.setSuffix("secondEconomy", (String) jsonObject.get("SystemSecondEconomy_Localised"));
-                systemPane.setSuffix("government", (String) jsonObject.get("SystemGovernment_Localised"));
-                systemPane.setSuffix("security", (String) jsonObject.get("SystemSecurity_Localised"));
-                systemPane.setSuffix("population", jsonObject.get("Population").toString());
+                systemPane.setSuffix("systemName", starSystem.starSystem);
+                systemPane.setSuffix("allegiance", starSystem.systemAllegiance);
+                systemPane.setSuffix("economy", starSystem.systemEconomy_Localised);
+                systemPane.setSuffix("secondEconomy", starSystem.systemSecondEconomy_Localised);
+                systemPane.setSuffix("government", starSystem.systemGovernment_Localised);
+                systemPane.setSuffix("security", starSystem.systemSecurity_Localised);
+                systemPane.setSuffix("population", String.valueOf(starSystem.population));
                 systemPane.updateText();
                 break;
             case "StartJump":
@@ -82,9 +84,26 @@ public class JSONInterpreter {
                 break;
             case "Scan":
                 //TODO Implement Scan
-                DefaultMutableTreeNode body = new DefaultMutableTreeNode(jsonObject.get("BodyName").toString());
-                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).add(body);
-                ((JTree)componentHashMap.get("bodiesOutput")).expandRow(0);
+                Body bodyToAdd;
+                if(jsonObject.containsKey("StarType")){
+                    //Star
+                    bodyToAdd = new Star(jsonObject);
+
+                }else{
+                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
+                        //Belt Cluster
+                        bodyToAdd = new BeltCluster(jsonObject);
+                    }else {
+                        //Body
+                        bodyToAdd = new Planet(jsonObject);
+                    }
+                }
+                BodyMutableTreeNode bodyMutableTreeNode = new BodyMutableTreeNode(bodyToAdd);
+                ((DefaultMutableTreeNode)((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).getFirstChild()).add(bodyMutableTreeNode);
+                JTree jtree = ((JTree)componentHashMap.get("bodiesOutput"));
+                for(int i = 0; i < jtree.getRowCount();i++)
+                    jtree.expandRow(i);
+                systemPane.updateText();
                 break;
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered

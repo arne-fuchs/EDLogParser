@@ -31,13 +31,13 @@ StarSystem,SystemAllegiance,SystemEconomy,SystemEconomy_Localised,SystemSecondEc
 
 { "timestamp":"2022-02-21T18:00:37Z", "event":"StartJump", "JumpType":"Hyperspace", "StarSystem":"Plaa Eurk KD-V b2-0", "SystemAddress":643305710617, "StarClass":"M" }
 
--> Display, that a jump to the next system has been initialised
+-> Display, that a jump to the next starSystem has been initialised
 -> To be displayed: StarSystem,StarClass
 <hr>
 
 { "timestamp":"2022-02-21T17:58:49Z", "event":"FSDJump", "Taxi":false, "Multicrew":false, "StarSystem":"Plaa Eurk SG-Y c1", "SystemAddress":355307885066, "StarPos":[-2043.34375,4.78125,-992.31250], "SystemAllegiance":"", "SystemEconomy":"$economy_None;", "SystemEconomy_Localised":"n/v", "SystemSecondEconomy":"$economy_None;", "SystemSecondEconomy_Localised":"n/v", "SystemGovernment":"$government_None;", "SystemGovernment_Localised":"n/v", "SystemSecurity":"$GAlAXY_MAP_INFO_state_anarchy;", "SystemSecurity_Localised":"Anarchie", "Population":0, "Body":"Plaa Eurk SG-Y c1", "BodyID":0, "BodyType":"Star", "JumpDist":31.524, "FuelUsed":12.166890, "FuelLevel":51.833111 }<br >
 
--> Display, that a jump to the next system has been initialised
+-> Display, that a jump to the next starSystem has been initialised
 -> To be displayed (if available): StarSystem,SystemAllegiance,SystemEconomy,SystemEconomy_Localised,SystemSecondEconomy,SystemGovernment,SystemGovernment_Localised,SystemSecurity_Localised,Population
 <hr>
 
@@ -86,4 +86,4 @@ Composition (built as followed: "Composition":{ "Ice":0.000000, "Rock":0.668933,
 
 { "timestamp":"2022-03-06T13:16:30Z", "event":"FSSAllBodiesFound", "SystemName":"Boekh QT-H b40-16", "SystemAddress":35715469360985, "Count":11 }
 
--> Notifying that the system has been fully scanned
+-> Notifying that the starSystem has been fully scanned

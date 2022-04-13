@@ -1,4 +1,4 @@
-package de.paesserver.structure;
+package de.paesserver.structure.body;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -14,6 +14,7 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
 
     @Override
     public void add(MutableTreeNode node){
+        //FIXME Needs logical change because bodies doesn't come pre-sorted. The Info needs to be shown directly
         //Floall QC-R b48-0 A 1
         //Floall QC-R b48-0 A 1 a
         //Floall QC-R b48-0 A 3
@@ -25,7 +26,7 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
 
         //diff = 3 a
         //diffChild = 3
-        String diffWithNewNode = node.toString().replace(this.toString(),"").trim();
+        String diffWithNewNode = node.toString().replace(this.toString(),"").replace("Belt Cluster","").trim();
         //If one letter is remaining, it has to be a child of this element
         if(diffWithNewNode.length() == 1){
             super.add(node);
@@ -36,7 +37,7 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
             Iterator<TreeNode> treeNodeIterator = children().asIterator();
             while(treeNodeIterator.hasNext()){
                 TreeNode child =  treeNodeIterator.next();
-                char firstCharOfChild = child.toString().replace(this.toString(),"").trim().charAt(0);
+                char firstCharOfChild = child.toString().replace(this.toString(),"").replace("Belt Cluster","").trim().charAt(0);
                 if(firstCharOfChild == diffWithNewNode.charAt(0)){
                     //If boths first chars after substraction are the same, one of the childs of the childs must get the new node
                     ((DefaultMutableTreeNode)child).add(node);
@@ -64,11 +65,11 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
         if(node.toString().equals(this.toString())){
             this.removeFromParent();
         }else{
-            String diffWithNewNode = node.toString().replace(this.toString(),"").trim();
+            String diffWithNewNode = node.toString().replace(this.toString(),"").replace("Belt Cluster","").trim();
             Iterator<TreeNode> treeNodeIterator = children().asIterator();
             while(treeNodeIterator.hasNext()){
                 BodyMutableTreeNode child = (BodyMutableTreeNode) treeNodeIterator.next();
-                char firstCharOfChild = child.toString().replace(this.toString(),"").trim().charAt(0);
+                char firstCharOfChild = child.toString().replace(this.toString(),"").replace("Belt Cluster","").trim().charAt(0);
                 if(firstCharOfChild == diffWithNewNode.charAt(0)){
                     //If boths first chars after substraction are the same, one of the childs of the childs must get the new node
                     child.remove(node);

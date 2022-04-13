@@ -1,14 +1,13 @@
 package de.paesserver.structure;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
+import de.paesserver.structure.body.BodyMutableTreeNode;
 
 public class SystemMutableTreeNode extends BodyMutableTreeNode {
-    final public System system;
-    public SystemMutableTreeNode(System system){
+    final public StarSystem starSystem;
+    public SystemMutableTreeNode(StarSystem starSystem){
         super(null);
-        this.system = system;
-        this.setUserObject(system.toString());
+        this.starSystem = starSystem;
+        this.setUserObject(starSystem.toString());
         this.setAllowsChildren(true);
     }
 }

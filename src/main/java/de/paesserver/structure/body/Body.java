@@ -1,4 +1,4 @@
-package de.paesserver.structure;
+package de.paesserver.structure.body;
 
 import org.json.simple.JSONObject;
 
@@ -20,47 +20,26 @@ public abstract class Body {
     // "WasDiscovered":true, "WasMapped":false }
 
     final String bodyName;
-    final int bodyID;
+    final long bodyID;
     //TODO -> parents
     final String starSystem;
     final long systemAddress;
     final double distanceFromArrivalLS;
-    final double radius;
-    final double surfaceTemperature;
 
-    final double semiMajorAxis;
-    //How much the orbital line differents from a perfect circle
-    final double eccentricity;
-    //tilt of the orbital line
-    final double orbitalInclination;
-    final double periapsis;
-    final double orbitalPeriod;
-    final double ascendingNode;
-    final double meanAnomaly;
-    final double rotationPeriod;
-    final double axialTilt;
     //TODO Rings
     boolean wasDiscovered;
     boolean wasMapped;
 
     public Body(JSONObject jsonObject){
-        bodyName = (String) jsonObject.get("BodyID");
-        bodyID = (int) jsonObject.get("BodyID");
+        System.out.println("\nInitializing Body");
+        System.out.println(jsonObject.toJSONString());
+
+        bodyName = (String) jsonObject.get("BodyName");
+        bodyID = (long) jsonObject.get("BodyID");
         //TODO -> parents
         starSystem = (String) jsonObject.get("StarySystem");
         systemAddress = (long) jsonObject.get("SystemAddress");
         distanceFromArrivalLS = (double) jsonObject.get("DistanceFromArrivalLS");
-        radius = (double) jsonObject.get("Radius");
-        surfaceTemperature = (double) jsonObject.get("SurfaceTemperature");
-        semiMajorAxis = (double) jsonObject.get("SemiMajorAxis");
-        eccentricity = (double) jsonObject.get("Eccentricity");
-        orbitalInclination = (double)  jsonObject.get("OrbitalInclination");
-        periapsis = (double) jsonObject.get("Periapsis");
-        orbitalPeriod = (double) jsonObject.get("OrbitalPeriod");
-        ascendingNode = (double)jsonObject.get("AscendingNode");
-        meanAnomaly = (double) jsonObject.get("MeanAnomaly");
-        rotationPeriod = (double) jsonObject.get("RotationPeriod");
-        axialTilt = (double) jsonObject.get("AxialTilt");
         wasDiscovered = (boolean) jsonObject.get("WasDiscovered");
         wasMapped = (boolean) jsonObject.get("WasMapped");
     }

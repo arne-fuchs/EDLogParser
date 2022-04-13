@@ -1,10 +1,7 @@
-package de.paesserver.structure;
+package de.paesserver.structure.body;
 
+import de.paesserver.structure.body.Body;
 import org.json.simple.JSONObject;
-
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-import java.util.Enumeration;
 
 public class Planet extends Body {
 
@@ -36,6 +33,20 @@ public class Planet extends Body {
     final public boolean landable;
     //TODO Materials
     //TODO Composition
+    final double radius;
+    final double surfaceTemperature;
+
+    final double semiMajorAxis;
+    //How much the orbital line differents from a perfect circle
+    final double eccentricity;
+    //tilt of the orbital line
+    final double orbitalInclination;
+    final double periapsis;
+    final double orbitalPeriod;
+    final double ascendingNode;
+    final double meanAnomaly;
+    final double rotationPeriod;
+    final double axialTilt;
 
     public Planet(JSONObject jsonObject) {
         super(jsonObject);
@@ -52,5 +63,16 @@ public class Planet extends Body {
         landable = jsonObject.containsKey("Landable") && (boolean) jsonObject.get("Landable");
         //TODO Materials
         //TODO Composition
+        radius = (double) jsonObject.get("Radius");
+        surfaceTemperature = (double) jsonObject.get("SurfaceTemperature");
+        semiMajorAxis = (double) jsonObject.get("SemiMajorAxis");
+        eccentricity = (double) jsonObject.get("Eccentricity");
+        orbitalInclination = (double)  jsonObject.get("OrbitalInclination");
+        periapsis = (double) jsonObject.get("Periapsis");
+        orbitalPeriod = (double) jsonObject.get("OrbitalPeriod");
+        ascendingNode = (double)jsonObject.get("AscendingNode");
+        meanAnomaly = (double) jsonObject.get("MeanAnomaly");
+        rotationPeriod = (double) jsonObject.get("RotationPeriod");
+        axialTilt = (double) jsonObject.get("AxialTilt");
     }
 }
