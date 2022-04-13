@@ -2,89 +2,64 @@ package de.paesserver.structure;
 
 import org.json.simple.JSONObject;
 
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class System {
-    private final JTextArea textArea;
+//{ "timestamp":"2022-04-12T18:58:02Z", "event":"FSDJump", "Taxi":false, "Multicrew":false,
+// "StarSystem":"Floall QC-R b48-0", "SystemAddress":474725563809, "StarPos":[-14610.00000,-787.84375,15349.40625], "SystemAllegiance":"", "SystemEconomy":"$economy_None;", "SystemEconomy_Localised":"None", "SystemSecondEconomy":"$economy_None;", "SystemSecondEconomy_Localised":"None", "SystemGovernment":"$government_None;", "SystemGovernment_Localised":"None", "SystemSecurity":"$GAlAXY_MAP_INFO_state_anarchy;", "SystemSecurity_Localised":"Anarchy",
+// "Population":0, "Body":"Floall QC-R b48-0 A", "BodyID":1, "BodyType":"Star", "JumpDist":32.691, "FuelUsed":11.844490, "FuelLevel":44.822250 }
 
-    public StringPair systemName = new StringPair("System Name");
-    public StringPair bodiesCount = new StringPair("Bodies");
-    public StringPair nonBodiesCount = new StringPair("Non-Bodies");
-    public StringPair allegiance = new StringPair("Allegiance");
-    public StringPair government = new StringPair("Government");
-    public StringPair security = new StringPair("Security");
-    public StringPair population = new StringPair("Population");
-    public StringPair economy = new StringPair("Economy");
-    public StringPair secondEconomy = new StringPair("Second Economy");
+    final public String starSystem;
+    final public long systemAddress;
+    final public double[] starPos;
+    final public String systemAllegiance;
+    final public String systemEconomy;
+    final public String systemEconomy_Localised;
+    final public String systemSecondEconomy;
+    final public String systemSecondEconomy_Localised;
+    final public String systemGovernment;
+    final public String systemGovernment_Localised;
+    final public String systemSecurity;
+    final public String systemSecurity_Localised;
+    final public long population;
+    final public String body;
+    final public int bodyID;
+    final public String bodyType;
+    final public double jumpDist;
+    final public double fuelused;
+    final public double fuelLevel;
 
-    public DefaultMutableTreeNode systemTreeNode;
 
-    private final ArrayList<StringPair> systemDataList;
+    public System(JSONObject jsonObject){
+        starSystem = (String) jsonObject.get("StarSystem");
+        systemAddress = (long) jsonObject.get("SystemAddress");
 
-    public System(JTextArea textArea,DefaultMutableTreeNode systemTreeNode){
-        this.textArea = textArea;
-        this.systemTreeNode = systemTreeNode;
+        starPos = new double[3];
+        String string = (String) jsonObject.get("StarPos");
+        String[] stringArray = string.replace("[","").replace("]","").split(",");
+        for(int i = 0; i<3;i++)
+            starPos[i]=Long.parseLong(stringArray[i]);
 
-        systemDataList = new ArrayList<>();
-        systemDataList.add(systemName);
-        systemDataList.add(allegiance);
-        systemDataList.add(government);
-        systemDataList.add(security);
-        systemDataList.add(population);
-        systemDataList.add(economy);
-        systemDataList.add(secondEconomy);
-        systemDataList.add(bodiesCount);
-        systemDataList.add(nonBodiesCount);
-    }
-    public void updateText(){
-        StringBuilder builder = new StringBuilder();
-        builder.append("---SystemInfo---");
-        builder.append("\n");
-        systemDataList.forEach(stringPair -> builder.append(stringPair.toString()).append("\n"));
-        textArea.setText(builder.toString());
-    }
-
-    public void resetSuffix(){
-        systemDataList.forEach(stringPair -> stringPair.suffix = "n/a");
-    }
-
-    public void setSuffix(String key,String suffix){
-        switch (key){
-            case "systemName": systemName.suffix = suffix; break;
-            case "bodiesCount": bodiesCount.suffix = suffix; break;
-            case "nonBodiesCount": nonBodiesCount.suffix = suffix; break;
-            case "allegiance": allegiance.suffix = suffix; break;
-            case "government": government.suffix = suffix; break;
-            case "security": security.suffix = suffix; break;
-            case "population": population.suffix = suffix; break;
-            case "economy": economy.suffix = suffix; break;
-            case "secondEconomy": secondEconomy.suffix = suffix; break;
-            default: java.lang.System.out.println("Couldn't find stringPair: " + key);
-        }
-    }
-
-    public void insert(JSONObject jsonObject){
-
-    }
-}
-class StringPair{
-    final String prefix;
-    String suffix;
-
-    public StringPair(String prefix,String suffix){
-        this.prefix = prefix;
-        this.suffix = suffix;
-    }
-
-    public StringPair(String prefix){
-        this.prefix = prefix;
-        this.suffix = "n/a";
+        systemAllegiance = (String) jsonObject.get("SystemAllegiance");
+        systemEconomy = (String) jsonObject.get("SystemEconomy");
+        systemEconomy_Localised = (String) jsonObject.get("SystemEconomy_Localised");
+        systemSecondEconomy = (String) jsonObject.get("SystemSecondEconomy");
+        systemSecondEconomy_Localised = (String) jsonObject.get("SystemSecondEconomy_Localised");
+        systemGovernment = (String) jsonObject.get("SystemGovernment");
+        systemGovernment_Localised = (String) jsonObject.get("SystemGovernment_Localised");
+        systemSecurity = (String) jsonObject.get("SystemSecurity");
+        systemSecurity_Localised = (String) jsonObject.get("SystemSecurity_Localised");
+        population = (int) jsonObject.get("Population");
+        body = (String) jsonObject.get("Body");
+        bodyID = (int) jsonObject.get("BodyID");
+        bodyType = (String) jsonObject.get("BodyType");
+        jumpDist = (double) jsonObject.get("JumpDist");
+        fuelused = (double) jsonObject.get("fuelused");
+        fuelLevel = (double) jsonObject.get("FuelLevel");
     }
 
     @Override
-    public String toString() {
-        return prefix + ":\n" + suffix + "\n";
+    public String toString(){
+        return starSystem;
     }
 }

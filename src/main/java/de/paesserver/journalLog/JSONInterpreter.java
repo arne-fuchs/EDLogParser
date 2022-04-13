@@ -1,12 +1,13 @@
 package de.paesserver.journalLog;
 
+import de.paesserver.frames.SystemPane;
 import de.paesserver.structure.System;
+import de.paesserver.structure.SystemMutableTreeNode;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.MutableTreeNode;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -18,7 +19,7 @@ public class JSONInterpreter {
         this.componentHashMap = componentHashMap;
     }
 
-    public void computeJSONObject(JSONObject jsonObject, System system){
+    public void computeJSONObject(JSONObject jsonObject, SystemPane systemPane){
 
         String event = (String) jsonObject.get("event");
 
@@ -27,15 +28,18 @@ public class JSONInterpreter {
             case "Location":
             case "FSDJump":
                 //TODO Implement location
-                ((DefaultMutableTreeNode)system.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
-                system.setSuffix("systemName", (String) jsonObject.get("StarSystem"));
-                system.setSuffix("allegiance", (String) jsonObject.get("SystemAllegiance"));
-                system.setSuffix("economy", (String) jsonObject.get("SystemEconomy_Localised"));
-                system.setSuffix("secondEconomy", (String) jsonObject.get("SystemSecondEconomy_Localised"));
-                system.setSuffix("government", (String) jsonObject.get("SystemGovernment_Localised"));
-                system.setSuffix("security", (String) jsonObject.get("SystemSecurity_Localised"));
-                system.setSuffix("population", jsonObject.get("Population").toString());
-                system.updateText();
+                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
+                System system = new System(jsonObject);
+                SystemMutableTreeNode systemMutableTreeNode = new SystemMutableTreeNode(system);
+
+                systemPane.setSuffix("systemName", (String) jsonObject.get("StarSystem"));
+                systemPane.setSuffix("allegiance", (String) jsonObject.get("SystemAllegiance"));
+                systemPane.setSuffix("economy", (String) jsonObject.get("SystemEconomy_Localised"));
+                systemPane.setSuffix("secondEconomy", (String) jsonObject.get("SystemSecondEconomy_Localised"));
+                systemPane.setSuffix("government", (String) jsonObject.get("SystemGovernment_Localised"));
+                systemPane.setSuffix("security", (String) jsonObject.get("SystemSecurity_Localised"));
+                systemPane.setSuffix("population", jsonObject.get("Population").toString());
+                systemPane.updateText();
                 break;
             case "StartJump":
                 if(jsonObject.get("JumpType").equals("Supercruise"))
@@ -44,8 +48,8 @@ public class JSONInterpreter {
                     ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
                     ((JTree)componentHashMap.get("bodiesOutput")).removeAll();
                     ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
-                    system.resetSuffix();
-                    system.updateText();
+                    systemPane.resetSuffix();
+                    systemPane.updateText();
                     ((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
                 }
                 break;
@@ -68,9 +72,9 @@ public class JSONInterpreter {
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
                 ((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
-                system.setSuffix("bodiesCount", jsonObject.get("BodyCount").toString());
-                system.setSuffix("nonBodiesCount", jsonObject.get("NonBodyCount").toString());
-                system.updateText();
+                systemPane.setSuffix("bodiesCount", jsonObject.get("BodyCount").toString());
+                systemPane.setSuffix("nonBodiesCount", jsonObject.get("NonBodyCount").toString());
+                systemPane.updateText();
                 break;
             case "FSSAllBodiesFound":
                 //TODO Implement FSSAllBodiesFound
@@ -79,7 +83,7 @@ public class JSONInterpreter {
             case "Scan":
                 //TODO Implement Scan
                 DefaultMutableTreeNode body = new DefaultMutableTreeNode(jsonObject.get("BodyName").toString());
-                ((DefaultMutableTreeNode)system.systemTreeNode.getRoot()).add(body);
+                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).add(body);
                 ((JTree)componentHashMap.get("bodiesOutput")).expandRow(0);
                 break;
             case "FSSSignalDiscovered":

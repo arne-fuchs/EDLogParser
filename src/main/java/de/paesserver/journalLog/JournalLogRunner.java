@@ -1,6 +1,6 @@
 package de.paesserver.journalLog;
 
-import de.paesserver.structure.System;
+import de.paesserver.frames.SystemPane;
 import org.json.simple.JSONObject;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class JournalLogRunner implements Runnable{
     public final JournalLogParser parser;
     public final JSONInterpreter interpreter;
 
-    private System system;
+    private SystemPane systemPane;
 
     public JournalLogRunner(HashMap<String, Component> componentHashMap,DefaultMutableTreeNode defaultMutableTreeNode) {
         this.componentHashMap = componentHashMap;
@@ -26,8 +26,8 @@ public class JournalLogRunner implements Runnable{
         ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
         ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
 
-        system = new System((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
-        system.updateText();
+        systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
+        systemPane.updateText();
     }
     public JournalLogRunner(HashMap<String, Component> componentHashMap, DefaultMutableTreeNode defaultMutableTreeNode, String directoryPath) {
         this.componentHashMap = componentHashMap;
@@ -36,8 +36,8 @@ public class JournalLogRunner implements Runnable{
         ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
         ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
 
-        system = new System((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
-        system.updateText();
+        systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
+        systemPane.updateText();
     }
 
     @Override
@@ -51,7 +51,7 @@ public class JournalLogRunner implements Runnable{
                         JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
                         //check if line is valid (it should be since in journal logs, there only is json data)
                         if(jsonObject != null)
-                            interpreter.computeJSONObject(jsonObject, system);
+                            interpreter.computeJSONObject(jsonObject, systemPane);
                         else
                             java.lang.System.out.println("Invalid JSON line found: " + line);
                     }

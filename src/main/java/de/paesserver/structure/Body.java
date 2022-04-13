@@ -1,7 +1,11 @@
 package de.paesserver.structure;
 
-import de.paesserver.journalLog.JSONInterpreter;
 import org.json.simple.JSONObject;
+
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import java.util.Enumeration;
 
 public abstract class Body {
     //{ "timestamp":"2022-03-18T11:20:56Z", "event":"Scan", "ScanType":"Detailed", "BodyName":"Randgnid 2", "BodyID":3, "Parents":[ {"Null":2}, {"Star":0} ], "StarSystem":"Randgnid", "SystemAddress":2688540283179, "DistanceFromArrivalLS":65.490883,
@@ -59,5 +63,9 @@ public abstract class Body {
         axialTilt = (double) jsonObject.get("AxialTilt");
         wasDiscovered = (boolean) jsonObject.get("WasDiscovered");
         wasMapped = (boolean) jsonObject.get("WasMapped");
+    }
+    @Override
+    public String toString(){
+        return bodyName;
     }
 }

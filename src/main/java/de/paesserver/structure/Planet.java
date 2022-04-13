@@ -2,7 +2,11 @@ package de.paesserver.structure;
 
 import org.json.simple.JSONObject;
 
-public class Planet extends Body{
+import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
+import java.util.Enumeration;
+
+public class Planet extends Body {
 
     //{ "timestamp":"2022-03-18T11:20:56Z", "event":"Scan", "ScanType":"Detailed", "BodyName":"Randgnid 2", "BodyID":3, "Parents":[ {"Null":2}, {"Star":0} ], "StarSystem":"Randgnid", "SystemAddress":2688540283179, "DistanceFromArrivalLS":65.490883,
     // "TidalLock":true, "TerraformState":"", "PlanetClass":"Metal rich body", "Atmosphere":"", "AtmosphereType":"None", "Volcanism":"silicate vapour geysers volcanism",
@@ -19,17 +23,17 @@ public class Planet extends Body{
     //From wikipedia:
     // Tidal locking between a pair of co-orbiting astronomical bodies occurs
     // when one of the objects reaches a state where there is no longer any net change in its rotation rate over the course of a complete orbit.
-    final boolean tidalLock;
-    final String terrafromState;
-    final String planetClass;
-    final String atmosphere;
-    final String atmosphereType;
-    final String volcanism;
+    final public boolean tidalLock;
+    final public String terrafromState;
+    final public String planetClass;
+    final public String atmosphere;
+    final public String atmosphereType;
+    final public String volcanism;
     //Earth mass multiplied
-    final double massEM;
-    final double surfaceGravity;
-    final double surfacePressure;
-    final boolean landable;
+    final public double massEM;
+    final public double surfaceGravity;
+    final public double surfacePressure;
+    final public boolean landable;
     //TODO Materials
     //TODO Composition
 

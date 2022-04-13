@@ -17,7 +17,7 @@ public class MainFrame extends JFrame {
         //Creating the MenuBar and adding components
         JMenuBar menuBar = new JMenuBar();
         JMenu logMenu = new JMenu("Logs");
-        logMenu.addMenuListener(new LogFrame(container));
+        logMenu.addMenuListener(new LogPane(container));
         JMenu aboutMenu = new JMenu("About");
         aboutMenu.addActionListener(null);
         JMenu helpMenu = new JMenu("Help");

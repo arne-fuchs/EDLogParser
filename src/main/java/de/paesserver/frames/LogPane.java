@@ -10,10 +10,10 @@ import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
 
-public class LogFrame implements MenuListener {
+public class LogPane implements MenuListener {
     Container container;
     JournalLogRunner journalLogRunner;
-    public LogFrame(Container container){
+    public LogPane(Container container){
         this.container = container;
     }
 
