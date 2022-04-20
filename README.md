@@ -1,21 +1,30 @@
 # EDLogParser
 Reads the log and gives the commander additional information
 
-#IN DEVELOPMENT
+# IN DEVELOPMENT
 
-##Release will be announced
+## Release will be announced
 
-##Planned Features:
-###LogParser
-Tool to read the logs and give the user information
+## Planned Features:
+* -[ ] __LogParser__
+  * Tool to read the logs and give the user information
+  * Information about last explored object
+  * Signals in the system
+  * General System info
+* -[ ] __NavRoute Market Analyzer__
+  * Tool to read current market stats and market stats on the route to give the user best buy/sell opportunities.
+* -[ ] __Material List__
+    * List of materials the user can set, which he needs for upgrades. List may update automatically.
 
-###NavRoute Market Analyzer
-Tool to read current market stats and market stats on the route to give the user best buy/sell opportunities.
+### For feature request please use the issues tab
 
-###Shopping List
-List of materials the user can set, which he needs for upgrades. List may update automatically.
+## Installation
 
-##For feature request please use the issues tab
+Go into your <br>
+`drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
+and but the EDLogPrser-X.X.jar into the folder.
+
+
 
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
