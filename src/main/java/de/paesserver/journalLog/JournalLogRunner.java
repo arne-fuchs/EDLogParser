@@ -57,7 +57,7 @@ public class JournalLogRunner implements Runnable{
                     }
                 }
                 synchronized (this) {
-                    this.wait(50);
+                    this.wait(100);
                 }
             }
             parser.closeReader();

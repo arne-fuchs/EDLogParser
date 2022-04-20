@@ -84,26 +84,31 @@ public class JSONInterpreter {
                 break;
             case "Scan":
                 //TODO Implement Scan
+                System.out.print("\nFound scan: ");
                 Body bodyToAdd;
                 if(jsonObject.containsKey("StarType")){
                     //Star
+                    System.out.print("Star ");
                     bodyToAdd = new Star(jsonObject);
 
                 }else{
                     if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
                         //Belt Cluster
+                        System.out.print("Belt Cluster ");
                         bodyToAdd = new BeltCluster(jsonObject);
                     }else {
-                        //Body
+                        //Planet
+                        System.out.print("Planet ");
                         bodyToAdd = new Planet(jsonObject);
                     }
                 }
+                System.out.print(bodyToAdd+"\n\n");
                 BodyMutableTreeNode bodyMutableTreeNode = new BodyMutableTreeNode(bodyToAdd);
                 ((DefaultMutableTreeNode)((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).getFirstChild()).add(bodyMutableTreeNode);
                 JTree jtree = ((JTree)componentHashMap.get("bodiesOutput"));
                 for(int i = 0; i < jtree.getRowCount();i++)
                     jtree.expandRow(i);
-                systemPane.updateText();
+                jtree.updateUI();
                 break;
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered

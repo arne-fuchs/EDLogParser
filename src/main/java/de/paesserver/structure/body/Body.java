@@ -19,25 +19,25 @@ public abstract class Body {
     // "Rings":[ { "Name":"Asura 1 A Ring", "RingClass":"eRingClass_Rocky", "MassMT":1.9939e+12, "InnerRad":1.1623e+08, "OuterRad":5.7778e+08 } ],
     // "WasDiscovered":true, "WasMapped":false }
 
-    final String bodyName;
-    final long bodyID;
+    final public String bodyName;
+    final public long bodyID;
     //TODO -> parents
-    final String starSystem;
-    final long systemAddress;
-    final double distanceFromArrivalLS;
+    final public String starSystem;
+    final public long systemAddress;
+    final public double distanceFromArrivalLS;
 
     //TODO Rings
-    boolean wasDiscovered;
-    boolean wasMapped;
+    final public boolean wasDiscovered;
+    final public boolean wasMapped;
 
     public Body(JSONObject jsonObject){
-        System.out.println("\nInitializing Body");
-        System.out.println(jsonObject.toJSONString());
+        //System.out.println("\nInitializing Body");
+        //System.out.println(jsonObject.toJSONString());
 
         bodyName = (String) jsonObject.get("BodyName");
         bodyID = (long) jsonObject.get("BodyID");
         //TODO -> parents
-        starSystem = (String) jsonObject.get("StarySystem");
+        starSystem = (String) jsonObject.get("StarSystem");
         systemAddress = (long) jsonObject.get("SystemAddress");
         distanceFromArrivalLS = (double) jsonObject.get("DistanceFromArrivalLS");
         wasDiscovered = (boolean) jsonObject.get("WasDiscovered");

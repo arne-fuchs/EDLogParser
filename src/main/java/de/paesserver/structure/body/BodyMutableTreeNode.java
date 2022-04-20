@@ -7,52 +7,40 @@ import java.util.Enumeration;
 import java.util.Iterator;
 
 public class BodyMutableTreeNode extends DefaultMutableTreeNode {
-    final public Body body;
+    public Body body;
+    public ImaginaryBody imaginaryBody;
     public BodyMutableTreeNode(Body body){
         this.body = body;
+        imaginaryBody = null;
+    }
+
+    public BodyMutableTreeNode(ImaginaryBody imaginaryBody){
+        this.body = null;
+        this.imaginaryBody = imaginaryBody;
+    }
+
+    public BodyMutableTreeNode(){
+        this.body = null;
+        this.imaginaryBody = null;
+    }
+
+    @Override
+    public String toString(){
+        assert this.body != null;
+        if(body != null)
+            return this.body.bodyName;
+        return this.imaginaryBody.toString();
     }
 
     @Override
     public void add(MutableTreeNode node){
-        //FIXME Needs logical change because bodies doesn't come pre-sorted. The Info needs to be shown directly
-        //Floall QC-R b48-0 A 1
-        //Floall QC-R b48-0 A 1 a
-        //Floall QC-R b48-0 A 3
-
-        //Floall QC-R b48-0 B
-        //Floall QC-R b48-0 B 3
-        //Floall QC-R b48-0 B 3 a
-        //Floall QC-R b48-0 B 4
-
-        //diff = 3 a
-        //diffChild = 3
-        String diffWithNewNode = node.toString().replace(this.toString(),"").replace("Belt Cluster","").trim();
-        //If one letter is remaining, it has to be a child of this element
-        if(diffWithNewNode.length() == 1){
-            super.add(node);
-            node.setUserObject(node.toString());
-            ((DefaultMutableTreeNode)node).setAllowsChildren(true);
-        }else{
-            //if more letters are remaining it has to be a child of a child.
-            Iterator<TreeNode> treeNodeIterator = children().asIterator();
-            while(treeNodeIterator.hasNext()){
-                TreeNode child =  treeNodeIterator.next();
-                char firstCharOfChild = child.toString().replace(this.toString(),"").replace("Belt Cluster","").trim().charAt(0);
-                if(firstCharOfChild == diffWithNewNode.charAt(0)){
-                    //If boths first chars after substraction are the same, one of the childs of the childs must get the new node
-                    ((DefaultMutableTreeNode)child).add(node);
-                    //can break out of iteration because the right child has been found
-                    break;
-                }
-                //Else look at next node
-            }
-        }
+        super.add(node);
     }
 
     @Override
     @Deprecated
     public void insert(MutableTreeNode child, int index) {
-        this.add(child);
+        super.insert(child,index);
     }
 
     @Override
@@ -62,23 +50,7 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
 
     @Override
     public void remove(MutableTreeNode node) {
-        if(node.toString().equals(this.toString())){
-            this.removeFromParent();
-        }else{
-            String diffWithNewNode = node.toString().replace(this.toString(),"").replace("Belt Cluster","").trim();
-            Iterator<TreeNode> treeNodeIterator = children().asIterator();
-            while(treeNodeIterator.hasNext()){
-                BodyMutableTreeNode child = (BodyMutableTreeNode) treeNodeIterator.next();
-                char firstCharOfChild = child.toString().replace(this.toString(),"").replace("Belt Cluster","").trim().charAt(0);
-                if(firstCharOfChild == diffWithNewNode.charAt(0)){
-                    //If boths first chars after substraction are the same, one of the childs of the childs must get the new node
-                    child.remove(node);
-                    //can break out of iteration because the right child has been found
-                    break;
-                }
-                //Else look at next node
-            }
-        }
+        super.remove(node);
     }
 
     @Override
@@ -129,5 +101,16 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
     @Override
     public Enumeration<TreeNode> children() {
         return super.children();
+    }
+
+    protected void correctParentsForChildren(){
+        if(children != null){
+            TreeNode[] localChildren = children.toArray(new TreeNode[0]);
+            for(TreeNode treeNode : localChildren){
+                ((BodyMutableTreeNode)treeNode).setParent(this);
+                ((BodyMutableTreeNode)treeNode).correctParentsForChildren();
+            }
+        }
+
     }
 }

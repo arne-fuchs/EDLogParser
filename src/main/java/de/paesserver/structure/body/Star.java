@@ -15,21 +15,21 @@ public class Star extends Body {
     final public double stellarMass;
     final public long age_MY;
     //radiated electromagnetic power
-    final String luminosity;
-    final double radius;
-    final double surfaceTemperature;
+    final public String luminosity;
+    final public double radius;
+    final public double surfaceTemperature;
 
-    final double semiMajorAxis;
+    final public double semiMajorAxis;
     //How much the orbital line differents from a perfect circle
-    final double eccentricity;
+    final public double eccentricity;
     //tilt of the orbital line
-    final double orbitalInclination;
-    final double periapsis;
-    final double orbitalPeriod;
-    final double ascendingNode;
-    final double meanAnomaly;
-    final double rotationPeriod;
-    final double axialTilt;
+    final public double orbitalInclination;
+    final public double periapsis;
+    final public double orbitalPeriod;
+    final public double ascendingNode;
+    final public double meanAnomaly;
+    final public double rotationPeriod;
+    final public double axialTilt;
 
     public Star(JSONObject jsonObject){
         super(jsonObject);
