@@ -1,5 +1,6 @@
 package de.paesserver.journalLog;
 
+import de.paesserver.frames.BodyPane;
 import de.paesserver.frames.SystemPane;
 import org.json.simple.JSONObject;
 
@@ -18,26 +19,31 @@ public class JournalLogRunner implements Runnable{
     public final JSONInterpreter interpreter;
 
     private SystemPane systemPane;
+    private BodyPane bodyPane;
 
     public JournalLogRunner(HashMap<String, Component> componentHashMap,DefaultMutableTreeNode defaultMutableTreeNode) {
         this.componentHashMap = componentHashMap;
         parser = new JournalLogParser();
         interpreter = new JSONInterpreter(componentHashMap);
-        ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
+        //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
         ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
 
         systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
         systemPane.updateText();
+
+        bodyPane = new BodyPane((JTextArea) componentHashMap.get("bodyInfo"));
     }
     public JournalLogRunner(HashMap<String, Component> componentHashMap, DefaultMutableTreeNode defaultMutableTreeNode, String directoryPath) {
         this.componentHashMap = componentHashMap;
         parser = new JournalLogParser(directoryPath);
         interpreter = new JSONInterpreter(componentHashMap);
-        ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
+        //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
         ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
 
         systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
         systemPane.updateText();
+
+        bodyPane = new BodyPane((JTextArea) componentHashMap.get("bodyInfo"));
     }
 
     @Override
@@ -50,8 +56,10 @@ public class JournalLogRunner implements Runnable{
                     if(line != null) {
                         JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
                         //check if line is valid (it should be since in journal logs, there only is json data)
-                        if(jsonObject != null)
-                            interpreter.computeJSONObject(jsonObject, systemPane);
+                        if(jsonObject != null){
+                            interpreter.computeJSONObject(jsonObject, systemPane, bodyPane);
+                            System.out.println(jsonObject.toJSONString());
+                        }
                         else
                             java.lang.System.out.println("Invalid JSON line found: " + line);
                     }

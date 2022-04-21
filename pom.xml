@@ -63,11 +63,20 @@
                 <includes>
                     <include>Journal.220221185127.01.log</include>
                     <include>Journal.2022-04-21T031231.01.log</include>
-                    <include>org.edassets</include>
                 </includes>
                 <!-- relative to target/classes
                      i.e. ${project.build.outputDirectory} -->
                 <targetPath>..</targetPath>
+            </resource>
+            <resource>
+                <directory>src/main/resources/org.edassets</directory>
+                <filtering>false</filtering>
+                <includes>
+                    <include>*</include>
+                </includes>
+                <!-- relative to target/classes
+                     i.e. ${project.build.outputDirectory} -->
+                <targetPath>${project.build.outputDirectory}/..</targetPath>
             </resource>
         </resources>
     </build>

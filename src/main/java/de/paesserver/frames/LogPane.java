@@ -1,5 +1,6 @@
 package de.paesserver.frames;
 
+import de.paesserver.Logger;
 import de.paesserver.journalLog.JournalLogRunner;
 import de.paesserver.structure.SystemMutableTreeNode;
 import de.paesserver.structure.body.BodyMutableTreeNode;
@@ -9,9 +10,11 @@ import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.tree.TreeCellRenderer;
+
 import java.awt.*;
 import java.io.File;
+
+import java.util.Arrays;
 import java.util.HashMap;
 
 public class LogPane implements MenuListener {
@@ -30,24 +33,24 @@ public class LogPane implements MenuListener {
         //System info
         JTextArea systemInfo =  new JTextArea();
         systemInfo.setEditable(false);
+        systemInfo.setPreferredSize(new Dimension(100,480));
+        systemInfo.setMaximumSize(new Dimension(100,480));
+        systemInfo.setMinimumSize(new Dimension(100,480));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        constraints.ipady = 40;
         constraints.gridx = 0;
         constraints.gridy = 1;
         container.add(systemInfo,constraints);
         textAreaHashMap.put("systemInfo",systemInfo);
 
         //Log
-        JTextArea logOutput =  new JTextArea();
-        logOutput.setAutoscrolls(true);
-        logOutput.setEditable(false);
-        logOutput.setPreferredSize(new Dimension(1,1));
-        logOutput.setMaximumSize(new Dimension(1,1));
-        logOutput.setMinimumSize(new Dimension(1,1));
-        logOutput.setSize(new Dimension(1,1));
+        JTextArea bodyInfo =  new JTextArea();
+        bodyInfo.setAutoscrolls(true);
+        bodyInfo.setEditable(false);
+        bodyInfo.setPreferredSize(new Dimension(100,1));
+        bodyInfo.setMaximumSize(new Dimension(100,1));
+        bodyInfo.setMinimumSize(new Dimension(100,1));
+        bodyInfo.setSize(new Dimension(100,1));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
@@ -55,8 +58,8 @@ public class LogPane implements MenuListener {
         constraints.ipady = 40;
         constraints.gridx = 0;
         constraints.gridy = 2;
-        container.add(logOutput,constraints);
-        textAreaHashMap.put("logOutput",logOutput);
+        container.add(bodyInfo,constraints);
+        textAreaHashMap.put("bodyInfo",bodyInfo);
 
         //Planets
         DefaultMutableTreeNode system = new DefaultMutableTreeNode("Milky Way");
@@ -70,6 +73,9 @@ public class LogPane implements MenuListener {
         constraints.gridy = 1;
         constraints.gridheight = 2;
         JTree tree = new JTree(system);
+        tree.setPreferredSize(new Dimension(250,1));
+        tree.setMinimumSize(new Dimension(250,1));
+        tree.setMaximumSize(new Dimension(250,1));
         tree.setCellRenderer(new DefaultTreeCellRenderer(){
             final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
             final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
@@ -81,6 +87,7 @@ public class LogPane implements MenuListener {
             public Component getTreeCellRendererComponent(JTree tree,
                                                           Object value, boolean selected, boolean expanded,
                                                           boolean leaf, int row, boolean hasFocus) {
+                Logger.log(Arrays.toString(new File("./").listFiles()));
                 super.getTreeCellRendererComponent(tree, value, selected,expanded, leaf, row, hasFocus);
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
                 ImageIcon icon = null;
@@ -106,10 +113,10 @@ public class LogPane implements MenuListener {
         JTextArea nonBodiesOutput =  new JTextArea();
         nonBodiesOutput.setAutoscrolls(true);
         nonBodiesOutput.setEditable(false);
-        nonBodiesOutput.setPreferredSize(new Dimension(1,1));
-        nonBodiesOutput.setMaximumSize(new Dimension(1,1));
-        nonBodiesOutput.setMinimumSize(new Dimension(1,1));
-        nonBodiesOutput.setSize(new Dimension(1,1));
+        nonBodiesOutput.setPreferredSize(new Dimension(100,1));
+        nonBodiesOutput.setMaximumSize(new Dimension(100,1));
+        nonBodiesOutput.setMinimumSize(new Dimension(100,1));
+        nonBodiesOutput.setSize(new Dimension(100,1));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;

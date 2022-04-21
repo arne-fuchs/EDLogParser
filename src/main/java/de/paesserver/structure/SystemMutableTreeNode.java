@@ -1,15 +1,15 @@
 package de.paesserver.structure;
 
-import com.sun.source.tree.Tree;
+
 import de.paesserver.Logger;
-import de.paesserver.structure.body.Body;
+
 import de.paesserver.structure.body.BodyMutableTreeNode;
 import de.paesserver.structure.body.ImaginaryBody;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
-import java.nio.charset.StandardCharsets;
+
 import java.util.*;
 
 public class SystemMutableTreeNode extends BodyMutableTreeNode {

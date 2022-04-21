@@ -1,5 +1,7 @@
 package de.paesserver.journalLog;
 
+import de.paesserver.Logger;
+import de.paesserver.frames.BodyPane;
 import de.paesserver.frames.SystemPane;
 import de.paesserver.structure.*;
 import de.paesserver.structure.StarSystem;
@@ -20,7 +22,7 @@ public class JSONInterpreter {
         this.componentHashMap = componentHashMap;
     }
 
-    public void computeJSONObject(JSONObject jsonObject, SystemPane systemPane){
+    public void computeJSONObject(JSONObject jsonObject, SystemPane systemPane, BodyPane bodyPane){
 
         String event = (String) jsonObject.get("event");
 
@@ -44,65 +46,63 @@ public class JSONInterpreter {
                 systemPane.updateText();
                 break;
             case "StartJump":
-                if(jsonObject.get("JumpType").equals("Supercruise"))
-                    ((JTextArea)componentHashMap.get("logOutput")).append("Entered Supercruise"+ "\n");
+                //if(jsonObject.get("JumpType").equals("Supercruise"))
+                    //((JTextArea)componentHashMap.get("logOutput")).append("Entered Supercruise"+ "\n");
                 if(jsonObject.get("JumpType").equals("Hyperspace")){
-                    ((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
+                    //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
                     ((JTree)componentHashMap.get("bodiesOutput")).removeAll();
                     ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
                     systemPane.resetSuffix();
                     systemPane.updateText();
-                    ((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
+                    //((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
                 }
                 break;
             case "SupercruiseExit":
-                ((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
                 break;
             case "MaterialCollected":
-                ((JTextArea)componentHashMap.get("logOutput")).append("Material collected: " + jsonObject.get("Name_Localised")  + "\n");
-                ((JTextArea)componentHashMap.get("logOutput")).append("Count: " + jsonObject.get("Count")  + "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Material collected: " + jsonObject.get("Name_Localised")  + "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Count: " + jsonObject.get("Count")  + "\n");
                 break;
             case "Bounty":
                 //TODO More details about bounty:
                 //{ "timestamp":"2022-03-16T16:33:27Z", "event":"Bounty", "Rewards":[ { "Faction":"HOTCOL", "Reward":271012 } ], "Target":"empire_trader", "Target_Localised":"Imperial Clipper", "TotalReward":271012, "VictimFaction":"HOTCOL" }
                 //{ "timestamp":"2022-03-16T16:36:11Z", "event":"Bounty", "Rewards":[ { "Faction":"HOTCOL", "Reward":174749 }, { "Faction":"Colonia Co-operative", "Reward":59843 } ], "Target":"diamondback", "Target_Localised":"Diamondback Scout", "TotalReward":234592, "VictimFaction":"Matlehi Silver Mob" }
-                ((JTextArea)componentHashMap.get("logOutput")).append("Bounty collected: " + jsonObject.get("Target_Localised")  + "\n");
-                ((JTextArea)componentHashMap.get("logOutput")).append("Total Reward: " + jsonObject.get("TotalReward")  + "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Bounty collected: " + jsonObject.get("Target_Localised")  + "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Total Reward: " + jsonObject.get("TotalReward")  + "\n");
                 break;
 
             //SCAN ACTIVITIES
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
-                ((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
                 systemPane.setSuffix("bodiesCount", jsonObject.get("BodyCount").toString());
                 systemPane.setSuffix("nonBodiesCount", jsonObject.get("NonBodyCount").toString());
                 systemPane.updateText();
                 break;
             case "FSSAllBodiesFound":
                 //TODO Implement FSSAllBodiesFound
-                ((JTextArea)componentHashMap.get("logOutput")).append("All bodies discovered"+ "\n");
+                //((JTextArea)componentHashMap.get("logOutput")).append("All bodies discovered"+ "\n");
                 break;
             case "Scan":
                 //TODO Implement Scan
-                System.out.print("\nFound scan: ");
                 Body bodyToAdd;
                 if(jsonObject.containsKey("StarType")){
                     //Star
-                    System.out.print("Star ");
                     bodyToAdd = new Star(jsonObject);
 
                 }else{
                     if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
                         //Belt Cluster
-                        System.out.print("Belt Cluster ");
                         bodyToAdd = new BeltCluster(jsonObject);
                     }else {
                         //Planet
-                        System.out.print("Planet ");
-                        bodyToAdd = new Planet(jsonObject);
+                        Planet planet = new Planet(jsonObject);
+                        bodyToAdd = planet;
+                        bodyPane.setTextForPlanet(planet);
                     }
                 }
-                System.out.print(bodyToAdd+"\n\n");
+                Logger.log("Found scan:" +bodyToAdd+"\n\n");
                 BodyMutableTreeNode bodyMutableTreeNode = new BodyMutableTreeNode(bodyToAdd);
                 ((DefaultMutableTreeNode)((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).getFirstChild()).add(bodyMutableTreeNode);
                 JTree jtree = ((JTree)componentHashMap.get("bodiesOutput"));
