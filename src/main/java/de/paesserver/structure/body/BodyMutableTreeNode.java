@@ -3,6 +3,7 @@ package de.paesserver.structure.body;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Iterator;
 
@@ -111,6 +112,12 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
                 ((BodyMutableTreeNode)treeNode).correctParentsForChildren();
             }
         }
+    }
 
+    public void sortChildren(){
+        if(children != null) {
+            children.stream().parallel().forEach(s -> ((BodyMutableTreeNode)s).sortChildren());
+            children.sort(Comparator.comparing(Object::toString));
+        }
     }
 }

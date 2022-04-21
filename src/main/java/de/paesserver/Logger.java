@@ -61,7 +61,10 @@ public class Logger {
             ANSI_BRIGHT_BG_BLACK, ANSI_BRIGHT_BG_RED, ANSI_BRIGHT_BG_GREEN, ANSI_BRIGHT_BG_YELLOW,
             ANSI_BRIGHT_BG_BLUE, ANSI_BRIGHT_BG_PURPLE, ANSI_BRIGHT_BG_CYAN, ANSI_BRIGHT_BG_WHITE };
 
+    final static boolean ACTIVE = false;
     public static void logWithDepth(DefaultMutableTreeNode treeNode,String message){
+        if(!ACTIVE)
+            return;
         BodyMutableTreeNode bodyMutableTreeNode = (BodyMutableTreeNode) treeNode;
         int limit = 0;
         if(bodyMutableTreeNode.body != null)
@@ -71,13 +74,19 @@ public class Logger {
         System.out.print(message+"\n");
     }
     public static void log(String message){
+        if(!ACTIVE)
+            return;
         System.out.println(ANSI_CYAN+message+ANSI_RESET);
     }
     public static void log(Object object){
+        if(!ACTIVE)
+            return;
         System.out.println(ANSI_CYAN+object+ANSI_RESET);
     }
 
     public static void logWithDepth(DefaultMutableTreeNode treeNode,Object object){
+        if(!ACTIVE)
+            return;
         logWithDepth(treeNode,object.toString());
     }
 }

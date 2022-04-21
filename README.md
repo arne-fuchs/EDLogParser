@@ -24,12 +24,15 @@ Go into your <br>
 `drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
 and but the EDLogPrser-X.X.jar into the folder.
 
-
-
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
 Log names build like the following: netLog.DATE.log where DATE is parsed like YYDDMM\*. * is unkown time.
 PART is the part of the journal (had only 01 in my case).
+
+## Thanks to
+https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to EDAssets") for the many assets they provide.
+
+<hr>
 
 What it need to be displayed:
 { "timestamp":"2022-02-21T17:52:41Z", "event":"Location", "Docked":false, "Taxi":false, "Multicrew":false, "StarSystem":"Plaa Eurk WM-W c1-9", "SystemAddress":2554331140626, "StarPos":[-2033.40625,-15.59375,-970.40625], "SystemAllegiance":"", "SystemEconomy":"$economy_None;", "SystemEconomy_Localised":"n/v", "SystemSecondEconomy":"$economy_None;", "SystemSecondEconomy_Localised":"n/v", "SystemGovernment":"$government_None;", "SystemGovernment_Localised":"n/v", "SystemSecurity":"$GAlAXY_MAP_INFO_state_anarchy;", "SystemSecurity_Localised":"Anarchie", "Population":0, "Body":"Plaa Eurk WM-W c1-9 A", "BodyID":1, "BodyType":"Star" }<br />

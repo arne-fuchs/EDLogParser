@@ -10,10 +10,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Vector;
+import java.util.*;
 
 public class SystemMutableTreeNode extends BodyMutableTreeNode {
     final public StarSystem starSystem;
@@ -27,12 +24,21 @@ public class SystemMutableTreeNode extends BodyMutableTreeNode {
 
     @Override
     public void add(MutableTreeNode node) {
+        DefaultMutableTreeNode defaultMutableTreeNode = (DefaultMutableTreeNode) node;
+        insertionProgress(defaultMutableTreeNode);
+        if(children != null){
+            children.stream().parallel().forEach(s -> ((BodyMutableTreeNode)s).sortChildren());
+            children.sort(Comparator.comparing(Object::toString));
+        }
+        Logger.logWithDepth(defaultMutableTreeNode,"Done adding body");
+    }
+
+    private void insertionProgress(MutableTreeNode node){
         //FIXME Needs logical change because bodies doesn't come pre-sorted. The Info needs to be shown directly
         assert node.toString().length() != 0;
         Logger.logWithDepth((DefaultMutableTreeNode) node,"----------------------------------------------------------------------------------");
         Logger.logWithDepth((DefaultMutableTreeNode) node,"Started insertion process for node " + node);
         Logger.logWithDepth((DefaultMutableTreeNode) node,"----------------------------------------------------------------------------------");
-
         node.setUserObject(node.toString());
         ((DefaultMutableTreeNode) node).setAllowsChildren(true);
 

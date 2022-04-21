@@ -1,11 +1,15 @@
 package de.paesserver.frames;
 
 import de.paesserver.journalLog.JournalLogRunner;
+import de.paesserver.structure.SystemMutableTreeNode;
+import de.paesserver.structure.body.BodyMutableTreeNode;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
 import java.io.File;
 import java.util.HashMap;
@@ -55,7 +59,7 @@ public class LogPane implements MenuListener {
         textAreaHashMap.put("logOutput",logOutput);
 
         //Planets
-        DefaultMutableTreeNode system = new DefaultMutableTreeNode("System");
+        DefaultMutableTreeNode system = new DefaultMutableTreeNode("Milky Way");
         system.setAllowsChildren(true);
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
@@ -66,6 +70,35 @@ public class LogPane implements MenuListener {
         constraints.gridy = 1;
         constraints.gridheight = 2;
         JTree tree = new JTree(system);
+        tree.setCellRenderer(new DefaultTreeCellRenderer(){
+            final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+            final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+            final private ImageIcon planetIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/planet.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+            final private ImageIcon markerIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Marker-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+
+
+            @Override
+            public Component getTreeCellRendererComponent(JTree tree,
+                                                          Object value, boolean selected, boolean expanded,
+                                                          boolean leaf, int row, boolean hasFocus) {
+                super.getTreeCellRendererComponent(tree, value, selected,expanded, leaf, row, hasFocus);
+                DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
+                ImageIcon icon = null;
+                if (node.equals(tree.getModel().getRoot())) {
+                    icon = galaxyIcon;
+                } else if (node instanceof SystemMutableTreeNode) {
+                    icon = systemIcon;
+                } else if(node instanceof BodyMutableTreeNode){
+                    icon = planetIcon;
+                }
+                else {
+                    icon = markerIcon;
+                }
+                setIcon(icon);
+                return this;
+            }
+
+        });
         container.add(tree,constraints);
         textAreaHashMap.put("bodiesOutput",tree);
 
