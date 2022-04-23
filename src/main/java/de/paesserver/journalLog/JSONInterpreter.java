@@ -6,17 +6,21 @@ import de.paesserver.frames.SystemPane;
 import de.paesserver.structure.*;
 import de.paesserver.structure.StarSystem;
 import de.paesserver.structure.body.*;
+import de.paesserver.structure.signal.body.BodySignal;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class JSONInterpreter {
 
     private final HashMap<String, Component> componentHashMap;
+    ArrayList<BodySignal[]> bodySignalsList = new ArrayList<>();
+    Body bodyToAdd;
 
     public JSONInterpreter(HashMap<String, Component> componentHashMap){
         this.componentHashMap = componentHashMap;
@@ -36,6 +40,9 @@ public class JSONInterpreter {
                 StarSystem starSystem = new StarSystem(jsonObject);
                 ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).add(new SystemMutableTreeNode(starSystem));
 
+                JTree systemJTree = ((JTree)componentHashMap.get("bodiesOutput"));
+                systemJTree.updateUI();
+
                 systemPane.setSuffix("systemName", starSystem.starSystem);
                 systemPane.setSuffix("allegiance", starSystem.systemAllegiance);
                 systemPane.setSuffix("economy", starSystem.systemEconomy_Localised);
@@ -43,11 +50,15 @@ public class JSONInterpreter {
                 systemPane.setSuffix("government", starSystem.systemGovernment_Localised);
                 systemPane.setSuffix("security", starSystem.systemSecurity_Localised);
                 systemPane.setSuffix("population", String.valueOf(starSystem.population));
+                systemPane.wipeSignals();
                 systemPane.updateText();
+                bodyPane.wipeText();
+
                 break;
             case "StartJump":
                 //if(jsonObject.get("JumpType").equals("Supercruise"))
                     //((JTextArea)componentHashMap.get("logOutput")).append("Entered Supercruise"+ "\n");
+                /*
                 if(jsonObject.get("JumpType").equals("Hyperspace")){
                     //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
                     ((JTree)componentHashMap.get("bodiesOutput")).removeAll();
@@ -56,6 +67,7 @@ public class JSONInterpreter {
                     systemPane.updateText();
                     //((JTextArea)componentHashMap.get("logOutput")).append("Jump has been initialised"+ "\n");
                 }
+                 */
                 break;
             case "SupercruiseExit":
                 //((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
@@ -84,9 +96,42 @@ public class JSONInterpreter {
                 //TODO Implement FSSAllBodiesFound
                 //((JTextArea)componentHashMap.get("logOutput")).append("All bodies discovered"+ "\n");
                 break;
+            case "SAAScanComplete":
+                //TODO Implement SAAScanComplete
+                break;
+            //{ "timestamp":"2022-02-13T23:07:21Z", "event":"SAAScanComplete", "BodyName":"Synuefe ZR-I b43-10 D 2", "SystemAddress":22671924274545, "BodyID":46, "ProbesUsed":4, "EfficiencyTarget":4 }
+
+            case "SAASignalsFound":
+
+                //{ "timestamp":"2022-02-13T23:07:21Z", "event":"SAASignalsFound", "BodyName":"Synuefe ZR-I b43-10 D 2", "SystemAddress":22671924274545, "BodyID":46,
+                // "Signals":[ { "Type":"$SAA_SignalType_Guardian;", "Type_Localised":"Guardian", "Count":4 },
+                //  { "Type":"$SAA_SignalType_Biological;", "Type_Localised":"Biologisch", "Count":1 },
+                //  { "Type":"$SAA_SignalType_Geological;", "Type_Localised":"Geologisch", "Count":3 },
+                //  { "Type":"$SAA_SignalType_Human;", "Type_Localised":"Menschlich", "Count":2 } ] }
+
+            case "FSSBodySignals":
+            //{ "timestamp":"2022-04-07T15:59:02Z", "event":"FSSBodySignals", "BodyName":"Eol Prou HG-X d1-519 4 a", "BodyID":25, "SystemAddress":17841151349011,
+                // "Signals":[
+                //  { "Type":"$SAA_SignalType_Biological;", "Type_Localised":"Biological", "Count":2 },
+                //  { "Type":"$SAA_SignalType_Geological;", "Type_Localised":"Geological", "Count":3 }
+                //  ] }
+
+            //TODO Implement FSSBodySignals
+                BodySignal[] portentialBodySignals = BodySignal.getBodySignals(jsonObject);
+                if(portentialBodySignals.length != 0){
+                    systemPane.addSignals(portentialBodySignals);
+                    if(portentialBodySignals[0].bodyID == bodyToAdd.bodyID){
+                        bodyToAdd.bodySignals = portentialBodySignals;
+                        bodyPane.updateText();
+                    }else
+                        bodySignalsList.add(portentialBodySignals);
+                }
+
+
+                break;
             case "Scan":
                 //TODO Implement Scan
-                Body bodyToAdd;
+
                 if(jsonObject.containsKey("StarType")){
                     //Star
                     bodyToAdd = new Star(jsonObject);
@@ -109,6 +154,18 @@ public class JSONInterpreter {
                 for(int i = 0; i < jtree.getRowCount();i++)
                     jtree.expandRow(i);
                 jtree.updateUI();
+
+                ArrayList<BodySignal[]> toRemove = new ArrayList<>();
+
+                bodySignalsList.forEach(bArray -> {
+                    if(bArray[0].bodyID == bodyToAdd.bodyID){
+                        bodyToAdd.bodySignals = bArray;
+                        toRemove.add(bArray);
+                        bodyPane.updateText();
+                    }
+                });
+
+                toRemove.forEach(bArray -> bodySignalsList.remove(bArray));
                 break;
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered

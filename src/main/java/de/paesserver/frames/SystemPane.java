@@ -1,8 +1,18 @@
 package de.paesserver.frames;
 
+import de.paesserver.structure.signal.body.BodySignal;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.MutableTreeNode;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class SystemPane {
     private final JTextArea textArea;
@@ -16,6 +26,8 @@ public class SystemPane {
     public StringPair population = new StringPair("Population");
     public StringPair economy = new StringPair("Economy");
     public StringPair secondEconomy = new StringPair("Second Economy");
+
+    ArrayList<BodySignal> bodySignalsList = new ArrayList<>();
 
     public DefaultMutableTreeNode systemTreeNode;
 
@@ -38,9 +50,30 @@ public class SystemPane {
     }
     public void updateText(){
         StringBuilder builder = new StringBuilder();
-        builder.append("---SystemInfo---");
+        builder.append("---System Info---");
         builder.append("\n");
         systemDataList.forEach(stringPair -> builder.append(stringPair.toString()).append("\n"));
+        builder.append("\n---Body Signals---\n");
+
+        bodySignalsList.stream().
+                collect(Collectors.groupingBy(
+                        bodySignal -> bodySignal.type_Localised,Collectors.maxBy(Comparator.comparingInt(bodySignal -> (int) bodySignal.count)))
+                ).forEach((s,body) ->
+                    builder.append("Max ").append(s).append(":\n").append(body.get().bodyName).append(": \t").append(body.get().count).append("\n")
+                );
+
+        builder.append("\n");
+
+        bodySignalsList.stream().
+                collect(Collectors.groupingBy(
+                bodySignal -> bodySignal.type_Localised,Collectors.summingLong(bodySignal -> bodySignal.count)
+        )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
+
+
+
+
+
+
         textArea.setText(builder.toString());
     }
 
@@ -61,5 +94,14 @@ public class SystemPane {
             case "secondEconomy": secondEconomy.suffix = suffix; break;
             default: java.lang.System.out.println("Couldn't find stringPair: " + key);
         }
+    }
+
+    public void addSignals(BodySignal[] bodySignalsArray){
+        bodySignalsList.addAll(Arrays.asList(bodySignalsArray));
+        updateText();
+    }
+
+    public void wipeSignals(){
+        bodySignalsList = new ArrayList<>();
     }
 }

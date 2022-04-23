@@ -14,7 +14,7 @@ public class Main {
             System.err.println( "Failed to initialize LaF" );
         }
         MainFrame mainFrame = new MainFrame("EDLogParser");
-        mainFrame.setSize(1000,800);
+        mainFrame.setSize(1420,900);
         mainFrame.setVisible(true);
     }
 }

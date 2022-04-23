@@ -1,6 +1,5 @@
 package de.paesserver.structure.body;
 
-import de.paesserver.structure.body.Body;
 import org.json.simple.JSONObject;
 
 public class Planet extends Body {
@@ -21,8 +20,8 @@ public class Planet extends Body {
     // Tidal locking between a pair of co-orbiting astronomical bodies occurs
     // when one of the objects reaches a state where there is no longer any net change in its rotation rate over the course of a complete orbit.
     final public boolean tidalLock;
-    final public String terrafromState;
-    final public String planetClass;
+    final public String terraformState;
+    final public PlanetClass planetClass;
     final public String atmosphere;
     final public String atmosphereType;
     final public String volcanism;
@@ -51,8 +50,8 @@ public class Planet extends Body {
     public Planet(JSONObject jsonObject) {
         super(jsonObject);
         tidalLock = (boolean) jsonObject.get("TidalLock");
-        terrafromState = (String) jsonObject.get("TerraformState");
-        planetClass = (String) jsonObject.get("PlanetClass");
+        terraformState = (String) jsonObject.get("TerraformState");
+        planetClass = PlanetClass.getBodyClass((String) jsonObject.get("PlanetClass"));
         atmosphere = (String) jsonObject.get("Atmosphere");
         atmosphereType = (String) jsonObject.get("AtmosphereType");
         volcanism = (String) jsonObject.get("Volcanism");

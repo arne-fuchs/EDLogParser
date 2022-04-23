@@ -17,10 +17,10 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.HashMap;
 
-public class LogPane implements MenuListener {
+public class LogFrame implements MenuListener {
     Container container;
     JournalLogRunner journalLogRunner;
-    public LogPane(Container container){
+    public LogFrame(Container container){
         this.container = container;
     }
 
@@ -33,9 +33,9 @@ public class LogPane implements MenuListener {
         //System info
         JTextArea systemInfo =  new JTextArea();
         systemInfo.setEditable(false);
-        systemInfo.setPreferredSize(new Dimension(100,480));
-        systemInfo.setMaximumSize(new Dimension(100,480));
-        systemInfo.setMinimumSize(new Dimension(100,480));
+        systemInfo.setPreferredSize(new Dimension(100,600));
+        systemInfo.setMaximumSize(new Dimension(100,600));
+        systemInfo.setMinimumSize(new Dimension(100,600));
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
@@ -43,21 +43,25 @@ public class LogPane implements MenuListener {
         container.add(systemInfo,constraints);
         textAreaHashMap.put("systemInfo",systemInfo);
 
-        //Log
+
+
+        //Planet Info
         JTextArea bodyInfo =  new JTextArea();
         bodyInfo.setAutoscrolls(true);
         bodyInfo.setEditable(false);
+
         bodyInfo.setPreferredSize(new Dimension(100,1));
         bodyInfo.setMaximumSize(new Dimension(100,1));
         bodyInfo.setMinimumSize(new Dimension(100,1));
         bodyInfo.setSize(new Dimension(100,1));
+
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         constraints.ipady = 40;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
+        constraints.gridx = 2;
+        constraints.gridy = 1;
         container.add(bodyInfo,constraints);
         textAreaHashMap.put("bodyInfo",bodyInfo);
 
@@ -113,18 +117,21 @@ public class LogPane implements MenuListener {
         JTextArea nonBodiesOutput =  new JTextArea();
         nonBodiesOutput.setAutoscrolls(true);
         nonBodiesOutput.setEditable(false);
+
         nonBodiesOutput.setPreferredSize(new Dimension(100,1));
         nonBodiesOutput.setMaximumSize(new Dimension(100,1));
         nonBodiesOutput.setMinimumSize(new Dimension(100,1));
         nonBodiesOutput.setSize(new Dimension(100,1));
+
+
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;
         constraints.weighty = 1.0;
         constraints.ipady = 40;
-        constraints.gridx = 2;
-        constraints.gridy = 1;
-        constraints.gridheight = 2;
+        constraints.gridx = 0;
+        constraints.gridy = 2;
+        constraints.gridheight = 1;
         container.add(nonBodiesOutput,constraints);
         textAreaHashMap.put("nonBodiesOutput",nonBodiesOutput);
 
@@ -136,6 +143,7 @@ public class LogPane implements MenuListener {
         }else{
             journalLogRunner.setHalt(false);
         }
+
 
         //Reset Button
         JButton resetButton =  new JButton("Reset Reader");
