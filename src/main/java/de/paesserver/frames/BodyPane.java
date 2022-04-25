@@ -1,9 +1,11 @@
 package de.paesserver.frames;
 
 import de.paesserver.structure.body.Planet;
+import de.paesserver.structure.body.PlanetClass;
 import de.paesserver.structure.signal.body.BodySignal;
 
 import javax.swing.*;
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class BodyPane {
@@ -54,27 +56,49 @@ public class BodyPane {
                 }
                 break;
             case WaterWorld:
-                //TODO Terraformable
-                if(planet.wasDiscovered){
-                    //FSS || FSS+DSS
-                    estEarn = 99747 ;
-                    eastMapEarn = 415613  ;
+                if("Terraformable".equals(planet.terraformState)){
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 268616;
+                        eastMapEarn = 1119231;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 698400  ;
+                        eastMapEarn = 3229773   ;
+                    }
                 }else {
-                    //FSS+FDD || FSS+FD+DSS
-                    estEarn = 259343 ;
-                    eastMapEarn = 1199337  ;
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 99747 ;
+                        eastMapEarn = 415613  ;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 259343 ;
+                        eastMapEarn = 1199337  ;
+                    }
                 }
                 break;
             case HighMetalContentPlanet:
-                //TODO Terraformable
-                if(planet.wasDiscovered){
-                    //FSS || FSS+DSS
-                    estEarn = 14070 ;
-                    eastMapEarn = 58624 ;
+                if("Terraformable".equals(planet.terraformState)){
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 163948;
+                        eastMapEarn = 683116 ;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 426264 ;
+                        eastMapEarn = 1971272;
+                    }
                 }else {
-                    //FSS+FDD || FSS+FD+DSS
-                    estEarn = 36581;
-                    eastMapEarn = 169171;
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 14070 ;
+                        eastMapEarn = 58624 ;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 36581;
+                        eastMapEarn = 169171;
+                    }
                 }
                 break;
             case IcyBody:
@@ -101,14 +125,26 @@ public class BodyPane {
                 break;
             case RockyBody:
                 //TODO Terraformable
-                if(planet.wasDiscovered){
-                    //FSS || FSS+DSS
-                    estEarn = 500;
-                    eastMapEarn = 1476;
+                if("Terraformable".equals(planet.terraformState)){
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 129504;
+                        eastMapEarn = 539601;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 336711;
+                        eastMapEarn = 1557130;
+                    }
                 }else {
-                    //FSS+FDD || FSS+FD+DSS
-                    estEarn = 1300;
-                    eastMapEarn = 4260;
+                    if(planet.wasDiscovered){
+                        //FSS || FSS+DSS
+                        estEarn = 500;
+                        eastMapEarn = 1476;
+                    }else {
+                        //FSS+FDD || FSS+FD+DSS
+                        estEarn = 1300;
+                        eastMapEarn = 4260;
+                    }
                 }
                 break;
             case RockyIceBody:
@@ -223,17 +259,19 @@ public class BodyPane {
                 break;
         }
 
+        DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
+
         StringBuilder stringBuilder = new StringBuilder("---" + planet.bodyName + "---" + "\n" +
-                "Body Class:     \t" + planet.planetClass + "\n" +
-                "Terraform State:\t" + planet.planetClass + "\n\n" +
+                "Body Class:     \t" + PlanetClass.getString(planet.planetClass) + "\n" +
+                "Terraform State:\t" + planet.terraformState + "\n\n" +
 
                 "Discovered:     \t" + planet.wasDiscovered + "\n" +
                 "Mapped:         \t" + planet.wasMapped + "\n" +
                 "Distance:       \t" + (long)planet.distanceFromArrivalLS + " LS\n" +
                 "Landable:       \t" + planet.landable + "\n\n" +
 
-                "Est. earnings:  \t" + estEarn + " Credits\n" +
-                "when mapped:    \t" + eastMapEarn + " Credits\n\n" +
+                "Est. earnings:  \t" + decimalFormat.format(estEarn) + " Credits\n" +
+                "when mapped:    \t" + decimalFormat.format(eastMapEarn) + " Credits\n\n" +
 
                 "Gravity:        \t" + planet.surfaceGravity/10 + " G\n" +
                 "Earth Masses:   \t" + planet.massEM + "\n" +
