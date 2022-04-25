@@ -16,5 +16,6 @@ public class Main {
         MainFrame mainFrame = new MainFrame("EDLogParser");
         mainFrame.setSize(1420,900);
         mainFrame.setVisible(true);
+        mainFrame.setIconImage(new ImageIcon("org.edassets/materials/Basic.png").getImage());
     }
 }
