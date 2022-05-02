@@ -16,7 +16,7 @@ public class SystemMutableTreeNode extends BodyMutableTreeNode {
     final public StarSystem starSystem;
 
     public SystemMutableTreeNode(StarSystem starSystem) {
-        super();
+        super(starSystem);
         this.starSystem = starSystem;
         this.setUserObject(starSystem.toString());
         this.setAllowsChildren(true);
@@ -104,8 +104,8 @@ public class SystemMutableTreeNode extends BodyMutableTreeNode {
         //And then so on... Floall QC-R b48-0 A A
 
         for(int i = 0; i < missingBodyCount;i++){
-            char imaginaryNodeBodyChar = diffWithNewNodeFromClosestChild.replace(starSystem.starSystem, "").trim().charAt(0);
-            String imaginaryNodeBodyName = closestTreeNode + " " + imaginaryNodeBodyChar;
+            String imaginaryNodeBodyString = removeSystemAndClusterName(diffWithNewNodeFromClosestChild).split(" ")[0];
+            String imaginaryNodeBodyName = closestTreeNode + " " + imaginaryNodeBodyString;
             BodyMutableTreeNode imaginaryNode = new BodyMutableTreeNode(new ImaginaryBody(imaginaryNodeBodyName));
 
             closestTreeNode.add(imaginaryNode);
@@ -123,9 +123,18 @@ public class SystemMutableTreeNode extends BodyMutableTreeNode {
     private MutableTreeNode getClosestNode(MutableTreeNode relativeNode){
         MutableTreeNode cloesestNode = this;
         Iterator<? extends TreeNode> iterator = cloesestNode.children().asIterator();
+        //Relativ:  Zejae PR-T b49-0 AB 4 c
+        //Fehler:   Zejae PR-T b49-0 A
+        //Correct:  Zejae PR-T b49-0
+
+        String[] rNodeParts = removeSystemAndClusterName(relativeNode.toString()).split(" ");
+        int depth = 0;
+
         while (iterator.hasNext()) {
             TreeNode itaredTreeNode = iterator.next();
-            if(relativeNode.toString().contains(itaredTreeNode.toString())){
+            String[] iNodeParts = removeSystemAndClusterName(itaredTreeNode.toString()).split(" ");
+            if(iNodeParts.length > depth && rNodeParts.length > depth && rNodeParts[depth].equals(iNodeParts[depth])){
+                depth++;
                 cloesestNode = (MutableTreeNode) itaredTreeNode;
                 iterator = cloesestNode.children().asIterator();
             }

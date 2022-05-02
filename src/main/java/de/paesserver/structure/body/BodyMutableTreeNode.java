@@ -1,5 +1,7 @@
 package de.paesserver.structure.body;
 
+import de.paesserver.structure.StarSystem;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -9,9 +11,11 @@ import java.util.Iterator;
 
 public class BodyMutableTreeNode extends DefaultMutableTreeNode {
     public Body body;
+    public StarSystem starSystem;
     public ImaginaryBody imaginaryBody;
     public BodyMutableTreeNode(Body body){
         this.body = body;
+        starSystem = null;
         imaginaryBody = null;
     }
 
@@ -20,17 +24,19 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
         this.imaginaryBody = imaginaryBody;
     }
 
-    public BodyMutableTreeNode(){
+    public BodyMutableTreeNode(StarSystem starSystem){
         this.body = null;
         this.imaginaryBody = null;
+        this.starSystem = starSystem;
     }
 
     @Override
     public String toString(){
-        assert this.body != null;
         if(body != null)
             return this.body.bodyName;
-        return this.imaginaryBody.toString();
+        if(imaginaryBody != null)
+            return this.imaginaryBody.toString();
+        return starSystem.toString();
     }
 
     @Override

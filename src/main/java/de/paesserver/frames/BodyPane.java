@@ -22,7 +22,8 @@ public class BodyPane {
     }
 
     public void updateText(){
-        setText(planet);
+        if(planet != null)
+            setText(planet);
     }
 
     public void wipeText(){
@@ -267,7 +268,7 @@ public class BodyPane {
 
                 "Discovered:     \t" + planet.wasDiscovered + "\n" +
                 "Mapped:         \t" + planet.wasMapped + "\n" +
-                "Distance:       \t" + (long)planet.distanceFromArrivalLS + " LS\n" +
+                "Distance:       \t" + decimalFormat.format((long)planet.distanceFromArrivalLS) + " LS\n" +
                 "Landable:       \t" + planet.landable + "\n\n" +
 
                 "Est. earnings:  \t" + decimalFormat.format(estEarn) + " Credits\n" +

@@ -70,10 +70,6 @@ public class SystemPane {
         )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
 
 
-
-
-
-
         textArea.setText(builder.toString());
     }
 

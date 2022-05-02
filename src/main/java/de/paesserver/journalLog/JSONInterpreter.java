@@ -29,12 +29,16 @@ public class JSONInterpreter {
     public void computeJSONObject(JSONObject jsonObject, SystemPane systemPane, BodyPane bodyPane){
 
         String event = (String) jsonObject.get("event");
+        Database database = DatabaseSingleton.getInstance();
 
         switch (event){
             //Will be called by loading the game
             case "Location":
             case "FSDJump":
                 //TODO Implement location
+
+                database.insertSystem(jsonObject);
+
                 ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).removeAllChildren();
                 //((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
                 StarSystem starSystem = new StarSystem(jsonObject);
@@ -117,20 +121,39 @@ public class JSONInterpreter {
                 //  ] }
 
             //TODO Implement FSSBodySignals
-                BodySignal[] portentialBodySignals = BodySignal.getBodySignals(jsonObject);
-                if(portentialBodySignals.length != 0){
-                    systemPane.addSignals(portentialBodySignals);
-                    if(portentialBodySignals[0].bodyID == bodyToAdd.bodyID){
-                        bodyToAdd.bodySignals = portentialBodySignals;
+                database.insertPlanetSignals(jsonObject);
+
+                BodySignal[] potentialBodySignals = BodySignal.getBodySignals(jsonObject);
+                if(potentialBodySignals.length != 0){
+                    systemPane.addSignals(potentialBodySignals);
+                    if(bodyToAdd != null && potentialBodySignals[0].bodyID == bodyToAdd.bodyID){
+                        bodyToAdd.bodySignals = potentialBodySignals;
                         bodyPane.updateText();
                     }else
-                        bodySignalsList.add(portentialBodySignals);
+                        bodySignalsList.add(potentialBodySignals);
                 }
 
 
                 break;
+            case "FSSSignalDiscovered":
+                //TODO Implement FSSSignalDiscovered
+                database.insertSystemSignal(jsonObject);
+                if(jsonObject.containsKey("SignalName_Localised"))
+                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName_Localised")+"\n");
+                else
+                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName")+"\n");
+                break;
             case "Scan":
                 //TODO Implement Scan
+
+                if(jsonObject.containsKey("StarType"))
+                    database.insertStar(jsonObject);
+                else
+                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster"))
+                        database.insertBeltCluster(jsonObject);
+                    else
+                        database.insertBody(jsonObject);
+
 
                 if(jsonObject.containsKey("StarType")){
                     //Star
@@ -166,13 +189,6 @@ public class JSONInterpreter {
                 });
 
                 toRemove.forEach(bArray -> bodySignalsList.remove(bArray));
-                break;
-            case "FSSSignalDiscovered":
-                //TODO Implement FSSSignalDiscovered
-                if(jsonObject.containsKey("SignalName_Localised"))
-                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName_Localised")+"\n");
-                else
-                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName")+"\n");
                 break;
             default:
         }

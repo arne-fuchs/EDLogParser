@@ -61,7 +61,7 @@ public class Logger {
             ANSI_BRIGHT_BG_BLACK, ANSI_BRIGHT_BG_RED, ANSI_BRIGHT_BG_GREEN, ANSI_BRIGHT_BG_YELLOW,
             ANSI_BRIGHT_BG_BLUE, ANSI_BRIGHT_BG_PURPLE, ANSI_BRIGHT_BG_CYAN, ANSI_BRIGHT_BG_WHITE };
 
-    final static boolean ACTIVE = false;
+    final static boolean ACTIVE = true;
     public static void logWithDepth(DefaultMutableTreeNode treeNode,String message){
         if(!ACTIVE)
             return;

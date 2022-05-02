@@ -58,16 +58,13 @@ public class JournalLogRunner implements Runnable{
                         //check if line is valid (it should be since in journal logs, there only is json data)
                         if(jsonObject != null){
                             interpreter.computeJSONObject(jsonObject, systemPane, bodyPane);
-                            System.out.println("\n");
-                            System.out.println(jsonObject.toJSONString());
-
                         }
                         else
                             java.lang.System.out.println("Invalid JSON line found: " + line);
                     }
                 }
                 synchronized (this) {
-                    this.wait(100);
+                    this.wait(30);
                 }
             }
             parser.closeReader();
