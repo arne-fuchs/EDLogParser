@@ -1,5 +1,5 @@
 # EDLogParser
-Log parser for the game Elite Dangerous.
+Log parser tool for the game Elite Dangerous.
 It collects information through logs and displays these on a graphical user interface.
 
 Beside the usual planet and system information it will also show:
