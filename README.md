@@ -1,5 +1,14 @@
 # EDLogParser
-Reads the log and gives the commander additional information
+Log parser for the game Elite Dangerous.
+It collects information through logs and displays these on a graphical user interface.
+
+Beside the usual planet and system information it will also show:
+* Planet with the most biological, geological, human, xeno signals within the system. So you don't have to remember which planet it was.
+* A nice tree with all the bodies (and in the future also signals)
+* All necesarry system information so you don't have to look for it in the map panel
+
+![image](https://user-images.githubusercontent.com/60095837/166445798-620072af-9cdc-492d-9f5c-f5f4fa5fc300.png)
+(On some devices the right panel's formation gets a bit messed up. It will be fixed)
 
 # IN DEVELOPMENT
 
@@ -22,7 +31,7 @@ Reads the log and gives the commander additional information
 
 Go into your <br>
 `drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
-and but the EDLogPrser-X.X.jar into the folder.
+and put the EDLogPrser-X.X.jar into the folder.
 
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
