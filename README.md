@@ -5,7 +5,6 @@ It collects information through logs and displays these on a graphical user inte
 Beside the usual planet and system information it will also show:
 * Planet with the most biological, geological, human, xeno signals within the system. So you don't have to remember which planet it was.
 * A nice tree with all the bodies (and in the future also signals)
-* All necesarry system information so you don't have to look for it in the map panel
 
 ![image](https://user-images.githubusercontent.com/60095837/166445798-620072af-9cdc-492d-9f5c-f5f4fa5fc300.png)
 (On some devices the right panel's formation gets a bit messed up. It will be fixed)
@@ -49,5 +48,5 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 * About and help tabs are not implemented yet
 * Clicking on a planet in the tree doesn't show information about it... yet
 
-## Next Scope
+## Current Scope
 * Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain
