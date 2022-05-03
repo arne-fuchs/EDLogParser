@@ -36,6 +36,8 @@ public class LogFrame implements MenuListener {
         systemInfo.setPreferredSize(new Dimension(100,600));
         systemInfo.setMaximumSize(new Dimension(100,600));
         systemInfo.setMinimumSize(new Dimension(100,600));
+        systemInfo.setFont(Font.getFont("Liberation Mono"));
+        
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
@@ -54,6 +56,7 @@ public class LogFrame implements MenuListener {
         bodyInfo.setMaximumSize(new Dimension(100,1));
         bodyInfo.setMinimumSize(new Dimension(100,1));
         bodyInfo.setSize(new Dimension(100,1));
+        bodyInfo.setFont(Font.getFont("Liberation Mono"));
 
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
@@ -80,6 +83,8 @@ public class LogFrame implements MenuListener {
         tree.setPreferredSize(new Dimension(250,1));
         tree.setMinimumSize(new Dimension(250,1));
         tree.setMaximumSize(new Dimension(250,1));
+        tree.setFont(Font.getFont("Liberation Mono"));
+
         tree.setCellRenderer(new DefaultTreeCellRenderer(){
             final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
             final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
@@ -121,6 +126,7 @@ public class LogFrame implements MenuListener {
         nonBodiesOutput.setMaximumSize(new Dimension(100,1));
         nonBodiesOutput.setMinimumSize(new Dimension(100,1));
         nonBodiesOutput.setSize(new Dimension(100,1));
+        nonBodiesOutput.setFont(Font.getFont("Liberation Mono"));
 
 
         constraints = new GridBagConstraints();
@@ -146,6 +152,8 @@ public class LogFrame implements MenuListener {
 
         //Reset Button
         JButton resetButton =  new JButton("Reset Reader");
+        resetButton.setFont(Font.getFont("Liberation Mono"));
+
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;

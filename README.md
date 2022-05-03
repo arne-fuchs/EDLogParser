@@ -43,8 +43,8 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 <hr>
 
 ## Known Issues:
-* "Reset Reader" button doesn't work anymore since the database has been added
-* The planet's information panel formation can mess up on some devices
+* [FIXED IN UPCOMING VERSION] "Reset Reader" button doesn't work anymore since the database has been added
+* [*SHOULD* BE FIXED IN UPCOMING VERSION]The planet's information panel formation can mess up on some devices
 * About and help tabs are not implemented yet
 * Clicking on a planet in the tree doesn't show information about it... yet
 
