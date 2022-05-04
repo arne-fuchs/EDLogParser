@@ -4,7 +4,7 @@ import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
 
 public class ImaginaryBody {
-    final String bodyName;
+    final public String bodyName;
     public ImaginaryBody(String bodyName){
         this.bodyName = bodyName;
     }

@@ -1,20 +1,24 @@
 package de.paesserver.frames;
 
-import de.paesserver.Logger;
 import de.paesserver.journalLog.JournalLogRunner;
 import de.paesserver.structure.SystemMutableTreeNode;
+import de.paesserver.structure.body.BeltCluster;
 import de.paesserver.structure.body.BodyMutableTreeNode;
+import de.paesserver.structure.body.Planet;
+import de.paesserver.structure.body.Star;
 
 import javax.swing.*;
 import javax.swing.event.MenuEvent;
 import javax.swing.event.MenuListener;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.TreePath;
 
 import java.awt.*;
 import java.io.File;
 
-import java.util.Arrays;
 import java.util.HashMap;
 
 public class LogFrame implements MenuListener {
@@ -37,7 +41,7 @@ public class LogFrame implements MenuListener {
         systemInfo.setMaximumSize(new Dimension(100,600));
         systemInfo.setMinimumSize(new Dimension(100,600));
         systemInfo.setFont(Font.getFont("Liberation Mono"));
-        
+
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
@@ -85,6 +89,24 @@ public class LogFrame implements MenuListener {
         tree.setMaximumSize(new Dimension(250,1));
         tree.setFont(Font.getFont("Liberation Mono"));
 
+        //event listener for clicking on a planet
+        tree.addTreeSelectionListener(event -> {
+
+            TreePath treePath = event.getNewLeadSelectionPath();
+            if(!(treePath.getLastPathComponent() instanceof BodyMutableTreeNode))
+                return;
+            BodyMutableTreeNode bodyMutableTreeNode = (BodyMutableTreeNode) treePath.getLastPathComponent();
+            if(bodyMutableTreeNode.body instanceof Planet)
+                journalLogRunner.bodyPane.setTextForPlanet((Planet) bodyMutableTreeNode.body);
+            else if (bodyMutableTreeNode.body instanceof Star)
+                journalLogRunner.bodyPane.setTextforStar((Star) bodyMutableTreeNode.body);
+                else if (bodyMutableTreeNode.body instanceof BeltCluster)
+                        journalLogRunner.bodyPane.setTextForBeltCluster((BeltCluster) bodyMutableTreeNode.body);
+                    else if (bodyMutableTreeNode.imaginaryBody != null)
+                        journalLogRunner.bodyPane.setTextForImaginary(bodyMutableTreeNode.imaginaryBody);
+        });
+
+        //Set icons in tree
         tree.setCellRenderer(new DefaultTreeCellRenderer(){
             final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
             final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));

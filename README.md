@@ -44,9 +44,10 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 
 ## Known Issues:
 * [FIXED IN UPCOMING VERSION] "Reset Reader" button doesn't work anymore since the database has been added
-* [*SHOULD* BE FIXED IN UPCOMING VERSION]The planet's information panel formation can mess up on some devices
+* [*SHOULD* BE FIXED IN UPCOMING VERSION] The planet's information panel formation can mess up on some devices
 * About and help tabs are not implemented yet
-* Clicking on a planet in the tree doesn't show information about it... yet
+* [FIXED IN UPCOMING VERSION] Clicking on a planet in the tree doesn't show information about it... yet
+* Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
 
 ## Current Scope
 * Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain

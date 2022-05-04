@@ -157,7 +157,9 @@ public class JSONInterpreter {
 
                 if(jsonObject.containsKey("StarType")){
                     //Star
-                    bodyToAdd = new Star(jsonObject);
+                    Star star = new Star(jsonObject);
+                    bodyToAdd = star;
+                    bodyPane.setTextforStar(star);
 
                 }else{
                     if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){

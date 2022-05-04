@@ -18,8 +18,8 @@ public class JournalLogRunner implements Runnable{
     public final JournalLogParser parser;
     public final JSONInterpreter interpreter;
 
-    private SystemPane systemPane;
-    private BodyPane bodyPane;
+    public SystemPane systemPane;
+    public BodyPane bodyPane;
 
     public JournalLogRunner(HashMap<String, Component> componentHashMap,DefaultMutableTreeNode defaultMutableTreeNode) {
         this.componentHashMap = componentHashMap;
