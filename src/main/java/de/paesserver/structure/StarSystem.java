@@ -30,9 +30,6 @@ public class StarSystem {
 
 
     public StarSystem(JSONObject jsonObject){
-        System.out.println("\nInitializing StarSystem");
-        System.out.println(jsonObject.toJSONString());
-
         starSystem = (String) jsonObject.get("StarSystem");
         systemAddress = (long) jsonObject.get("SystemAddress");
 

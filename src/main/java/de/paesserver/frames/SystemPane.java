@@ -55,21 +55,24 @@ public class SystemPane {
         systemDataList.forEach(stringPair -> builder.append(stringPair.toString()).append("\n"));
         builder.append("\n---Body Signals---\n");
 
-        bodySignalsList.stream().
-                collect(Collectors.groupingBy(
-                        bodySignal -> bodySignal.type_Localised,Collectors.maxBy(Comparator.comparingInt(bodySignal -> (int) bodySignal.count)))
-                ).forEach((s,body) ->
-                    builder.append("Max ").append(s).append(":\n").append(body.get().bodyName).append(": \t").append(body.get().count).append("\n")
-                );
-
-        builder.append("\n");
-
-        bodySignalsList.stream().
-                collect(Collectors.groupingBy(
-                bodySignal -> bodySignal.type_Localised,Collectors.summingLong(bodySignal -> bodySignal.count)
-        )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
+        if(!bodiesCount.suffix.equals("n/a")){
+            bodySignalsList.stream().
+                    collect(Collectors.groupingBy(
+                            bodySignal -> bodySignal.type_Localised,Collectors.maxBy(Comparator.comparingInt(bodySignal -> (int) bodySignal.count)))
+                    ).forEach((s,body) ->
+                            builder.append("Max ").append(s).append(":\n").append(body.isPresent() ? body.get().bodyName : "Unknown Body").append(": \t").append(body.map(signal -> signal.count).orElse(0L)).append("\n")
+                    );
 
 
+            builder.append("\n");
+
+            bodySignalsList.stream().
+                    collect(Collectors.groupingBy(
+                            bodySignal -> bodySignal.type_Localised,Collectors.summingLong(bodySignal -> bodySignal.count)
+                    )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
+
+
+        }
         textArea.setText(builder.toString());
     }
 

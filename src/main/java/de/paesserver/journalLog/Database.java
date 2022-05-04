@@ -337,7 +337,7 @@ public class Database {
             for (Object object : jsonArray) {
                 JSONObject signal = (JSONObject) object;
                 statement.setString(6, signal.get("Type").toString());
-                statement.setString(7, signal.get("Type_Localised").toString());
+                statement.setString(7, signal.containsKey("Type_Localised") ? signal.get("Type_Localised").toString() : null);
                 statement.setLong(8, (long) signal.get("Count"));
 
                 statement.executeUpdate();
@@ -391,8 +391,8 @@ public class Database {
 
             statement.setString(1, jsonObject.get("timestamp").toString());
             statement.setString(2, jsonObject.get("event").toString());
-            statement.setLong(3, jsonObject.get("Taxi").toString().equals("false") ? 0 : 1);
-            statement.setLong(4, jsonObject.get("Multicrew").toString().equals("false") ? 0 : 1);
+            statement.setLong(3, jsonObject.containsKey("Taxi") ? (jsonObject.get("Taxi").toString().equals("false") ? 0 : 1) : 0);
+            statement.setLong(4, jsonObject.containsKey("Multicrew") ? (jsonObject.get("Multicrew").toString().equals("false") ? 0 : 1) : 0);
             statement.setString(5, jsonObject.get("StarSystem").toString());
             statement.setString(6, jsonObject.get("SystemAddress").toString());
             statement.setString(7, jsonObject.get("StarPos").toString());
