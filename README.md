@@ -44,7 +44,7 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 
 ## Known Issues and todos:
 * Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
-* Missing *good* assets for ssteroid belts
+* Missing *good* assets for asteroid belts
 * There are a bunch of null pointers internally. I don't know where they come from. They scare me. Please send help.
 ## Current Scope
 * Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain
