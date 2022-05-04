@@ -10,6 +10,8 @@ public class MainFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         addComponents(getContentPane());
         setVisible(true);
+        setIconImage(new ImageIcon("org.edassets/materials/Basic.png").getImage());
+        setName("EDLogParser");
     }
 
     private void addComponents(Container container) {

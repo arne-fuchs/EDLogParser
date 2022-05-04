@@ -48,7 +48,7 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 * About and help tabs are not implemented yet
 * [FIXED IN UPCOMING VERSION] Clicking on a planet in the tree doesn't show information about it... yet
 * Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
-* Missing *good* assets for Stars and Asteroid belts
+* Missing *good* assets for ssteroid belts
 
 ## Current Scope
 * Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain
