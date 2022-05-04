@@ -109,10 +109,13 @@ public class LogFrame implements MenuListener {
         //Set icons in tree
         tree.setCellRenderer(new DefaultTreeCellRenderer(){
             final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
-            final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+            final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/orrery_map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
             final private ImageIcon planetIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/planet.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
             final private ImageIcon markerIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Marker-galaxy-map.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
 
+            final private ImageIcon starIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/star.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
+
+            final private ImageIcon asteroidIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/asteroids.png").getImage().getScaledInstance(15,15,java.awt.Image.SCALE_SMOOTH));
 
             @Override
             public Component getTreeCellRendererComponent(JTree tree,
@@ -126,7 +129,13 @@ public class LogFrame implements MenuListener {
                 } else if (node instanceof SystemMutableTreeNode) {
                     icon = systemIcon;
                 } else if(node instanceof BodyMutableTreeNode){
-                    icon = planetIcon;
+                    BodyMutableTreeNode bodyMutableTreeNode = (BodyMutableTreeNode) node;
+                    if(bodyMutableTreeNode.body instanceof Star)
+                        icon = starIcon;
+                    else if (bodyMutableTreeNode.body instanceof Planet)
+                        icon = planetIcon;
+                    else if (bodyMutableTreeNode.body instanceof BeltCluster)
+                        icon = asteroidIcon;
                 }
                 else {
                     icon = markerIcon;

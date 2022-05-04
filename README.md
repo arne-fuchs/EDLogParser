@@ -30,7 +30,7 @@ Beside the usual planet and system information it will also show:
 
 Go into your <br>
 `drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
-and put the EDLogPrser-X.X.jar into the folder as well as the org.edassets folder.
+and put the EDLogPrser-X.X.jar into the folder as well as the org.edassets and de.paesserver folder.
 
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
@@ -42,12 +42,13 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 
 <hr>
 
-## Known Issues:
+## Known Issues and todos:
 * [FIXED IN UPCOMING VERSION] "Reset Reader" button doesn't work anymore since the database has been added
 * [*SHOULD* BE FIXED IN UPCOMING VERSION] The planet's information panel formation can mess up on some devices
 * About and help tabs are not implemented yet
 * [FIXED IN UPCOMING VERSION] Clicking on a planet in the tree doesn't show information about it... yet
 * Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
+* Missing *good* assets for Stars and Asteroid belts
 
 ## Current Scope
 * Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain

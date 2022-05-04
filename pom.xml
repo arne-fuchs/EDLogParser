@@ -74,10 +74,11 @@
                 <targetPath>..</targetPath>
             </resource>
             <resource>
-                <directory>src/main/resources/org.edassets</directory>
+                <directory>src/main/resources</directory>
                 <filtering>false</filtering>
                 <includes>
-                    <include>*</include>
+                    <include>org.edassets</include>
+                    <include>de.paesserver</include>
                 </includes>
                 <!-- relative to target/classes
                      i.e. ${project.build.outputDirectory} -->
