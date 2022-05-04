@@ -30,7 +30,7 @@ Beside the usual planet and system information it will also show:
 
 Go into your <br>
 `drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
-and put the EDLogPrser-X.X.jar into the folder.
+and put the EDLogPrser-X.X.jar into the folder as well as the org.edassets folder.
 
 Location of journal logs:
 %USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
