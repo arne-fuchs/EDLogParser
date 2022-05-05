@@ -228,6 +228,7 @@ public class Database {
 
     public void insertBody(JSONObject jsonObject) {
         Logger.log(jsonObject.toJSONString());
+        System.out.println(jsonObject.toJSONString());
 
         String query = "INSERT INTO PLANET(timestamp,event,ScanType,BodyName,BodyID,Parents,StarSystem,SystemAddress,DistanceFromArrivalLS," +
                 "TidalLock,TerraformState,PlanetClass,Atmosphere,AtmosphereType,AtmosphereComposition,Volcanism,MassEM,Radius,SurfaceGravity," +
@@ -280,6 +281,7 @@ public class Database {
             statement.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(jsonObject.toJSONString());
             throw new RuntimeException(e);
         }
 
@@ -314,6 +316,7 @@ public class Database {
             statement.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(jsonObject.toJSONString());
             throw new RuntimeException(e);
         }
     }
@@ -344,6 +347,7 @@ public class Database {
             }
 
         } catch (SQLException e) {
+            System.out.println(jsonObject.toJSONString());
             throw new RuntimeException(e);
         }
     }
@@ -373,6 +377,7 @@ public class Database {
             statement.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(jsonObject.toJSONString());
             throw new RuntimeException(e);
         }
     }
@@ -424,6 +429,7 @@ public class Database {
             statement.executeUpdate();
 
         } catch (SQLException e) {
+            System.out.println(jsonObject.toJSONString());
             throw new RuntimeException(e);
         }
     }

@@ -151,8 +151,11 @@ public class JSONInterpreter {
                 else
                     if(((String)jsonObject.get("BodyName")).contains("Belt Cluster"))
                         database.insertBeltCluster(jsonObject);
-                    else
-                        database.insertBody(jsonObject);
+                    else if(((String)jsonObject.get("BodyName")).contains("Ring"))
+                            return;
+                        //TODO implement ring
+                        else
+                            database.insertBody(jsonObject);
 
 
                 if(jsonObject.containsKey("StarType")){
@@ -166,10 +169,15 @@ public class JSONInterpreter {
                         //Belt Cluster
                         bodyToAdd = new BeltCluster(jsonObject);
                     }else {
-                        //Planet
-                        Planet planet = new Planet(jsonObject);
-                        bodyToAdd = planet;
-                        bodyPane.setTextForPlanet(planet);
+                        if(((String)jsonObject.get("BodyName")).contains("Ring"))
+                        //TODO implement ring
+                            return;
+                        else {
+                            //Planet
+                            Planet planet = new Planet(jsonObject);
+                            bodyToAdd = planet;
+                            bodyPane.setTextForPlanet(planet);
+                        }
                     }
                 }
                 Logger.log("Found scan:" +bodyToAdd+"\n\n");
