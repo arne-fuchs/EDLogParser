@@ -6,8 +6,7 @@ Beside the usual planet and system information it will also show:
 * Planet with the most biological, geological, human, xeno signals within the system. So you don't have to remember which planet it was.
 * A nice tree with all the bodies (and in the future also signals)
 
-![image](https://user-images.githubusercontent.com/60095837/166445798-620072af-9cdc-492d-9f5c-f5f4fa5fc300.png)
-(On some devices the right panel's formation gets a bit messed up. It will be fixed)
+![image](https://user-images.githubusercontent.com/60095837/166691494-281c07ae-64cf-4f0f-b118-9f20b9faa600.png)
 
 # IN DEVELOPMENT
 
