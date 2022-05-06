@@ -1,11 +1,9 @@
-package de.paesserver;
-
 import com.formdev.flatlaf.FlatDarkLaf;
 import de.paesserver.frames.MainFrame;
 
 import javax.swing.*;
 
-public class Main {
+public class EDLogParser {
     public static void main(String[] args){
         //Creating Frame
         try {

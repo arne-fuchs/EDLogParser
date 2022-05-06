@@ -60,18 +60,17 @@ public class SystemInfo {
 
         bodySignalsList.stream().
                 collect(Collectors.groupingBy(
-                        bodySignal -> bodySignal.type_Localised,Collectors.maxBy(Comparator.comparingInt(bodySignal -> (int) bodySignal.count)))
-                ).forEach((s,body) ->
-                        builder.append("Max ").append(s).append(":\n").append(body.isPresent() ? body.get().bodyName : "Unknown Body").append(": \t").append(body.map(signal -> signal.count).orElse(0L)).append("\n")
-                );
-
+                        bodySignal -> bodySignal.type_Localised,Collectors.summingLong(bodySignal -> bodySignal.count)
+                )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
 
         builder.append("\n");
 
         bodySignalsList.stream().
                 collect(Collectors.groupingBy(
-                        bodySignal -> bodySignal.type_Localised,Collectors.summingLong(bodySignal -> bodySignal.count)
-                )).forEach((s,l) -> builder.append("Total ").append(s).append(":\t").append(l).append("\n"));
+                        bodySignal -> bodySignal.type_Localised,Collectors.maxBy(Comparator.comparingInt(bodySignal -> (int) bodySignal.count)))
+                ).forEach((s,body) ->
+                        builder.append("Max ").append(s).append(":\n").append(body.isPresent() ? body.get().bodyName : "Unknown Body").append(": \t").append(body.map(signal -> signal.count).orElse(0L)).append("\n")
+                );
 
 
         LogFrameComponentsSingleton.getSystemInfoTextArea().setText(builder.toString());

@@ -1,8 +1,11 @@
 package de.paesserver.frames.logframe;
 
 import de.paesserver.frames.logframe.components.SystemTree;
+import de.paesserver.structure.body.Body;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 
 /**
@@ -34,10 +37,10 @@ public class LogFrameComponentsSingleton {
             planetInfoTextArea.setAutoscrolls(true);
             planetInfoTextArea.setEditable(false);
 
-            planetInfoTextArea.setPreferredSize(new Dimension(100,1000));
-            planetInfoTextArea.setMaximumSize(new Dimension(100,1000));
-            planetInfoTextArea.setMinimumSize(new Dimension(100,1000));
-            planetInfoTextArea.setSize(new Dimension(100,1000));
+            planetInfoTextArea.setPreferredSize(new Dimension(100,600));
+            planetInfoTextArea.setMaximumSize(new Dimension(100,600));
+            planetInfoTextArea.setMinimumSize(new Dimension(100,600));
+            planetInfoTextArea.setSize(new Dimension(100,600));
             planetInfoTextArea.setFont(globalFont);
         }
         return planetInfoTextArea;

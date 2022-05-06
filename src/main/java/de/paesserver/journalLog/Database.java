@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class Database {
 
-    Connection databaseConnection = null;
+    public Connection databaseConnection = null;
 
     public Database() {
         try {
@@ -130,7 +130,8 @@ public class Database {
                     "Type TEXT, " +
                     "Type_Localised TEXT, " +
                     "Count INTEGER, " +
-                    "FOREIGN KEY (Type) REFERENCES PLANET(BodyName)" +
+                    "PRIMARY KEY (BodyName,Type)" +
+                    //"FOREIGN KEY (Type) REFERENCES PLANET(BodyName)" +
                     ");";
 
             statement.executeUpdate(sql);

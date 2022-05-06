@@ -38,9 +38,22 @@ public class LogFrame implements MenuListener {
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
         constraints.gridy = 1;
+        constraints.weightx = 1;
+        constraints.weighty = 0.7;
+        constraints.gridheight = 2;
         container.add(systemInfo,constraints);
 
+        //Signals
+        JTextArea nonBodiesOutput = LogFrameComponentsSingleton.getSignalTextArea();
 
+        constraints = new GridBagConstraints();
+        constraints.fill = GridBagConstraints.BOTH;
+        constraints.gridx = 0;
+        constraints.gridy = 3;
+        constraints.weightx = 1.0;
+        constraints.weighty = 0.8;
+        constraints.gridheight = 1;
+        container.add(nonBodiesOutput,constraints);
 
         //Planet Info
         JTextArea bodyInfo = LogFrameComponentsSingleton.getPlanetInfoTextArea();
@@ -52,6 +65,7 @@ public class LogFrame implements MenuListener {
         constraints.ipady = 40;
         constraints.gridx = 2;
         constraints.gridy = 1;
+        constraints.gridheight = 3;
         container.add(bodyInfo,constraints);
 
         //Planets
@@ -62,23 +76,10 @@ public class LogFrame implements MenuListener {
         constraints.ipady = 40;
         constraints.gridx = 1;
         constraints.gridy = 1;
-        constraints.gridheight = 2;
+        constraints.gridheight = 3;
         JTree tree = LogFrameComponentsSingleton.getSystemTree();
 
         container.add(tree,constraints);
-
-        //Signals
-        JTextArea nonBodiesOutput = LogFrameComponentsSingleton.getSignalTextArea();
-
-        constraints = new GridBagConstraints();
-        constraints.fill = GridBagConstraints.BOTH;
-        constraints.weightx = 1.0;
-        constraints.weighty = 1.0;
-        constraints.ipady = 40;
-        constraints.gridx = 0;
-        constraints.gridy = 2;
-        constraints.gridheight = 1;
-        container.add(nonBodiesOutput,constraints);
 
         //Creating LogParser and giving it the textArea, where it can write into
         if(journalLogRunner == null){
@@ -97,7 +98,7 @@ public class LogFrame implements MenuListener {
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.gridx = 0;
-        constraints.gridy = 3;
+        constraints.gridy = 4;
         constraints.gridwidth = 3;
 
         resetButton.addActionListener(a -> {

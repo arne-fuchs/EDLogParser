@@ -1,9 +1,14 @@
 package de.paesserver.frames.logframe.components;
 
 import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
+import de.paesserver.journalLog.Database;
+import de.paesserver.journalLog.DatabaseSingleton;
 import de.paesserver.structure.body.*;
 import de.paesserver.structure.signal.body.BodySignal;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
@@ -288,10 +293,17 @@ public class BodyInfo {
 
                 "---Body Signals---" + "\n");
 
-        for(BodySignal bodySignal : planet.bodySignals){
-            stringBuilder.append("\n")
-                    .append(bodySignal.type_Localised).append(":\t").append(bodySignal.count);
+        String query = "SELECT * FROM BODYSIGNAL WHERE BodyName = ?";
+        try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
+            statement.setString(1,planet.bodyName);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                stringBuilder.append("\n").append(resultSet.getString("Type_Localised")).append(":\t").append(resultSet.getLong("Count"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+
         LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder.toString());
     }
 

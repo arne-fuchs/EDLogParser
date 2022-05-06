@@ -110,17 +110,12 @@ public class JSONInterpreter {
 
             //TODO Implement FSSBodySignals
                 database.insertPlanetSignals(jsonObject);
+                BodyInfo.updateText();
 
                 BodySignal[] potentialBodySignals = BodySignal.getBodySignals(jsonObject);
                 if(potentialBodySignals.length != 0){
                     systemInfo.addSignals(potentialBodySignals);
-                    if(bodyToAdd != null && potentialBodySignals[0].bodyID == bodyToAdd.bodyID){
-                        bodyToAdd.bodySignals = potentialBodySignals;
-                        BodyInfo.updateText();
-                    }else
-                        bodySignalsList.add(potentialBodySignals);
                 }
-
 
                 break;
             case "FSSSignalDiscovered":
@@ -131,6 +126,7 @@ public class JSONInterpreter {
                 else
                     LogFrameComponentsSingleton.getSignalTextArea().append(jsonObject.get("SignalName")+"\n");
                 break;
+
             case "Scan":
                 //TODO Implement Scan
 
