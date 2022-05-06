@@ -34,10 +34,10 @@ public class LogFrameComponentsSingleton {
             planetInfoTextArea.setAutoscrolls(true);
             planetInfoTextArea.setEditable(false);
 
-            planetInfoTextArea.setPreferredSize(new Dimension(100,1));
-            planetInfoTextArea.setMaximumSize(new Dimension(100,1));
-            planetInfoTextArea.setMinimumSize(new Dimension(100,1));
-            planetInfoTextArea.setSize(new Dimension(100,1));
+            planetInfoTextArea.setPreferredSize(new Dimension(100,1000));
+            planetInfoTextArea.setMaximumSize(new Dimension(100,1000));
+            planetInfoTextArea.setMinimumSize(new Dimension(100,1000));
+            planetInfoTextArea.setSize(new Dimension(100,1000));
             planetInfoTextArea.setFont(globalFont);
         }
         return planetInfoTextArea;
