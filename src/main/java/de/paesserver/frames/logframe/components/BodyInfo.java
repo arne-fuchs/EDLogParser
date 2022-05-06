@@ -256,37 +256,38 @@ public class BodyInfo {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
 
         StringBuilder stringBuilder = new StringBuilder("---" + planet.bodyName + "---" + "\n" +
-                "Body Class:     \t" + PlanetClass.getString(planet.planetClass) + "\n" +
-                "Terraform State:\t" + planet.terraformState + "\n\n" +
+                "Body Class:     " + PlanetClass.getString(planet.planetClass) + "\n" +
+                "Terraform State:" + planet.terraformState + "\n\n" +
 
-                "Discovered:     \t" + planet.wasDiscovered + "\n" +
-                "Mapped:         \t" + planet.wasMapped + "\n" +
-                "Distance:       \t" + decimalFormat.format((long)planet.distanceFromArrivalLS) + " LS\n" +
-                "Landable:       \t" + planet.landable + "\n\n" +
+                "Discovered:     " + planet.wasDiscovered + "\n" +
+                "Mapped:         " + planet.wasMapped + "\n" +
+                "Distance:       " + decimalFormat.format((long)planet.distanceFromArrivalLS) + " LS\n" +
+                "Landable:       " + planet.landable + "\n\n" +
 
-                "Est. earnings:  \t" + decimalFormat.format(estEarn) + " Credits\n" +
-                "when mapped:    \t" + decimalFormat.format(eastMapEarn) + " Credits\n\n" +
+                "Est. earnings:  " + decimalFormat.format(estEarn) + " Credits\n" +
+                "when mapped:    " + decimalFormat.format(eastMapEarn) + " Credits\n\n" +
 
-                "Gravity:        \t" + planet.surfaceGravity/10 + " G\n" +
-                "Earth Masses:   \t" + planet.massEM + "\n" +
-                "Radius:         \t" + planet.radius + " KM\n" +
-                "Axial Tilt:     \t" + planet.axialTilt + "\u00b0\n" +
-                "Semi Major Axis:\t" + planet.semiMajorAxis + "\n" +
-                "Eccentricity:   \t" + planet.eccentricity + "\n\n" +
+                "Gravity:        " + planet.surfaceGravity/10 + " G\n" +
+                "Earth Masses:   " + planet.massEM + "\n" +
+                "Radius:         " + planet.radius + " KM\n" +
+                "Axial Tilt:     " + planet.axialTilt + "\u00b0\n" +
+                "Semi Major Axis:" + planet.semiMajorAxis + "\n" +
+                "Eccentricity:   " + planet.eccentricity + "\n\n" +
 
-                "Temperature K:  \t" + planet.surfaceTemperature + " Kelvin\n" +
-                "Temperature C:  \t" + (planet.surfaceTemperature - 273.000) + "\u00b0Celsius\n" +
-                "Atmosphere :    \t" + planet.atmosphereType + "\n" +
-                "Pressure:       \t" + planet.surfacePressure + "\n" +
-                "Volcanism:      \t" + planet.volcanism + "\n\n" +
+                "Temperature K:  " + planet.surfaceTemperature + " Kelvin\n" +
+                "Temperature C:  " + (planet.surfaceTemperature - 273.000) + " \u00b0Celsius\n" +
+                "Atmosphere :    " + planet.atmosphereType + "\n" +
+                "Pressure:       " + planet.surfacePressure + "\n" +
+                "Volcanism:      " + planet.volcanism + "\n\n" +
 
-                "Rotation Period:\t" + planet.rotationPeriod/100000+ " Days\n" +
-                "Orbital Period: \t" + planet.orbitalPeriod/100000 + " Days\n" +
-                "Inclination:    \t" + planet.orbitalInclination + "\u00b0\n\n" +
+                "Rotation Period:" + planet.rotationPeriod/100000+ " Days\n" +
+                "Orbital Period: " + planet.orbitalPeriod/100000 + " Days\n" +
+                "Inclination:    " + planet.orbitalInclination + "\u00b0\n\n" +
 
-                "Mean Anomaly:   \t" + planet.meanAnomaly + "\n\n" +
+                "Mean Anomaly:   " + planet.meanAnomaly + "\n\n" +
 
                 "---Body Signals---" + "\n");
+
         for(BodySignal bodySignal : planet.bodySignals){
             stringBuilder.append("\n")
                     .append(bodySignal.type_Localised).append(":\t").append(bodySignal.count);
@@ -300,30 +301,30 @@ public class BodyInfo {
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
 
         String stringBuilder = "---" + star.bodyName + "---" + "\n" +
-                "Star Type:      \t" + star.starType + "\n" +
-                "Subclass:       \t" + star.subclass + "\n" +
-                "Age:            \t" + decimalFormat.format(star.age_MY) + " Million Years\n" +
-                "Luminosity:     \t" + star.luminosity + "\n\n" +
+                "Star Type:      " + star.starType + "\n" +
+                "Subclass:       " + star.subclass + "\n" +
+                "Age:            " + decimalFormat.format(star.age_MY) + " Million Years\n" +
+                "Luminosity:     " + star.luminosity + "\n\n" +
 
-                "Discovered:     \t" + star.wasDiscovered + "\n" +
-                "Distance:       \t" + decimalFormat.format((long) star.distanceFromArrivalLS) + " LS\n" +
+                "Discovered:     " + star.wasDiscovered + "\n" +
+                "Distance:       " + decimalFormat.format((long) star.distanceFromArrivalLS) + " LS\n" +
 
-                "Est. earnings:  \t n/a yet\n" +
+                "Est. earnings:   n/a yet\n" +
 
-                "Stellar Mass:   \t" + star.stellarMass + "\n" +
-                "Radius:         \t" + star.radius + " KM\n" +
-                "Axial Tilt:     \t" + star.axialTilt + "\u00b0\n" +
-                "Semi Major Axis:\t" + star.semiMajorAxis + "\n" +
-                "Eccentricity:   \t" + star.eccentricity + "\n\n" +
+                "Stellar Mass:   " + star.stellarMass + "\n" +
+                "Radius:         " + star.radius + " KM\n" +
+                "Axial Tilt:     " + star.axialTilt + "\u00b0\n" +
+                "Semi Major Axis:" + star.semiMajorAxis + "\n" +
+                "Eccentricity:   " + star.eccentricity + "\n\n" +
 
-                "Temperature K:  \t" + star.surfaceTemperature + " Kelvin\n" +
-                "Temperature C:  \t" + (star.surfaceTemperature - 273.000) + "\u00b0Celsius\n" +
+                "Temperature K:  " + star.surfaceTemperature + " Kelvin\n" +
+                "Temperature C:  " + (star.surfaceTemperature - 273.000) + "\u00b0Celsius\n" +
 
-                "Rotation Period:\t" + star.rotationPeriod / 100000 + " Days\n" +
-                "Orbital Period: \t" + star.orbitalPeriod / 100000 + " Days\n" +
-                "Inclination:    \t" + star.orbitalInclination + "\u00b0\n\n" +
+                "Rotation Period:" + star.rotationPeriod / 100000 + " Days\n" +
+                "Orbital Period: " + star.orbitalPeriod / 100000 + " Days\n" +
+                "Inclination:    " + star.orbitalInclination + "\u00b0\n\n" +
 
-                "Mean Anomaly:   \t" + star.meanAnomaly + "\n\n" +
+                "Mean Anomaly:   " + star.meanAnomaly + "\n\n" +
 
                 "---Body Signals---" + "\n";
         LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder);
@@ -342,8 +343,8 @@ public class BodyInfo {
 
         String stringBuilder = "---" + body.bodyName + "---" + "\n" +
 
-                "Discovered:     \t" + body.wasDiscovered + "\n" +
-                "Distance:       \t" + decimalFormat.format((long)body.distanceFromArrivalLS) + " LS";
+                "Discovered:     " + body.wasDiscovered + "\n" +
+                "Distance:       " + decimalFormat.format((long)body.distanceFromArrivalLS) + " LS";
 
         LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder);
     }

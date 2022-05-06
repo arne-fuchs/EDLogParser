@@ -55,7 +55,6 @@ public class LogFrame implements MenuListener {
         container.add(bodyInfo,constraints);
 
         //Planets
-
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;
         constraints.weightx = 1.0;

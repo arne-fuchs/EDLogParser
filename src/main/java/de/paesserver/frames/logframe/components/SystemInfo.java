@@ -36,7 +36,7 @@ public class SystemInfo {
     public long nonBodyCount = 0;
     public void setTextForSystem(JSONObject jsonObject){
 
-        systemString = "---"+ jsonObject.get("systemName") +"---\n" +
+        systemString = "---"+ jsonObject.get("StarSystem") +"---\n" +
                 "Allegiance:  \t" + jsonObject.get("SystemAllegiance") + "\n" +
                 "Economy:     \t" + jsonObject.get("SystemEconomy_Localised") + "\n" +
                 "Sec. Economy:\t" + jsonObject.get("SystemSecondEconomy_Localised") + "\n" +
