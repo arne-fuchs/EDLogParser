@@ -275,7 +275,7 @@ public class BodyInfo {
                 "Eccentricity:    " + planet.eccentricity + "\n\n" +
 
                 "Temperature K:   " + planet.surfaceTemperature + " Kelvin\n" +
-                "Temperature C:   " + (planet.surfaceTemperature - 273.000) + " \u00b0Celsius\n" +
+                "Temperature C:   " + (planet.surfaceTemperature - 273.000) + "\u00b0 Celsius\n" +
                 "Atmosphere :     " + planet.atmosphereType + "\n" +
                 "Pressure:        " + planet.surfacePressure + "\n" +
                 "Volcanism:       " + planet.volcanism + "\n\n" +
