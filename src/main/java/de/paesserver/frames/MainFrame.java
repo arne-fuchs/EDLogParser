@@ -1,7 +1,8 @@
 package de.paesserver.frames;
 
+import de.paesserver.frames.logframe.LogFrame;
+
 import javax.swing.*;
-import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 
 public class MainFrame extends JFrame {

@@ -1,35 +1,30 @@
-package de.paesserver.frames;
+package de.paesserver.frames.logframe.components;
 
+import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
 import de.paesserver.structure.body.*;
 import de.paesserver.structure.signal.body.BodySignal;
 
-import javax.swing.*;
 import java.text.DecimalFormat;
 import java.util.Objects;
 
-public class BodyPane {
-    private final JTextArea textArea;
-    public Planet planet = null;
+public class BodyInfo {
+    public static Body body = null;
 
-    public BodyPane(JTextArea textArea){
-        this.textArea = textArea;
+
+    public static void updateText(){
+        if(body instanceof Star)
+            setTextforStar((Star)body);
+        else if (body instanceof Planet) {
+            setTextForPlanet((Planet) body);
+        }else if (body instanceof BeltCluster)
+            setTextForBeltCluster((BeltCluster) body);
     }
 
-    public void setTextForPlanet(Planet planet){
-        this.planet = planet;
-        setText(planet);
+    public static void wipeText(){
+        LogFrameComponentsSingleton.getPlanetInfoTextArea().setText("");
     }
 
-    public void updateText(){
-        if(planet != null)
-            setText(planet);
-    }
-
-    public void wipeText(){
-        textArea.setText("");
-    }
-
-    private void setText(Planet planet) {
+    public static void setTextForPlanet(Planet planet) {
         long estEarn = 0;
         long eastMapEarn = 0;
         switch (Objects.requireNonNull(planet.planetClass)){
@@ -124,7 +119,6 @@ public class BodyPane {
                 }
                 break;
             case RockyBody:
-                //TODO Terraformable
                 if("Terraformable".equals(planet.terraformState)){
                     if(planet.wasDiscovered){
                         //FSS || FSS+DSS
@@ -297,10 +291,10 @@ public class BodyPane {
             stringBuilder.append("\n")
                     .append(bodySignal.type_Localised).append(":\t").append(bodySignal.count);
         }
-        textArea.setText(stringBuilder.toString());
+        LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder.toString());
     }
 
-    public void setTextforStar(Star star) {
+    public static void setTextforStar(Star star) {
         //Est. earnings missing
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
@@ -332,17 +326,17 @@ public class BodyPane {
                 "Mean Anomaly:   \t" + star.meanAnomaly + "\n\n" +
 
                 "---Body Signals---" + "\n";
-        textArea.setText(stringBuilder);
+        LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder);
     }
 
-    public void setTextForImaginary(ImaginaryBody body) {
+    public static void setTextForImaginary(ImaginaryBody body) {
         String stringBuilder = "---" + body.bodyName + "---" + "\n" +
                 "No data available";
 
-        textArea.setText(stringBuilder);
+        LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder);
     }
 
-    public void setTextForBeltCluster(BeltCluster body) {
+    public static void setTextForBeltCluster(BeltCluster body) {
 
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
 
@@ -351,6 +345,6 @@ public class BodyPane {
                 "Discovered:     \t" + body.wasDiscovered + "\n" +
                 "Distance:       \t" + decimalFormat.format((long)body.distanceFromArrivalLS) + " LS";
 
-                textArea.setText(stringBuilder);
+        LogFrameComponentsSingleton.getPlanetInfoTextArea().setText(stringBuilder);
     }
 }

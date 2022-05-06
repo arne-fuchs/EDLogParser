@@ -228,7 +228,6 @@ public class Database {
 
     public void insertBody(JSONObject jsonObject) {
         Logger.log(jsonObject.toJSONString());
-        System.out.println(jsonObject.toJSONString());
 
         String query = "INSERT INTO PLANET(timestamp,event,ScanType,BodyName,BodyID,Parents,StarSystem,SystemAddress,DistanceFromArrivalLS," +
                 "TidalLock,TerraformState,PlanetClass,Atmosphere,AtmosphereType,AtmosphereComposition,Volcanism,MassEM,Radius,SurfaceGravity," +

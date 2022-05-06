@@ -34,7 +34,6 @@ public class SystemMutableTreeNode extends BodyMutableTreeNode {
     }
 
     private void insertionProgress(MutableTreeNode node){
-        //FIXME Needs logical change because bodies doesn't come pre-sorted. The Info needs to be shown directly
         assert node.toString().length() != 0;
         Logger.logWithDepth((DefaultMutableTreeNode) node,"----------------------------------------------------------------------------------");
         Logger.logWithDepth((DefaultMutableTreeNode) node,"Started insertion process for node " + node);

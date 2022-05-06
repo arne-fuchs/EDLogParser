@@ -1,49 +1,23 @@
 package de.paesserver.journalLog;
 
-import de.paesserver.frames.BodyPane;
-import de.paesserver.frames.SystemPane;
+import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
+import de.paesserver.frames.logframe.components.BodyInfo;
+import de.paesserver.frames.logframe.components.SystemInfo;
 import org.json.simple.JSONObject;
-
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.awt.*;
-import java.util.*;
 
 public class JournalLogRunner implements Runnable{
 
     private boolean stop = false;
     private boolean halt = false;
-
-    private final HashMap<String, Component> componentHashMap;
     public final JournalLogParser parser;
     public final JSONInterpreter interpreter;
 
-    public SystemPane systemPane;
-    public BodyPane bodyPane;
-
-    public JournalLogRunner(HashMap<String, Component> componentHashMap,DefaultMutableTreeNode defaultMutableTreeNode) {
-        this.componentHashMap = componentHashMap;
+    public JournalLogRunner() {
         parser = new JournalLogParser();
-        interpreter = new JSONInterpreter(componentHashMap);
-        //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
-        ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
+        interpreter = new JSONInterpreter();
+        LogFrameComponentsSingleton.getSignalTextArea().setText("---SIGNALS---\t\t\t\t\t\t\n");
 
-        systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
-        systemPane.updateText();
-
-        bodyPane = new BodyPane((JTextArea) componentHashMap.get("bodyInfo"));
-    }
-    public JournalLogRunner(HashMap<String, Component> componentHashMap, DefaultMutableTreeNode defaultMutableTreeNode, String directoryPath) {
-        this.componentHashMap = componentHashMap;
-        parser = new JournalLogParser(directoryPath);
-        interpreter = new JSONInterpreter(componentHashMap);
-        //((JTextArea)componentHashMap.get("logOutput")).setText("---LOG---\t\t\t\t\t\t\n");
-        ((JTextArea)componentHashMap.get("nonBodiesOutput")).setText("---SIGNALS---\t\t\t\t\t\t\n");
-
-        systemPane = new SystemPane((JTextArea) componentHashMap.get("systemInfo"),defaultMutableTreeNode);
-        systemPane.updateText();
-
-        bodyPane = new BodyPane((JTextArea) componentHashMap.get("bodyInfo"));
+        LogFrameComponentsSingleton.getSystemInfoTextArea().setText("---SYSTEM---\n");
     }
 
     @Override
@@ -57,7 +31,7 @@ public class JournalLogRunner implements Runnable{
                         JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
                         //check if line is valid (it should be since in journal logs, there only is json data)
                         if(jsonObject != null){
-                            interpreter.computeJSONObject(jsonObject, systemPane, bodyPane);
+                            interpreter.computeJSONObject(jsonObject);
                         }
                         else
                             java.lang.System.out.println("Invalid JSON line found: " + line);

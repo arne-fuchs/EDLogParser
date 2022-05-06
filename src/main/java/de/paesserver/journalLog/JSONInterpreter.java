@@ -1,8 +1,10 @@
 package de.paesserver.journalLog;
 
 import de.paesserver.Logger;
-import de.paesserver.frames.BodyPane;
-import de.paesserver.frames.SystemPane;
+import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
+import de.paesserver.frames.logframe.components.BodyInfo;
+import de.paesserver.frames.logframe.components.SystemInfo;
+import de.paesserver.frames.logframe.components.SystemTree;
 import de.paesserver.structure.*;
 import de.paesserver.structure.StarSystem;
 import de.paesserver.structure.body.*;
@@ -12,21 +14,16 @@ import org.json.simple.parser.JSONParser;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class JSONInterpreter {
 
-    private final HashMap<String, Component> componentHashMap;
     ArrayList<BodySignal[]> bodySignalsList = new ArrayList<>();
     Body bodyToAdd;
+    SystemInfo systemInfo;
 
-    public JSONInterpreter(HashMap<String, Component> componentHashMap){
-        this.componentHashMap = componentHashMap;
-    }
 
-    public void computeJSONObject(JSONObject jsonObject, SystemPane systemPane, BodyPane bodyPane){
+    public void computeJSONObject(JSONObject jsonObject){
 
         String event = (String) jsonObject.get("event");
         Database database = DatabaseSingleton.getInstance();
@@ -39,24 +36,15 @@ public class JSONInterpreter {
 
                 database.insertSystem(jsonObject);
 
-                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).removeAllChildren();
-                //((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).setUserObject(jsonObject.get("StarSystem").toString());
+                SystemTree.systemTreeRootNode.removeAllChildren();
                 StarSystem starSystem = new StarSystem(jsonObject);
-                ((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).add(new SystemMutableTreeNode(starSystem));
+                SystemTree.systemTreeRootNode.add(new SystemMutableTreeNode(starSystem));
 
-                JTree systemJTree = ((JTree)componentHashMap.get("bodiesOutput"));
-                systemJTree.updateUI();
+                LogFrameComponentsSingleton.getSystemTree().updateUI();
 
-                systemPane.setSuffix("systemName", starSystem.starSystem);
-                systemPane.setSuffix("allegiance", starSystem.systemAllegiance);
-                systemPane.setSuffix("economy", starSystem.systemEconomy_Localised);
-                systemPane.setSuffix("secondEconomy", starSystem.systemSecondEconomy_Localised);
-                systemPane.setSuffix("government", starSystem.systemGovernment_Localised);
-                systemPane.setSuffix("security", starSystem.systemSecurity_Localised);
-                systemPane.setSuffix("population", String.valueOf(starSystem.population));
-                systemPane.wipeSignals();
-                systemPane.updateText();
-                bodyPane.wipeText();
+                systemInfo = new SystemInfo(jsonObject);
+                systemInfo.updateText();
+                BodyInfo.wipeText();
 
                 break;
             case "StartJump":
@@ -92,9 +80,9 @@ public class JSONInterpreter {
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
                 //((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
-                systemPane.setSuffix("bodiesCount", jsonObject.get("BodyCount").toString());
-                systemPane.setSuffix("nonBodiesCount", jsonObject.get("NonBodyCount").toString());
-                systemPane.updateText();
+                systemInfo.bodyCount = (long)jsonObject.get("BodyCount");
+                systemInfo.nonBodyCount = (long) jsonObject.get("NonBodyCount");
+                systemInfo.updateText();
                 break;
             case "FSSAllBodiesFound":
                 //TODO Implement FSSAllBodiesFound
@@ -125,10 +113,10 @@ public class JSONInterpreter {
 
                 BodySignal[] potentialBodySignals = BodySignal.getBodySignals(jsonObject);
                 if(potentialBodySignals.length != 0){
-                    systemPane.addSignals(potentialBodySignals);
+                    systemInfo.addSignals(potentialBodySignals);
                     if(bodyToAdd != null && potentialBodySignals[0].bodyID == bodyToAdd.bodyID){
                         bodyToAdd.bodySignals = potentialBodySignals;
-                        bodyPane.updateText();
+                        BodyInfo.updateText();
                     }else
                         bodySignalsList.add(potentialBodySignals);
                 }
@@ -139,9 +127,9 @@ public class JSONInterpreter {
                 //TODO Implement FSSSignalDiscovered
                 database.insertSystemSignal(jsonObject);
                 if(jsonObject.containsKey("SignalName_Localised"))
-                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName_Localised")+"\n");
+                    LogFrameComponentsSingleton.getSignalTextArea().append(jsonObject.get("SignalName_Localised")+"\n");
                 else
-                    ((JTextArea)componentHashMap.get("nonBodiesOutput")).append(jsonObject.get("SignalName")+"\n");
+                    LogFrameComponentsSingleton.getSignalTextArea().append(jsonObject.get("SignalName")+"\n");
                 break;
             case "Scan":
                 //TODO Implement Scan
@@ -162,7 +150,7 @@ public class JSONInterpreter {
                     //Star
                     Star star = new Star(jsonObject);
                     bodyToAdd = star;
-                    bodyPane.setTextforStar(star);
+                    BodyInfo.setTextforStar(star);
 
                 }else{
                     if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
@@ -176,14 +164,14 @@ public class JSONInterpreter {
                             //Planet
                             Planet planet = new Planet(jsonObject);
                             bodyToAdd = planet;
-                            bodyPane.setTextForPlanet(planet);
+                            BodyInfo.setTextForPlanet(planet);
                         }
                     }
                 }
                 Logger.log("Found scan:" +bodyToAdd+"\n\n");
                 BodyMutableTreeNode bodyMutableTreeNode = new BodyMutableTreeNode(bodyToAdd);
-                ((DefaultMutableTreeNode)((DefaultMutableTreeNode)systemPane.systemTreeNode.getRoot()).getFirstChild()).add(bodyMutableTreeNode);
-                JTree jtree = ((JTree)componentHashMap.get("bodiesOutput"));
+                ((DefaultMutableTreeNode)SystemTree.systemTreeRootNode.getFirstChild()).add(bodyMutableTreeNode);
+                JTree jtree = LogFrameComponentsSingleton.getSystemTree();
                 for(int i = 0; i < jtree.getRowCount();i++)
                     jtree.expandRow(i);
                 jtree.updateUI();
@@ -194,7 +182,7 @@ public class JSONInterpreter {
                     if(bArray[0].bodyID == bodyToAdd.bodyID){
                         bodyToAdd.bodySignals = bArray;
                         toRemove.add(bArray);
-                        bodyPane.updateText();
+                        BodyInfo.updateText();
                     }
                 });
 

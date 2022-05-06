@@ -1,4 +1,4 @@
-package de.paesserver.frames;
+package de.paesserver.frames.logframe.components;
 
 public class StringPair {
     final String prefix;
