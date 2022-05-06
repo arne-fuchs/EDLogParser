@@ -92,7 +92,7 @@ public class LogFrame implements MenuListener {
 
         //Reset Button
         JButton resetButton =  new JButton("Reset Reader");
-        resetButton.setFont(Font.getFont("Liberation Mono"));
+        resetButton.setFont(LogFrameComponentsSingleton.globalFont);
 
         constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.BOTH;

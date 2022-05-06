@@ -18,9 +18,9 @@ public class LogFrameComponentsSingleton {
             systemInfoTextArea = new JTextArea();
             systemInfoTextArea.setEditable(false);
 
-            systemInfoTextArea.setPreferredSize(new Dimension(100,600));
-            systemInfoTextArea.setMaximumSize(new Dimension(100,600));
-            systemInfoTextArea.setMinimumSize(new Dimension(100,600));
+            systemInfoTextArea.setPreferredSize(new Dimension(100,100));
+            systemInfoTextArea.setMaximumSize(new Dimension(100,100));
+            systemInfoTextArea.setMinimumSize(new Dimension(100,100));
             systemInfoTextArea.setFont(globalFont);
 
         }
