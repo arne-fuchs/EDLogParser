@@ -1,6 +1,7 @@
 package de.paesserver.structure.body;
 
 import de.paesserver.structure.StarSystem;
+import de.paesserver.structure.SystemMutableTreeNode;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -120,10 +121,22 @@ public class BodyMutableTreeNode extends DefaultMutableTreeNode {
         }
     }
 
+    public long getNodeValue(){
+        if(body != null)
+            return body.bodyID;
+
+        if(imaginaryBody != null){
+            return -1;
+        }
+
+        return -1;
+    }
+
     public void sortChildren(){
         if(children != null) {
             children.stream().parallel().forEach(s -> ((BodyMutableTreeNode)s).sortChildren());
-            children.sort(Comparator.comparing(Object::toString));
+            children.sort(Comparator.comparingLong(ob -> ((BodyMutableTreeNode)ob).getNodeValue()));
+            //children.sort(Comparator.comparing(Object::toString));
         }
     }
 }
