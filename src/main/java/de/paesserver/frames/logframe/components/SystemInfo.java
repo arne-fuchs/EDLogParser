@@ -65,7 +65,7 @@ public class SystemInfo {
     private void addBodySignalsAndPrint(String string,JSONObject jsonObject){
         StringBuilder builder = new StringBuilder(string);
 
-        String query = "SELECT sum(Count),BodyName,Type_Localised,count FROM BODYSIGNAL WHERE SystemAddress = ? GROUP BY Type";
+        String query = "SELECT sum(Count),BodyName,Type,Type_Localised,count FROM BODYSIGNAL WHERE SystemAddress = ? GROUP BY Type";
 
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
             statement.setLong(1,(long)jsonObject.get("SystemAddress"));
@@ -77,9 +77,14 @@ public class SystemInfo {
                 long count = resultSet.getLong("count");
                 long totalCount = resultSet.getLong("sum(Count)");
 
-                builder.append("Total ").append(type).append(": ").append(totalCount).append("\n");
+                builder.append("Total ");
+                if(type == null)
+                    builder.append(resultSet.getString("Type"));
+                else
+                    builder.append(type);
+                builder.append(": ").append(totalCount).append("\n");
 
-                builder.append("Max ").append(type).append(":\n")
+                builder.append("Max ").append(type).append(": ")
                         .append(body).append(": ").append(count).append("\n\n");
             }
         }catch (SQLException e){
@@ -106,6 +111,7 @@ public class SystemInfo {
             e.printStackTrace();
         }
         */
+
 
 
         LogFrameComponentsSingleton.getSystemInfoTextArea().setText(builder.toString());

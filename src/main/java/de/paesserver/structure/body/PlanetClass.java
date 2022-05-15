@@ -30,8 +30,9 @@ public enum PlanetClass {
     }
     public static PlanetClass getBodyClass(String string){
         switch (string){
+
             case "Ammonia world": return AmmoniaWorld;
-            case "Earthlike world": return EarthlikeWorld;
+            case "Earthlike body": return EarthlikeWorld;
             case "Water world": return WaterWorld;
             case "High metal content body": return HighMetalContentPlanet;
             case "Icy body": return IcyBody;
