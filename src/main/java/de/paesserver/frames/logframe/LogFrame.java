@@ -151,8 +151,11 @@ public class LogFrame {
     }
 
     public void updateBodyData() {
-        bodyInfoData.updateText();
-        bodyInfo.setText(bodyInfoData.getText());
+        if (bodyInfoData != null) {
+            bodyInfoData.updateText();
+            bodyInfo.setText(bodyInfoData.getText());
+        }
+
     }
 
     public void setSystemData(SystemInfo data) {

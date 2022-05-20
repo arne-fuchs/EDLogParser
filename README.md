@@ -42,6 +42,7 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 <hr>
 
 ## Known Issues and todos:
+* Planets in the System Tree are unsorted right now. This is already under scope.
 * Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
 * Missing *good* assets for asteroid belts
 * There are a bunch of null pointers internally. I don't know where they come from. They scare me. Please send help.
