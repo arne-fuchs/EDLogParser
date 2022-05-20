@@ -42,6 +42,7 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 <hr>
 
 ## Known Issues and todos:
+* At first start, the program can be slow. Be patient, it is because the database is updating in the background and access times to that is then slower.
 * Planets in the System Tree are unsorted right now. This is already under scope.
 * Est. earnings missing for stars. Please help me out to find a list for the earnings of all stars.
 * Missing *good* assets for asteroid belts
