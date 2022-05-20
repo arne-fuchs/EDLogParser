@@ -12,8 +12,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.gmaven>1.4</version.gmaven>
         <java.version>1.11</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
     <dependencies>
 
@@ -34,7 +32,27 @@
             <version>LATEST</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>javac2</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>forms_rt</artifactId>
+            <version>7.0.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.ow2.asm</groupId>
+            <artifactId>asm-all</artifactId>
+            <version>5.2</version>
+        </dependency>
 
+        <dependency>
+            <groupId>com.intellij</groupId>
+            <artifactId>openapi</artifactId>
+            <version>7.0.3</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -63,16 +81,6 @@
         <resources>
             <!-- resource processsing with a different output directory
                  for logback.xml -->
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>Journal.220221185127.01.log</include>
-                    <include>Journal.2022-04-21T031231.01.log</include>
-                </includes>
-                <!-- relative to target/classes
-                     i.e. ${project.build.outputDirectory} -->
-                <targetPath>..</targetPath>
-            </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <filtering>false</filtering>

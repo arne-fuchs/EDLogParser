@@ -1,0 +1,125 @@
+package de.paesserver.frames.logframe;
+
+import de.paesserver.journalLog.DatabaseSingleton;
+import de.paesserver.structure.SystemMutableTreeNode;
+
+import javax.swing.*;
+import java.awt.*;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+/**
+ * Contains all components, which are visible in the log window
+ */
+public class LogFrameComponents {
+
+    public static Font globalFont = Font.getFont("Liberation Mono");
+
+    private static JTextArea systemInfoTextArea;
+    public static JTextArea getSystemInfoTextArea(){
+        if(systemInfoTextArea == null){
+            systemInfoTextArea = new JTextArea();
+            systemInfoTextArea.setEditable(false);
+
+            systemInfoTextArea.setPreferredSize(new Dimension(100,100));
+            systemInfoTextArea.setMaximumSize(new Dimension(100,100));
+            systemInfoTextArea.setMinimumSize(new Dimension(100,100));
+            systemInfoTextArea.setFont(globalFont);
+
+        }
+        return systemInfoTextArea;
+    }
+
+    private static JTextArea planetInfoTextArea;
+    public static JTextArea getPlanetInfoTextArea(){
+        if(planetInfoTextArea == null){
+            planetInfoTextArea =  new JTextArea();
+            planetInfoTextArea.setAutoscrolls(true);
+            planetInfoTextArea.setEditable(false);
+
+            planetInfoTextArea.setPreferredSize(new Dimension(100,600));
+            planetInfoTextArea.setMaximumSize(new Dimension(100,600));
+            planetInfoTextArea.setMinimumSize(new Dimension(100,600));
+            planetInfoTextArea.setSize(new Dimension(100,600));
+            planetInfoTextArea.setFont(globalFont);
+        }
+        return planetInfoTextArea;
+    }
+
+    private static SystemTree systemTree;
+    public static SystemTree getSystemTree(){
+        if(systemTree == null){
+            systemTree = new SystemTree();
+
+            //systemTree.setPreferredSize(new Dimension(250,1));
+            //systemTree.setMinimumSize(new Dimension(250,1));
+            //systemTree.setMaximumSize(new Dimension(250,1));
+            systemTree.setFont(globalFont);
+        }
+        return systemTree;
+    }
+
+    private static JTable signalTable;
+    public static JTable getSignalTable() {
+        if (signalTable == null) {
+            signalTable = generateSystemSignalTable();
+        }
+        return signalTable;
+    }
+
+    public static JTable updateSignalTable() {
+        signalTable = generateSystemSignalTable();
+        return signalTable;
+    }
+
+    private static JTable generateSystemSignalTable() {
+        String[] columnNames =  new String[]{"Signal","Threat \nlevel"};
+        signalTable = new JTable(new String[][]{{"",""}},columnNames);
+        if(SystemTree.systemTreeRootNode.getChildCount() > 0){
+            SystemMutableTreeNode system = (SystemMutableTreeNode)SystemTree.systemTreeRootNode.getFirstChild();
+
+            String query = "SELECT * FROM SYSTEMSIGNAL WHERE SystemAddress = " + system.starSystem.systemAddress;
+
+            ArrayList<String[]> columnDataList = new ArrayList<>();
+            try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
+                ResultSet resultSet = statement.executeQuery();
+                while (resultSet.next()){
+                    String signalName = resultSet.getString("SignalName_Localised");
+                    if(signalName == null)
+                        signalName = resultSet.getString("SignalName");
+
+                    String threadLevel = resultSet.getLong("ThreadLevel") + "";
+                    columnDataList.add(new String[]{signalName,threadLevel});
+                }
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+
+            String[][] columnData = new String[columnDataList.size()][2];
+            columnData = columnDataList.toArray(columnData);
+            signalTable = new JTable(columnData,columnNames);
+        }
+
+        //signalTable.setBounds(0,0,200,300);
+        signalTable.getTableHeader().setVisible(true);
+
+        signalTable.setAutoscrolls(true);
+
+        //signalTable.setPreferredSize(new Dimension(100,1));
+        //signalTable.setMaximumSize(new Dimension(100,1));
+        //signalTable.setMinimumSize(new Dimension(100,1));
+        //signalTable.setSize(new Dimension(100,1));
+        signalTable.setFont(LogFrameComponents.globalFont);
+
+        signalTable.getColumnModel().getColumn(1).setPreferredWidth(150);
+        signalTable.getColumnModel().getColumn(1).setWidth(150);
+        signalTable.getColumnModel().getColumn(1).setMaxWidth(150);
+        signalTable.getColumnModel().getColumn(1).setMinWidth(150);
+
+        signalTable.setVisible(true);
+
+        return signalTable;
+    }
+}

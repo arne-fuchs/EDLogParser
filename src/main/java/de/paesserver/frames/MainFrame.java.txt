@@ -1,7 +1,5 @@
 package de.paesserver.frames;
 
-import de.paesserver.frames.logframe.LogFrame;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -21,7 +19,7 @@ public class MainFrame extends JFrame {
         //Creating the MenuBar and adding components
         JMenuBar menuBar = new JMenuBar();
         JMenu logMenu = new JMenu("Logs");
-        logMenu.addMenuListener(new LogFrame(container));
+        logMenu.addMenuListener(new LogFrameOLD(container));
         JMenu aboutMenu = new JMenu("About");
         aboutMenu.addActionListener(null);
         JMenu helpMenu = new JMenu("Help");
@@ -38,7 +36,5 @@ public class MainFrame extends JFrame {
         constraints.gridy = 0;
         constraints.gridwidth = 3;
         container.add(menuBar, constraints);
-
     }
-
 }

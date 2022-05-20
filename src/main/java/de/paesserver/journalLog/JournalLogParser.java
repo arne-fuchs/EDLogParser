@@ -1,10 +1,15 @@
 package de.paesserver.journalLog;
 
 
+import org.json.simple.JSONObject;
+
 import java.io.*;
+import java.rmi.UnexpectedException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class JournalLogParser{
 
@@ -22,6 +27,54 @@ public class JournalLogParser{
             bufferedReader = new BufferedReader(new FileReader(getLatestLogInWorkingDirectory()));
         }catch (Exception e){
             e.printStackTrace();
+        }
+
+        Database database = DatabaseSingleton.getInstance();
+        ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
+        try {
+            File directory = new File(directoryPath);
+
+            String[] filenames = directory.list((dir, name) -> name.startsWith("Journal") && name.contains("T"));
+            assert filenames != null;
+            for(String filename : filenames){
+                exec.submit(() -> {
+                    File log = new File(filename);
+                    try {
+                        BufferedReader reader = new BufferedReader(new FileReader(log));
+                        String line;
+                        while((line = reader.readLine()) != null && line.length() > 0){
+                            JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
+                            assert jsonObject != null;
+                            switch (jsonObject.get("event").toString()){
+                                case "Scan":
+                                    if(jsonObject.containsKey("StarType"))
+                                        database.insertStar(jsonObject);
+                                    else
+                                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster"))
+                                        database.insertBeltCluster(jsonObject);
+                                    else if(((String)jsonObject.get("BodyName")).contains("Ring")){
+                                        database.insertBodyRing(jsonObject);
+                                    }
+                                    else
+                                        database.insertBody(jsonObject);
+                                    break;
+                                case "FSSSignalDiscovered":
+                                    database.insertSystemSignal(jsonObject);
+                                    break;
+                                case "FSSBodySignals":
+                                    database.insertPlanetSignals(jsonObject);
+                                case "FSDJump":
+                                    database.insertSystem(jsonObject);
+                            }
+                        }
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+            }
+        }finally {
+            exec.shutdown();
         }
     }
 

@@ -1,26 +1,17 @@
 package de.paesserver.journalLog;
 
-import de.paesserver.Logger;
-import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
-import de.paesserver.frames.logframe.components.BodyInfo;
-import de.paesserver.frames.logframe.components.SystemInfo;
-import de.paesserver.frames.logframe.components.SystemTree;
-import de.paesserver.structure.*;
-import de.paesserver.structure.StarSystem;
-import de.paesserver.structure.body.*;
-import de.paesserver.structure.signal.body.BodySignal;
+import de.paesserver.frames.logframe.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
-import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
-import java.util.ArrayList;
 
 public class JSONInterpreter {
 
-    ArrayList<BodySignal[]> bodySignalsList = new ArrayList<>();
-    Body bodyToAdd;
-    SystemInfo systemInfo;
+    private final LogFrame logFrame;
+
+    public JSONInterpreter(LogFrame logFrame){
+        this.logFrame = logFrame;
+    }
 
 
     public void computeJSONObject(JSONObject jsonObject){
@@ -35,17 +26,9 @@ public class JSONInterpreter {
                 //TODO Implement location
 
                 database.insertSystem(jsonObject);
-
-                SystemTree.systemTreeRootNode.removeAllChildren();
-                StarSystem starSystem = new StarSystem(jsonObject);
-                SystemTree.systemTreeRootNode.add(new SystemMutableTreeNode(starSystem));
-
-                LogFrameComponentsSingleton.getSystemTree().updateUI();
-
-                systemInfo = new SystemInfo(jsonObject);
-                systemInfo.updateText();
-                BodyInfo.wipeText();
-
+                logFrame.setSystemData(new SystemInfo((long)jsonObject.get("SystemAddress")));
+                logFrame.replaceSystem(jsonObject.get("StarSystem").toString());
+                logFrame.updateBodySingalsTable((long) jsonObject.get("SystemAddress"));
                 break;
             case "StartJump":
                 //if(jsonObject.get("JumpType").equals("Supercruise"))
@@ -80,9 +63,9 @@ public class JSONInterpreter {
             case "FSSDiscoveryScan":
                 //TODO Implement FSSDiscoveryScan
                 //((JTextArea)componentHashMap.get("logOutput")).append("Discovery-Scan has been initialised\n");
-                systemInfo.bodyCount = (long)jsonObject.get("BodyCount");
-                systemInfo.nonBodyCount = (long) jsonObject.get("NonBodyCount");
-                systemInfo.updateText();
+                database.addBodyCounts(jsonObject);
+                logFrame.systemInfoData.setTextForBodyCounts();
+                logFrame.updateSystemData();
                 break;
             case "FSSAllBodiesFound":
                 //TODO Implement FSSAllBodiesFound
@@ -110,79 +93,40 @@ public class JSONInterpreter {
 
             //TODO Implement FSSBodySignals
                 database.insertPlanetSignals(jsonObject);
-                BodyInfo.updateText();
-
-                BodySignal[] potentialBodySignals = BodySignal.getBodySignals(jsonObject);
-                if(potentialBodySignals.length != 0){
-                    systemInfo.addSignals(potentialBodySignals);
-                }
-
+                logFrame.updateBodySingalsTable((long) jsonObject.get("SystemAddress"));
+                logFrame.updateBodyData();
                 break;
+
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered
                 database.insertSystemSignal(jsonObject);
-                if(jsonObject.containsKey("SignalName_Localised"))
-                    LogFrameComponentsSingleton.getSignalTextArea().append(jsonObject.get("SignalName_Localised")+"\n");
-                else
-                    LogFrameComponentsSingleton.getSignalTextArea().append(jsonObject.get("SignalName")+"\n");
+                logFrame.updateSystemData();
                 break;
 
             case "Scan":
                 //TODO Implement Scan
-
-                if(jsonObject.containsKey("StarType"))
-                    database.insertStar(jsonObject);
-                else
-                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster"))
-                        database.insertBeltCluster(jsonObject);
-                    else if(((String)jsonObject.get("BodyName")).contains("Ring"))
-                            return;
-                        //TODO implement ring
-                        else
-                            database.insertBody(jsonObject);
-
-
                 if(jsonObject.containsKey("StarType")){
-                    //Star
-                    Star star = new Star(jsonObject);
-                    bodyToAdd = star;
-                    BodyInfo.setTextforStar(star);
-
-                }else{
-                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
-                        //Belt Cluster
-                        bodyToAdd = new BeltCluster(jsonObject);
-                    }else {
-                        if(((String)jsonObject.get("BodyName")).contains("Ring"))
-                        //TODO implement ring
-                            return;
-                        else {
-                            //Planet
-                            Planet planet = new Planet(jsonObject);
-                            bodyToAdd = planet;
-                            BodyInfo.setTextForPlanet(planet);
-                        }
-                    }
+                    database.insertStar(jsonObject);
+                    BodyInfo bodyInfo = new BodyInfo();
+                    bodyInfo.setTextforStar(jsonObject.get("BodyName").toString());
+                    logFrame.setBodyData(bodyInfo);
                 }
-                Logger.log("Found scan:" +bodyToAdd+"\n\n");
-                BodyMutableTreeNode bodyMutableTreeNode = new BodyMutableTreeNode(bodyToAdd);
-                ((DefaultMutableTreeNode)SystemTree.systemTreeRootNode.getFirstChild()).add(bodyMutableTreeNode);
-                JTree jtree = LogFrameComponentsSingleton.getSystemTree();
-                for(int i = 0; i < jtree.getRowCount();i++)
-                    jtree.expandRow(i);
-                jtree.updateUI();
-
-                ArrayList<BodySignal[]> toRemove = new ArrayList<>();
-
-                bodySignalsList.forEach(bArray -> {
-                    if(bArray[0].bodyID == bodyToAdd.bodyID){
-                        bodyToAdd.bodySignals = bArray;
-                        toRemove.add(bArray);
-                        BodyInfo.updateText();
+                else
+                    if(((String)jsonObject.get("BodyName")).contains("Belt Cluster")){
+                        database.insertBeltCluster(jsonObject);
                     }
-                });
+                    else if(((String)jsonObject.get("BodyName")).contains("Ring")){
+                            database.insertBodyRing(jsonObject);
+                        }
+                        else{
+                            database.insertBody(jsonObject);
+                        BodyInfo bodyInfo = new BodyInfo();
+                        bodyInfo.setTextForPlanet(jsonObject.get("BodyName").toString());
+                        logFrame.setBodyData(bodyInfo);
+                        }
 
-                toRemove.forEach(bArray -> bodySignalsList.remove(bArray));
+                SystemTreeUserObject userObject = new SystemTreeUserObject(jsonObject.get("BodyName").toString(),BodyType.parseJson(jsonObject),(long)jsonObject.get("BodyID"));
+                logFrame.addNode(userObject);
                 break;
             default:
         }

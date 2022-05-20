@@ -1,10 +1,12 @@
-package de.paesserver.structure.body;
+package de.paesserver.frames.logframe;
 
 public enum PlanetClass {
     AmmoniaWorld,EarthlikeWorld,WaterWorld,
     HighMetalContentPlanet,IcyBody,MetalRichBody,RockyBody,RockyIceBody,
     ClassIGasGiant,ClassIIGasGiant,ClassIIIGasGiant,ClassIVGasGiant,ClassVGasGiant,
-    GasGiantwithAmmoniabasedLife,GasGiantwithWaterbasedLife,HeliumRichGasGiant,WaterGiant;
+    GasGiantwithAmmoniabasedLife,GasGiantwithWaterbasedLife,HeliumRichGasGiant,WaterGiant,
+
+    BeltCluster, Ring;
 
     public static String getString(PlanetClass planetClass){
         switch (planetClass){
@@ -25,10 +27,17 @@ public enum PlanetClass {
             case GasGiantwithWaterbasedLife: return "Gas Giant with Water-based Life";
             case HeliumRichGasGiant: return "Helium-Rich Gas Giant";
             case WaterGiant: return "Water Giant";
+            case Ring: return "Ring";
+            case BeltCluster: return "BeltCluster";
         }
         return null;
     }
     public static PlanetClass getBodyClass(String string){
+        if(string.contains("Belt Cluster"))
+            return BeltCluster;
+        if(string.contains("Ring"))
+            return Ring;
+
         switch (string){
 
             case "Ammonia world": return AmmoniaWorld;

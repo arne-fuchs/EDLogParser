@@ -1,8 +1,5 @@
 package de.paesserver.journalLog;
 
-import de.paesserver.frames.logframe.LogFrameComponentsSingleton;
-import de.paesserver.frames.logframe.components.BodyInfo;
-import de.paesserver.frames.logframe.components.SystemInfo;
 import org.json.simple.JSONObject;
 
 public class JournalLogRunner implements Runnable{
@@ -12,12 +9,9 @@ public class JournalLogRunner implements Runnable{
     public final JournalLogParser parser;
     public final JSONInterpreter interpreter;
 
-    public JournalLogRunner() {
-        parser = new JournalLogParser();
-        interpreter = new JSONInterpreter();
-        LogFrameComponentsSingleton.getSignalTextArea().setText("---SIGNALS---\t\t\t\t\t\t\n");
-
-        LogFrameComponentsSingleton.getSystemInfoTextArea().setText("---SYSTEM---\n");
+    public JournalLogRunner(JournalLogParser parser, JSONInterpreter interpreter) {
+        this.parser = parser;
+        this.interpreter = interpreter;
     }
 
     @Override
@@ -28,6 +22,7 @@ public class JournalLogRunner implements Runnable{
                     String line = parser.getNextLine();
                     //Check if new line is available
                     if(line != null) {
+
                         JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
                         //check if line is valid (it should be since in journal logs, there only is json data)
                         if(jsonObject != null){
@@ -38,7 +33,7 @@ public class JournalLogRunner implements Runnable{
                     }
                 }
                 synchronized (this) {
-                    this.wait(30);
+                    this.wait(20);
                 }
             }
             parser.closeReader();

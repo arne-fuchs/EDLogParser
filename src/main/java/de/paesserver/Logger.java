@@ -1,6 +1,5 @@
 package de.paesserver;
 
-import de.paesserver.structure.body.BodyMutableTreeNode;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.MutableTreeNode;
@@ -62,17 +61,6 @@ public class Logger {
             ANSI_BRIGHT_BG_BLUE, ANSI_BRIGHT_BG_PURPLE, ANSI_BRIGHT_BG_CYAN, ANSI_BRIGHT_BG_WHITE };
 
     final static boolean ACTIVE = false;
-    public static void logWithDepth(DefaultMutableTreeNode treeNode,String message){
-        if(!ACTIVE)
-            return;
-        BodyMutableTreeNode bodyMutableTreeNode = (BodyMutableTreeNode) treeNode;
-        int limit = 0;
-        if(bodyMutableTreeNode.body != null)
-            limit = bodyMutableTreeNode.body.toString().replace(bodyMutableTreeNode.body.starSystem,"").trim().replace("Belt Cluster ","").trim().split(" ").length;
-        for(int i = 0; i < limit;i++)
-            System.out.print("\t");
-        System.out.print(message+"\n");
-    }
     public static void log(String message){
         if(!ACTIVE)
             return;
