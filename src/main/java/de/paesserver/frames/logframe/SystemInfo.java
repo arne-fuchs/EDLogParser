@@ -54,9 +54,12 @@ public class SystemInfo {
 
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()){
+                String bodyCount = resultSet.getString("bodyCount");
+                String nonBodyCount = resultSet.getString("nonBodyCount");
+
                 bodyCountText =
-                        "\nBodies:      \t" + resultSet.getString("bodyCount") + "\n" +
-                        "Non-bodies:  \t" + resultSet.getString("nonBodyCount") + "\n";
+                        "\nBodies:      \t" + (bodyCount == null ? "Unknown" : bodyCount) + "\n" +
+                        "Non-bodies:  \t" + (nonBodyCount == null ? "Unknown" : nonBodyCount) + "\n";
             }
 
         }catch (SQLException e){

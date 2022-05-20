@@ -245,7 +245,7 @@ public class LogFrame {
         bodySignalsTable.getColumn("Signal Type").setMaxWidth(120);
         bodySignalsTable.getColumn("Signal Type").setMinWidth(120);
 
-        String query = "SELECT * FROM BODYSIGNAL WHERE SystemAddress = ? ORDER BY Count desc";
+        String query = "SELECT * FROM BODYSIGNAL WHERE SystemAddress = ? ORDER BY Count,BodyName desc";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
             statement.setLong(1, systemAddress);
 
@@ -280,7 +280,7 @@ public class LogFrame {
         systemSignalsTable.getColumn("Threat Level").setMinWidth(150);
 
 
-        String query = "SELECT SignalName,SignalName_Localised,ThreatLevel FROM SYSTEMSIGNAL WHERE SystemAddress = ? ORDER BY SignalName";
+        String query = "SELECT SignalName,SignalName_Localised,ThreatLevel FROM SYSTEMSIGNAL WHERE SystemAddress = ? ORDER BY SignalName,ThreatLevel";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
             statement.setLong(1, systemAddress);
 
