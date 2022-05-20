@@ -6,7 +6,7 @@ Beside the usual planet and system information it will also show:
 * Planet with the most biological, geological, human, xeno signals within the system. So you don't have to remember which planet it was.
 * A nice tree with all the bodies (and in the future also signals)
 
-![image](https://user-images.githubusercontent.com/60095837/167199931-ce89dced-e4e3-4cb9-9c07-5f9005baa7d2.png)
+![image](https://user-images.githubusercontent.com/60095837/169622112-1eb9ae64-bd71-4110-b68b-9b47e49f4953.png)
 
 # IN DEVELOPMENT
 
@@ -47,4 +47,4 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 * There are a bunch of null pointers internally. I don't know where they come from. They scare me. Please send help.
 
 ## Current Scope
-* Rebuilding datastructure to be based on SQL to make the project more organized and easier to maintain
+* Finishing the log parser tab
