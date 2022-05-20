@@ -33,7 +33,7 @@ public class JournalLogRunner implements Runnable{
                     }
                 }
                 synchronized (this) {
-                    this.wait(20);
+                    this.wait(10);
                 }
             }
             parser.closeReader();

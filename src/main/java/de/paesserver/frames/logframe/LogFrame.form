@@ -18,9 +18,7 @@
       </component>
       <component id="fcae1" class="javax.swing.JTextArea" binding="bodyInfo">
         <constraints>
-          <grid row="0" column="2" row-span="4" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="130" height="50"/>
-          </grid>
+          <grid row="0" column="2" row-span="4" col-span="1" vsize-policy="6" hsize-policy="6" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties/>
       </component>
@@ -36,7 +34,9 @@
       </component>
       <scrollpane id="97d45">
         <constraints>
-          <grid row="0" column="1" row-span="4" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="1" row-span="4" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
+            <minimum-size width="500" height="-1"/>
+          </grid>
         </constraints>
         <properties/>
         <border type="none"/>

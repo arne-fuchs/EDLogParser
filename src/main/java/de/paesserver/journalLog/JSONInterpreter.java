@@ -120,9 +120,9 @@ public class JSONInterpreter {
                         }
                         else{
                             database.insertBody(jsonObject);
-                        BodyInfo bodyInfo = new BodyInfo();
-                        bodyInfo.setTextForPlanet(jsonObject.get("BodyName").toString());
-                        logFrame.setBodyData(bodyInfo);
+                            BodyInfo bodyInfo = new BodyInfo();
+                            bodyInfo.setTextForPlanet(jsonObject.get("BodyName").toString());
+                            logFrame.setBodyData(bodyInfo);
                         }
 
                 SystemTreeUserObject userObject = new SystemTreeUserObject(jsonObject.get("BodyName").toString(),BodyType.parseJson(jsonObject),(long)jsonObject.get("BodyID"));

@@ -11,8 +11,7 @@ import java.util.Arrays;
 public class SystemInfo {
 
     public long currentSystemAddress = 0;
-    public long bodyCount = 0;
-    public long nonBodyCount = 0;
+
 
     String systemText = "";
     String bodyCountText = "";
@@ -49,9 +48,20 @@ public class SystemInfo {
     }
 
     public void setTextForBodyCounts(){
-        bodyCountText =
-                "\nBodies:      \t" + bodyCount + "\n" +
-                "Non-bodies:  \t" + nonBodyCount + "\n";
+        String query = "SELECT bodyCount, nonBodyCount FROM SYSTEM WHERE SystemAddress = ?;";
+        try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
+            statement.setLong(1,currentSystemAddress);
+
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()){
+                bodyCountText =
+                        "\nBodies:      \t" + resultSet.getString("bodyCount") + "\n" +
+                        "Non-bodies:  \t" + resultSet.getString("nonBodyCount") + "\n";
+            }
+
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+        }
     }
 
     public void setTextForBodySignals(){
