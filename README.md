@@ -7,6 +7,7 @@ Beside the usual planet and system information it will also show:
 * A nice tree with all the bodies (and in the future also signals)
 
 ![image](https://user-images.githubusercontent.com/60095837/169622112-1eb9ae64-bd71-4110-b68b-9b47e49f4953.png)
+![image](https://user-images.githubusercontent.com/60095837/169639612-f9ea07e4-ba4e-4c1b-93f8-91a46d33cf04.png)
 
 # IN DEVELOPMENT
 
