@@ -280,7 +280,7 @@ public class LogFrame {
         systemSignalsTable.getColumn("Threat Level").setMinWidth(150);
 
 
-        String query = "SELECT SignalName,SignalName_Localised,ThreatLevel FROM SYSTEMSIGNAL WHERE SystemAddress = ? ORDER BY SignalName,ThreatLevel desd";
+        String query = "SELECT SignalName,SignalName_Localised,ThreatLevel FROM SYSTEMSIGNAL WHERE SystemAddress = ? ORDER BY SignalName,ThreatLevel desc";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
             statement.setLong(1, systemAddress);
 
