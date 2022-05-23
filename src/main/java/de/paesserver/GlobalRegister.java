@@ -19,7 +19,6 @@ public class GlobalRegister {
             mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             mainFrame.setIconImage(new ImageIcon("org.edassets/materials/Basic.png").getImage());
             mainFrame.setSize(1600,800);
-            mainFrame.setFont(Font.getFont(GlobalRegister.properties.getProperty("font")));
             mainFrame.setVisible(true);
         }
         return mainFrame;
@@ -29,13 +28,11 @@ public class GlobalRegister {
         logButton.addActionListener(e -> {
             LogFrame logFrame = new LogFrame();
             mainFrame.setContentPane(logFrame.mainPane);
-            mainFrame.setFont(Font.getFont(GlobalRegister.properties.getProperty("font")));
             mainFrame.setVisible(true);
         });
         settingButton.addActionListener(e -> {
             SettingFrame settingFrame = new SettingFrame();
             mainFrame.setContentPane(settingFrame.mainPane);
-            mainFrame.setFont(Font.getFont(GlobalRegister.properties.getProperty("font")));
             mainFrame.setVisible(true);
         });
     }
