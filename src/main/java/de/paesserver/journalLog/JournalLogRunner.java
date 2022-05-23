@@ -1,5 +1,6 @@
 package de.paesserver.journalLog;
 
+import de.paesserver.GlobalRegister;
 import org.json.simple.JSONObject;
 
 public class JournalLogRunner implements Runnable{
@@ -8,6 +9,7 @@ public class JournalLogRunner implements Runnable{
     private boolean halt = false;
     public final JournalLogParser parser;
     public final JSONInterpreter interpreter;
+    long timeout = Long.parseLong(GlobalRegister.properties.getProperty("journalLogReaderInterval"));
 
     public JournalLogRunner(JournalLogParser parser, JSONInterpreter interpreter) {
         this.parser = parser;
@@ -33,7 +35,7 @@ public class JournalLogRunner implements Runnable{
                     }
                 }
                 synchronized (this) {
-                    this.wait(10);
+                    this.wait(timeout);
                 }
             }
             parser.closeReader();

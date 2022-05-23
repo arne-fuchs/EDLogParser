@@ -1,5 +1,7 @@
 import com.formdev.flatlaf.FlatDarkLaf;
+import de.paesserver.GlobalRegister;
 import de.paesserver.frames.logframe.LogFrame;
+import de.paesserver.frames.settingframe.Settings;
 
 import javax.swing.*;
 import java.awt.*;
@@ -7,22 +9,15 @@ import java.awt.*;
 public class EDLogParser {
 
     public static LogFrame logFrame;
+    public static JFrame mainFrame;
     public static void main(String[] args){
         //Creating Frame
-
+        Settings.initializeGlobalSettings();
         try {
-            UIManager.setLookAndFeel( new FlatDarkLaf());
+            UIManager.setLookAndFeel(GlobalRegister.properties.getProperty("theme"));
         } catch( Exception ex ) {
             System.err.println( "Failed to initialize LaF" );
         }
-        JFrame frame = new JFrame("EDLogParser");
-        logFrame = new LogFrame();
-        frame.setContentPane(logFrame.mainPanel);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setIconImage(new ImageIcon("org.edassets/materials/Basic.png").getImage());
-        frame.setSize(1600,800);
-        frame.setFont(Font.getFont("Liberation Mono"));
-        frame.setVisible(true);
-
+        GlobalRegister.getMainFrame();
     }
 }

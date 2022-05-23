@@ -1,8 +1,10 @@
 package de.paesserver.journalLog;
 
 
+import de.paesserver.GlobalRegister;
 import org.json.simple.JSONObject;
 
+import javax.swing.*;
 import java.io.*;
 import java.rmi.UnexpectedException;
 import java.text.ParseException;
@@ -17,7 +19,7 @@ public class JournalLogParser{
     final SimpleDateFormat prefixJournalDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     final SimpleDateFormat suffixJournalDateFormat = new SimpleDateFormat("HHmmss");
     private BufferedReader bufferedReader;
-    String directoryPath = "./";
+    String directoryPath = GlobalRegister.properties.getProperty("journalLogPath");
 
     /**
      * Reads the latest log in the current working directory
@@ -30,8 +32,8 @@ public class JournalLogParser{
         }
 
         Database database = DatabaseSingleton.getInstance();
-        ExecutorService exec = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-
+        ExecutorService exec = Executors.newFixedThreadPool(Integer.parseInt(GlobalRegister.properties.getProperty("journalLogCoreCount")));
+        long timeout = Long.parseLong(GlobalRegister.properties.getProperty("journalLogUpdaterInterval"));
         try {
             File directory = new File(directoryPath);
 
@@ -69,7 +71,14 @@ public class JournalLogParser{
                             }
                         }
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+                    }
+                    synchronized (this) {
+                        try {
+                            this.wait(timeout);
+                        } catch (InterruptedException e) {
+                            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+                        }
                     }
                 });
             }
@@ -123,7 +132,7 @@ public class JournalLogParser{
             bufferedReader = new BufferedReader(new FileReader(file));
             return true;
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             return false;
         }
     }
@@ -136,7 +145,7 @@ public class JournalLogParser{
         try {
             return bufferedReader.readLine();
         }catch (Exception e){
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             return null;
         }
     }
@@ -146,7 +155,7 @@ public class JournalLogParser{
             bufferedReader.close();
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             return false;
         }
 
@@ -163,8 +172,8 @@ public class JournalLogParser{
     public Date extractDateFromJournalName(String dateString){
         try {
             return journalDateFormat.parse(dateString.split("\\.")[1].split("T")[0] + "-" + dateString.split("\\.")[1].split("T")[1]);
-        } catch (ParseException ex) {
-            ex.printStackTrace();
+        } catch (ParseException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
         return null;
     }

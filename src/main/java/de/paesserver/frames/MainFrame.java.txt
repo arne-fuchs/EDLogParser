@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
         menuBar.add(logMenu);
         menuBar.add(aboutMenu);
         menuBar.add(helpMenu);
-        menuBar.setFont(Font.getFont("Liberation Mono"));
+        menuBar.setFont(Font.getFont(GlobalRegister.properties.getProperty("font")));
 
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.fill = GridBagConstraints.HORIZONTAL;
