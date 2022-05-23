@@ -41,7 +41,7 @@ public class JournalLogParser{
             assert filenames != null;
             for(String filename : filenames){
                 exec.submit(() -> {
-                    File log = new File(filename);
+                    File log = new File(directoryPath+"/"+filename);
                     try {
                         BufferedReader reader = new BufferedReader(new FileReader(log));
                         String line;
@@ -77,7 +77,7 @@ public class JournalLogParser{
                         try {
                             this.wait(timeout);
                         } catch (InterruptedException e) {
-                            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+                            e.printStackTrace();
                         }
                     }
                 });
@@ -119,7 +119,7 @@ public class JournalLogParser{
 
         System.out.println("Choosing journal file: Journal." + prefixJournalDateFormat.format(optionalDate.get()) + "T" + suffixJournalDateFormat.format(optionalDate.get()) + ".01.log");
         //setup reader to read latest log
-        return new File("./Journal." + prefixJournalDateFormat.format(optionalDate.get()) + "T" + suffixJournalDateFormat.format(optionalDate.get()) + ".01.log");
+        return new File(directoryPath+"/Journal." + prefixJournalDateFormat.format(optionalDate.get()) + "T" + suffixJournalDateFormat.format(optionalDate.get()) + ".01.log");
     }
 
     /**

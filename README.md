@@ -31,7 +31,9 @@ Beside the usual planet and system information it will also show:
 Java 11 or higher
 
 ## Location of journal logs
-%USER%/Saved Games/Frontier Developments/Elite Dangerous/
+
+Linux: /home/user/.steam/steam/steamapps/compatdata/359320/pfx/drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous
+Windows : USER/Saved Games/Frontier Developments/Elite Dangerous
 
 ## Thanks to
 https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to EDAssets") for the many assets they provide.
