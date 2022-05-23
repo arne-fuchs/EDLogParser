@@ -29,6 +29,12 @@
               <text value="Settings"/>
             </properties>
           </component>
+          <component id="fedd9" class="javax.swing.JButton" binding="aboutButton">
+            <constraints/>
+            <properties>
+              <text value="About"/>
+            </properties>
+          </component>
         </children>
       </toolbar>
       <hspacer id="6ab06">

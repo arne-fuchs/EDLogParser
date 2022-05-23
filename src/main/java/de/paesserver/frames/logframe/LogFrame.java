@@ -35,6 +35,7 @@ public class LogFrame {
     public JTable bodySignalsTable;
     private JButton logButton;
     private JButton settingButton;
+    private JButton aboutButton;
 
     public JournalLogRunner journalLogRunner;
     public JournalLogParser journalLogParser;
@@ -45,7 +46,7 @@ public class LogFrame {
 
     public LogFrame() {
 
-        GlobalRegister.initializeMenuBar(logButton, settingButton);
+        GlobalRegister.initializeMenuBar(logButton, settingButton, aboutButton);
 
         journalLogParser = new JournalLogParser();
         jsonInterpreter = new JSONInterpreter(this);
@@ -241,13 +242,13 @@ public class LogFrame {
         bodySignalsTable.getTableHeader().setVisible(true);
         bodySignalsTable.getTableHeader().updateUI();
 
-        bodySignalsTable.getColumn("Count").setPreferredWidth(50);
-        bodySignalsTable.getColumn("Count").setMaxWidth(50);
-        bodySignalsTable.getColumn("Count").setMinWidth(50);
+        bodySignalsTable.getColumn("Count").setPreferredWidth(80);
+        bodySignalsTable.getColumn("Count").setMaxWidth(80);
+        bodySignalsTable.getColumn("Count").setMinWidth(80);
 
-        bodySignalsTable.getColumn("Signal Type").setPreferredWidth(120);
-        bodySignalsTable.getColumn("Signal Type").setMaxWidth(120);
-        bodySignalsTable.getColumn("Signal Type").setMinWidth(120);
+        bodySignalsTable.getColumn("Signal Type").setPreferredWidth(150);
+        bodySignalsTable.getColumn("Signal Type").setMaxWidth(150);
+        bodySignalsTable.getColumn("Signal Type").setMinWidth(150);
 
         String query = "SELECT * FROM BODYSIGNAL WHERE SystemAddress = ? ORDER BY Count desc,BodyName";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
@@ -329,7 +330,7 @@ public class LogFrame {
         resetReaderButton.setText("Reset Reader");
         mainPane.add(resetReaderButton, new GridConstraints(5, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         bodyInfo = new JTextArea();
-        mainPane.add(bodyInfo, new GridConstraints(1, 2, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
+        mainPane.add(bodyInfo, new GridConstraints(1, 2, 4, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_WANT_GROW, new Dimension(500, -1), new Dimension(500, -1), new Dimension(600, -1), 0, false));
         systemInfo = new JTextArea();
         systemInfo.setText("");
         mainPane.add(systemInfo, new GridConstraints(1, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(130, 50), null, 0, false));
@@ -353,6 +354,9 @@ public class LogFrame {
         settingButton = new JButton();
         settingButton.setText("Settings");
         toolBar1.add(settingButton);
+        aboutButton = new JButton();
+        aboutButton.setText("About");
+        toolBar1.add(aboutButton);
     }
 
     /**

@@ -43,7 +43,6 @@ public class SystemInfo {
                         "Population:  \t" + resultSet.getLong("Population") + "\n";
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
     }
 

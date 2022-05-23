@@ -33,9 +33,10 @@ public class SettingFrame {
     private JPanel previewPane;
     private JPanel fontPane;
     private JSpinner fontSpinner;
+    private JButton aboutButton;
 
     public SettingFrame() {
-        GlobalRegister.initializeMenuBar(logButton, settingButton);
+        GlobalRegister.initializeMenuBar(logButton, settingButton, aboutButton);
 
         journalLogFolderTextField.setText(GlobalRegister.properties.getProperty("journalLogPath"));
         journalLogFolderTextField.addMouseListener(new MouseAdapter() {
@@ -162,6 +163,9 @@ public class SettingFrame {
         settingButton = new JButton();
         settingButton.setText("Settings");
         toolBar1.add(settingButton);
+        aboutButton = new JButton();
+        aboutButton.setText("About");
+        toolBar1.add(aboutButton);
         final Spacer spacer1 = new Spacer();
         mainPane.add(spacer1, new GridConstraints(1, 0, 1, 3, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final JPanel panel1 = new JPanel();
