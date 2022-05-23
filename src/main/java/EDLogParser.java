@@ -6,7 +6,9 @@ import de.paesserver.frames.settingframe.Settings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.font.TextAttribute;
+import java.io.File;
 import java.util.Hashtable;
+import java.util.Properties;
 
 public class EDLogParser {
 

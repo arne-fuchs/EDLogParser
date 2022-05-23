@@ -26,16 +26,12 @@ Beside the usual planet and system information it will also show:
 
 ### For feature request please use the issues tab
 
-## Installation
+## Requirements 
 
-Go into your <br>
-`drive_c/users/steamuser/Saved Games/Frontier Developments/Elite Dangerous`<br>
-and put the EDLogPrser-X.X.jar into the folder as well as the org.edassets and de.paesserver folder.
+Java 11 or higher
 
-Location of journal logs:
-%USER%/Saved Games/Frontier Developments/Elite Dangerous/Journal.DATE.PART.log
-Log names build like the following: netLog.DATE.log where DATE is parsed like YYDDMM\*. * is unkown time.
-PART is the part of the journal (had only 01 in my case).
+## Location of journal logs
+%USER%/Saved Games/Frontier Developments/Elite Dangerous/
 
 ## Thanks to
 https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to EDAssets") for the many assets they provide.
@@ -50,4 +46,4 @@ https://edassets.org [[GitHub]](https://github.com/SpyTec/EDAssets "GitHub to ED
 * There are a bunch of null pointers internally. I don't know where they come from. They scare me. Please send help.
 
 ## Current Scope
-* Finishing the log parser tab
+* Finishing touches to the log parser tab

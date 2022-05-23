@@ -3,6 +3,9 @@ package de.paesserver.journalLog;
 import de.paesserver.GlobalRegister;
 import org.json.simple.JSONObject;
 
+import javax.swing.*;
+import java.util.Arrays;
+
 public class JournalLogRunner implements Runnable{
 
     private boolean stop = false;
@@ -22,8 +25,12 @@ public class JournalLogRunner implements Runnable{
             while(!stop){
                 if(!halt){
                     String line = parser.getNextLine();
+
                     //Check if new line is available
                     if(line != null) {
+                        //If -1 is thrown a wrong directory has been given
+                        if(line.equals("-1"))
+                            return;
 
                         JSONObject jsonObject = JSONInterpreter.extractJSONObjectFromString(line);
                         //check if line is valid (it should be since in journal logs, there only is json data)
@@ -40,7 +47,7 @@ public class JournalLogRunner implements Runnable{
             }
             parser.closeReader();
         } catch (Exception ex) {
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null,ex.getMessage() + "\n" + Arrays.toString(ex.getStackTrace()));
         }
     }
 

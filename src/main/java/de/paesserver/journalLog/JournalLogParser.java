@@ -142,6 +142,10 @@ public class JournalLogParser{
      * @return next line in file
      */
     public String getNextLine(){
+        if(bufferedReader == null){
+            JOptionPane.showMessageDialog(null,"Couldn't find any journal files. Make sure that the journal log path is correct.");
+            return "-1";
+        }
         try {
             return bufferedReader.readLine();
         }catch (Exception e){

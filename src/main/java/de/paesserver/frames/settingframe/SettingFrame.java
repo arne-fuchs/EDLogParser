@@ -45,7 +45,8 @@ public class SettingFrame {
                 super.mouseClicked(e);
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-                fileChooser.setCurrentDirectory(new File("./"));
+                fileChooser.setFileHidingEnabled(false);
+                fileChooser.setCurrentDirectory(new File(GlobalRegister.properties.getProperty("journalLogPath")));
                 int option = fileChooser.showOpenDialog(GlobalRegister.getMainFrame());
                 if (option == JFileChooser.APPROVE_OPTION) {
                     File file = fileChooser.getSelectedFile();
@@ -175,7 +176,7 @@ public class SettingFrame {
         panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1, true, false));
         panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         journalLogUpdaterIntervalLabel = new JLabel();
-        journalLogUpdaterIntervalLabel.setText("Update-Interval for Updater in ms:");
+        journalLogUpdaterIntervalLabel.setText("Update-Interval for Updater in ms[0-100]:");
         panel2.add(journalLogUpdaterIntervalLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         journalLogUpdaterIntervalSlider = new JSlider();
         journalLogUpdaterIntervalSlider.setPaintLabels(true);
@@ -187,7 +188,7 @@ public class SettingFrame {
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         journalLogReaderIntervalLabel = new JLabel();
         journalLogReaderIntervalLabel.setHorizontalTextPosition(10);
-        journalLogReaderIntervalLabel.setText("Update-Interval for Reader in ms:");
+        journalLogReaderIntervalLabel.setText("Update-Interval for Reader in ms[0-100]:");
         journalLogReaderIntervalLabel.setVerticalAlignment(0);
         journalLogReaderIntervalLabel.setVerticalTextPosition(0);
         panel3.add(journalLogReaderIntervalLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
