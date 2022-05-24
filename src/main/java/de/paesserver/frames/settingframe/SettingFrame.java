@@ -176,9 +176,10 @@ public class SettingFrame {
         panel2.setLayout(new GridLayoutManager(1, 2, new Insets(0, 0, 0, 0), -1, -1, true, false));
         panel1.add(panel2, new GridConstraints(3, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         journalLogUpdaterIntervalLabel = new JLabel();
-        journalLogUpdaterIntervalLabel.setText("Update-Interval for Updater in ms[0-100]:");
+        journalLogUpdaterIntervalLabel.setText("Update-Interval for Updater in ms[1-100]:");
         panel2.add(journalLogUpdaterIntervalLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         journalLogUpdaterIntervalSlider = new JSlider();
+        journalLogUpdaterIntervalSlider.setMinimum(1);
         journalLogUpdaterIntervalSlider.setPaintLabels(true);
         journalLogUpdaterIntervalSlider.setPaintTicks(true);
         journalLogUpdaterIntervalSlider.setSnapToTicks(true);
@@ -188,11 +189,12 @@ public class SettingFrame {
         panel1.add(panel3, new GridConstraints(2, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 0, false));
         journalLogReaderIntervalLabel = new JLabel();
         journalLogReaderIntervalLabel.setHorizontalTextPosition(10);
-        journalLogReaderIntervalLabel.setText("Update-Interval for Reader in ms[0-100]:");
+        journalLogReaderIntervalLabel.setText("Update-Interval for Reader in ms[1-100]:");
         journalLogReaderIntervalLabel.setVerticalAlignment(0);
         journalLogReaderIntervalLabel.setVerticalTextPosition(0);
         panel3.add(journalLogReaderIntervalLabel, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_EAST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
         journalLogReaderIntervalSlider = new JSlider();
+        journalLogReaderIntervalSlider.setMinimum(1);
         journalLogReaderIntervalSlider.setPaintLabels(true);
         journalLogReaderIntervalSlider.setPaintTicks(true);
         journalLogReaderIntervalSlider.setSnapToTicks(true);
