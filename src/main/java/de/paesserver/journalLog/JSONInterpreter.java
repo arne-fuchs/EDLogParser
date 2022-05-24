@@ -100,6 +100,7 @@ public class JSONInterpreter {
             case "FSSSignalDiscovered":
                 //TODO Implement FSSSignalDiscovered
                 database.insertSystemSignal(jsonObject);
+                logFrame.updateSystemSignalsTable((long) jsonObject.get("SystemAddress"));
                 logFrame.updateSystemData();
                 break;
 

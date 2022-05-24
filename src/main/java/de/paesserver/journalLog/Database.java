@@ -182,7 +182,8 @@ public class Database {
                     "SpawningFaction TEXT, " +
                     "ThreatLevel INTEGER, " +
                     "TimeRemaining REAL, " +
-                    "IsStation INTEGER" +
+                    "IsStation INTEGER, " +
+                    "PRIMARY KEY (SystemAddress,SignalName)" +
                     ");";
 
             statement.executeUpdate(sql);
@@ -388,7 +389,7 @@ public class Database {
 
         String query = "INSERT INTO SYSTEMSIGNAL(" +
                 "timestamp,event,SystemAddress,SignalName,SignalName_Localised,USSType,USSType_Localised,SpawningState,SpawningState_Localised," +
-                "SpawningFaction,ThreatLevel,TimeRemaining,IsStation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+                "SpawningFaction,ThreatLevel,TimeRemaining,IsStation) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING;";
 
         try (PreparedStatement statement = databaseConnection.prepareStatement(query)) {
 

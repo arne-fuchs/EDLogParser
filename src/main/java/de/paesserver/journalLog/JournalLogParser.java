@@ -34,6 +34,7 @@ public class JournalLogParser{
         Database database = DatabaseSingleton.getInstance();
         ExecutorService exec = Executors.newFixedThreadPool(Integer.parseInt(GlobalRegister.properties.getProperty("journalLogCoreCount")));
         long timeout = Long.parseLong(GlobalRegister.properties.getProperty("journalLogUpdaterInterval"));
+        if(GlobalRegister.properties.get("updateDB").equals("true"))
         try {
             File directory = new File(directoryPath);
 

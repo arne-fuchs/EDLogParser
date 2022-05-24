@@ -336,7 +336,7 @@ public class BodyInfo {
                         "Discovered:      " + (resultSet.getLong("WasDiscovered") != 0) + "\n" +
                         "Distance:        " + decimalFormat.format(resultSet.getLong("DistanceFromArrivalLS")) + " LS\n" +
 
-                        "Est. earnings:    n/a yet\n" +
+                        "Est. earnings:    n/a yet\n\n" +
 
                         "Stellar Mass:    " + resultSet.getDouble("StellarMass") + "\n" +
                         "Radius:          " + resultSet.getDouble("Radius") + " KM\n" +
