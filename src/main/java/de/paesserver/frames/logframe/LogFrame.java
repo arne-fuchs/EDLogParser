@@ -103,7 +103,6 @@ public class LogFrame {
 
                 DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
                 SystemTreeUserObject userObject = (SystemTreeUserObject) node.getUserObject();
-                ;
 
                 ImageIcon icon = markerIcon;
                 switch (userObject.bodyType) {
@@ -172,7 +171,28 @@ public class LogFrame {
         systemInfo.setText(systemInfoData.getText());
     }
 
-    public void replaceSystem(String systemName) {
+    public void updateSystemTree(String systemName){
+        String query = "select BodyName,BodyID,'Planet' Type from PLANET where StarSystem = ? union select BodyName,BodyID,'Star' Type from STAR where StarSystem = ? union select BodyName,BodyID,'Belt Cluster' Type from BELTCLUSTER where StarSystem = ? order by BodyID";
+        try(PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
+            statement.setString(1,systemName);
+            statement.setString(2,systemName);
+            statement.setString(3,systemName);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                SystemTreeUserObject systemTreeUserObject = new SystemTreeUserObject(
+                        resultSet.getString("BodyName"),
+                        BodyType.parseString(resultSet.getString("Type")),
+                        resultSet.getLong("BodyID")
+                );
+                addNode(systemTreeUserObject);
+            }
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+        }
+
+    }
+    public void replaceSystemTree(String systemName) {
         SystemTreeUserObject node = new SystemTreeUserObject(systemName, BodyType.System, 0);
 
         DefaultMutableTreeNode root = (DefaultMutableTreeNode) systemTree.getModel().getRoot();
@@ -196,8 +216,6 @@ public class LogFrame {
                     parent.add(newNode);
                     TreePath path = new TreePath(newNode.getPath());
                     systemTree.collapsePath(path);
-                    insertPossibleChildren(newNode);
-                    sortTree();
                     systemTree.updateUI();
                     return;
                 }
@@ -226,13 +244,6 @@ public class LogFrame {
         return null;
     }
 
-    private void insertPossibleChildren(DefaultMutableTreeNode parent) {
-        //TODO Implement sort insertPossibleChildren
-    }
-
-    private void sortTree() {
-        //TODO Implement sorting nodes
-    }
 
     public void updateBodySingalsTable(long systemAddress) {
         //bodySignalsTable.removeColumnSelectionInterval(0,bodySignalsTable.getColumnCount()-1);
@@ -307,6 +318,10 @@ public class LogFrame {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
+    }
+
+    public void wipeBodyData() {
+        bodyInfo.setText("");
     }
 
     {

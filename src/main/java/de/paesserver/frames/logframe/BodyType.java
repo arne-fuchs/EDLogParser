@@ -18,4 +18,13 @@ public enum BodyType {
             return Planet;
         return Imaginary;
     }
+
+    public static BodyType parseString(String string){
+        switch (string){
+            case "Planet": return Planet;
+            case "Star": return Star;
+            case "Belt Cluster": return BeltCluster;
+            default: return null;
+        }
+    }
 }

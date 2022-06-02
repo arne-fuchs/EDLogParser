@@ -27,8 +27,10 @@ public class JSONInterpreter {
 
                 database.insertSystem(jsonObject);
                 logFrame.setSystemData(new SystemInfo((long)jsonObject.get("SystemAddress")));
-                logFrame.replaceSystem(jsonObject.get("StarSystem").toString());
+                logFrame.replaceSystemTree(jsonObject.get("StarSystem").toString());
+                logFrame.updateSystemTree(jsonObject.get("StarSystem").toString());
                 logFrame.updateBodySingalsTable((long) jsonObject.get("SystemAddress"));
+                logFrame.wipeBodyData();
                 break;
             case "StartJump":
                 //if(jsonObject.get("JumpType").equals("Supercruise"))
@@ -126,8 +128,8 @@ public class JSONInterpreter {
                             logFrame.setBodyData(bodyInfo);
                         }
 
-                SystemTreeUserObject userObject = new SystemTreeUserObject(jsonObject.get("BodyName").toString(),BodyType.parseJson(jsonObject),(long)jsonObject.get("BodyID"));
-                logFrame.addNode(userObject);
+                logFrame.replaceSystemTree(jsonObject.get("StarSystem").toString());
+                logFrame.updateSystemTree(jsonObject.get("StarSystem").toString());
                 break;
             default:
         }

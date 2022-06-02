@@ -5,7 +5,6 @@ import de.paesserver.frames.logframe.LogFrame;
 import de.paesserver.frames.settingframe.SettingFrame;
 
 import javax.swing.*;
-import java.awt.*;
 import java.util.Properties;
 
 public class GlobalRegister {
@@ -27,20 +26,36 @@ public class GlobalRegister {
 
     public static void initializeMenuBar(JButton logButton, JButton settingButton, JButton aboutButton){
         logButton.addActionListener(e -> {
-            LogFrame logFrame = new LogFrame();
-            mainFrame.setContentPane(logFrame.mainPane);
+            mainFrame.setContentPane(getLogFrameInstance().mainPane);
             mainFrame.setVisible(true);
         });
         settingButton.addActionListener(e -> {
-            SettingFrame settingFrame = new SettingFrame();
-            mainFrame.setContentPane(settingFrame.mainPane);
+            mainFrame.setContentPane(getSettingFrameInstance().mainPane);
             mainFrame.setVisible(true);
         });
         aboutButton.addActionListener(e -> {
-            System.out.println("Here");
-            AboutFrame aboutFrame = new AboutFrame();
-            mainFrame.setContentPane(aboutFrame.mainPane);
+            mainFrame.setContentPane(getAboutFrameInstance().mainPane);
             mainFrame.setVisible(true);
         });
+    }
+
+    private static LogFrame logFrame;
+    private static SettingFrame settingFrame;
+    private static AboutFrame aboutFrame;
+
+    public static LogFrame getLogFrameInstance(){
+        if(logFrame == null)
+            logFrame = new LogFrame();
+        return logFrame;
+    }
+    public static SettingFrame getSettingFrameInstance(){
+        if(settingFrame == null)
+            settingFrame = new SettingFrame();
+        return settingFrame;
+    }
+    public static AboutFrame getAboutFrameInstance(){
+        if(aboutFrame == null)
+            aboutFrame = new AboutFrame();
+        return aboutFrame;
     }
 }

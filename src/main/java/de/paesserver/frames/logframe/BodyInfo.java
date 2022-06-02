@@ -118,7 +118,7 @@ public class BodyInfo {
                         if(wasDiscovered){
                             //FSS || FSS+DSS
                             estEarn = 31632 ;
-                            estEarn = 131802 ;
+                            eastMapEarn = 131802 ;
                         }else {
                             //FSS+FDD || FSS+FD+DSS
                             estEarn = 82244;
