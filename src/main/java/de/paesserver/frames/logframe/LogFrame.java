@@ -186,6 +186,7 @@ public class LogFrame {
                         resultSet.getLong("BodyID")
                 );
                 addNode(systemTreeUserObject);
+                //TODO Add rings and signals
             }
         }catch (SQLException e){
             JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
@@ -201,7 +202,7 @@ public class LogFrame {
         systemTree.updateUI();
     }
 
-    public void addNode(SystemTreeUserObject userObject) {
+    public DefaultMutableTreeNode addNode(SystemTreeUserObject userObject) {
         String query = "SELECT ParentBodyID FROM PARENT WHERE BodyName = ? ORDER BY ParentBodyID DESC";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
             statement.setString(1, userObject.nodeName);
@@ -217,12 +218,13 @@ public class LogFrame {
                     TreePath path = new TreePath(newNode.getPath());
                     systemTree.collapsePath(path);
                     systemTree.updateUI();
-                    return;
+                    return newNode;
                 }
             }
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
+        return null;
     }
 
 
