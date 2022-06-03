@@ -29,7 +29,7 @@ public class JSONInterpreter {
                 logFrame.setSystemData(new SystemInfo((long)jsonObject.get("SystemAddress")));
                 logFrame.replaceSystemTree(jsonObject.get("StarSystem").toString());
                 logFrame.updateSystemTree(jsonObject.get("StarSystem").toString());
-                logFrame.updateBodySingalsTable((long) jsonObject.get("SystemAddress"));
+                logFrame.updateBodySignalsTable((long) jsonObject.get("SystemAddress"));
                 logFrame.wipeBodyData();
                 break;
             case "StartJump":
@@ -95,7 +95,7 @@ public class JSONInterpreter {
 
             //TODO Implement FSSBodySignals
                 database.insertPlanetSignals(jsonObject);
-                logFrame.updateBodySingalsTable((long) jsonObject.get("SystemAddress"));
+                logFrame.updateBodySignalsTable((long) jsonObject.get("SystemAddress"));
                 logFrame.updateBodyData();
                 break;
 

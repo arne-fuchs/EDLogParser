@@ -55,7 +55,7 @@ public enum PlanetClass {
             case "Sudarsky class V gas giant": return ClassVGasGiant;
             case "Gas giant with ammonia based life": return GasGiantwithAmmoniabasedLife;
             case "Gas giant with water based life": return GasGiantwithWaterbasedLife;
-            case "Heliumrich gas giant": return HeliumRichGasGiant;
+            case "Helium rich gas giant": return HeliumRichGasGiant;
             case "Water giant": return WaterGiant;
         }
         return null;

@@ -689,7 +689,7 @@ public class Database {
 
 
                         query = "INSERT INTO RING ( timestamp, event, ScanType, BodyName, StarSystem, SystemAddress, RingClass, MassMT, InnerRad, OuterRad)" +
-                                "VALUES (?,?,?,?,?,?,?,?,?,?);";
+                                "VALUES (?,?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING;";
                         try (PreparedStatement insertStatement = databaseConnection.prepareStatement(query)) {
 
 

@@ -9,9 +9,7 @@ import de.paesserver.journalLog.JournalLogParser;
 import de.paesserver.journalLog.JournalLogRunner;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
+import javax.swing.table.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.TreeNode;
@@ -23,6 +21,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Objects;
 
 
 public class LogFrame {
@@ -89,6 +88,13 @@ public class LogFrame {
             final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
             final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/orrery_map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
             final private ImageIcon planetIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/planet.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconAmmonia = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-ammonia-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconEarthLike = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-earth-like-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconGasGiant = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconIcy = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-icy.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconRocky = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconRockyIce = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky-ice.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+            final private ImageIcon planetIconWaterWorld = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-water-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
             final private ImageIcon markerIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Map-galaxy-map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
 
             final private ImageIcon starIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/star.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
@@ -113,7 +119,41 @@ public class LogFrame {
                         icon = systemIcon;
                         break;
                     case Planet:
-                        icon = planetIcon;
+                        switch (userObject.planetClass) {
+                            case AmmoniaWorld:
+                                icon = planetIconAmmonia;
+                                break;
+                            case EarthlikeWorld:
+                                icon = planetIconEarthLike;
+                                break;
+                            case WaterWorld:
+                                icon = planetIconWaterWorld;
+                                break;
+                            case IcyBody:
+                                icon = planetIconIcy;
+                                break;
+                            case RockyBody:
+                            case MetalRichBody:
+                            case HighMetalContentPlanet:
+                                icon = planetIconRocky;
+                                break;
+                            case RockyIceBody:
+                                icon = planetIconRockyIce;
+                                break;
+                            case ClassIGasGiant:
+                            case ClassIIGasGiant:
+                            case ClassIIIGasGiant:
+                            case ClassIVGasGiant:
+                            case ClassVGasGiant:
+                            case GasGiantwithAmmoniabasedLife:
+                            case GasGiantwithWaterbasedLife:
+                            case WaterGiant:
+                            case HeliumRichGasGiant:
+                                icon = planetIconGasGiant;
+                                break;
+                            default:
+                                icon = planetIcon;
+                        }
                         break;
                     case Star:
                         icon = starIcon;
@@ -128,24 +168,26 @@ public class LogFrame {
                 return this;
             }
         });
+
+
         bodySignalsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(row % 2 == 0 ? Color.DARK_GRAY.brighter() : Color.DARK_GRAY);
-                return c;
+                final Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                component.setBackground(row % 2 == 0 ? Color.DARK_GRAY.brighter() : Color.DARK_GRAY);
+                return component;
             }
         });
         systemSignalsTable.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                final Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                c.setBackground(row % 2 == 0 ? Color.DARK_GRAY.brighter() : Color.DARK_GRAY);
-                return c;
+                final Component component = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                component.setBackground(row % 2 == 0 ? Color.DARK_GRAY.brighter() : Color.DARK_GRAY);
+                return component;
             }
         });
 
-        updateBodySingalsTable(0);
+        updateBodySignalsTable(0);
         updateSystemSignalsTable(0);
     }
 
@@ -168,31 +210,48 @@ public class LogFrame {
     }
 
     public void updateSystemData() {
-        systemInfo.setText(systemInfoData.getText());
+        if (systemInfoData != null)
+            systemInfo.setText(systemInfoData.getText());
     }
 
-    public void updateSystemTree(String systemName){
-        String query = "select BodyName,BodyID,'Planet' Type from PLANET where StarSystem = ? union select BodyName,BodyID,'Star' Type from STAR where StarSystem = ? union select BodyName,BodyID,'Belt Cluster' Type from BELTCLUSTER where StarSystem = ? order by BodyID";
-        try(PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
-            statement.setString(1,systemName);
-            statement.setString(2,systemName);
-            statement.setString(3,systemName);
+    public void updateSystemTree(String systemName) {
+        String query = "select BodyName,BodyID,PlanetClass Type from PLANET where StarSystem = ? union select BodyName,BodyID,'Star' Type from STAR where StarSystem = ? union select BodyName,BodyID,'Belt Cluster' Type from BELTCLUSTER where StarSystem = ? order by BodyID";
+        try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
+            statement.setString(1, systemName);
+            statement.setString(2, systemName);
+            statement.setString(3, systemName);
 
             ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                SystemTreeUserObject systemTreeUserObject = new SystemTreeUserObject(
-                        resultSet.getString("BodyName"),
-                        BodyType.parseString(resultSet.getString("Type")),
-                        resultSet.getLong("BodyID")
-                );
+            while (resultSet.next()) {
+                //TODO Missing planet class
+                SystemTreeUserObject systemTreeUserObject;
+                BodyType bodyType = BodyType.parseString(resultSet.getString("Type"));
+                if (bodyType == null) {
+                    bodyType = BodyType.Planet;
+                    systemTreeUserObject = new SystemTreeUserObject(
+                            resultSet.getString("BodyName"),
+                            bodyType,
+                            resultSet.getLong("BodyID"),
+                            Objects.requireNonNull(PlanetClass.getBodyClass(resultSet.getString("Type")))
+                    );
+                } else {
+                    systemTreeUserObject = new SystemTreeUserObject(
+                            resultSet.getString("BodyName"),
+                            bodyType,
+                            resultSet.getLong("BodyID")
+                    );
+                }
+
+
                 addNode(systemTreeUserObject);
                 //TODO Add rings and signals
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
         }
 
     }
+
     public void replaceSystemTree(String systemName) {
         SystemTreeUserObject node = new SystemTreeUserObject(systemName, BodyType.System, 0);
 
@@ -247,21 +306,45 @@ public class LogFrame {
     }
 
 
-    public void updateBodySingalsTable(long systemAddress) {
+    public void updateBodySignalsTable(long systemAddress) {
         //bodySignalsTable.removeColumnSelectionInterval(0,bodySignalsTable.getColumnCount()-1);
 
-        TableModel tableModel = new DefaultTableModel(new String[]{"Body Name", "Signal Type", "Count"}, 50);
+        TableModel tableModel = new DefaultTableModel(new String[]{"Body Name", "Signal Type", "Count", "Type"}, 50) {
+            @Override
+            public Class<?> getColumnClass(int column) {
+                if (column == 3)
+                    return ImageIcon.class;
+                return Object.class;
+            }
+        };
         bodySignalsTable.setModel(tableModel);
         bodySignalsTable.getTableHeader().setVisible(true);
         bodySignalsTable.getTableHeader().updateUI();
 
-        bodySignalsTable.getColumn("Count").setPreferredWidth(80);
-        bodySignalsTable.getColumn("Count").setMaxWidth(80);
-        bodySignalsTable.getColumn("Count").setMinWidth(80);
+        TableColumn typeLocalisedColumn = bodySignalsTable.getColumn("Signal Type");
 
-        bodySignalsTable.getColumn("Signal Type").setPreferredWidth(150);
-        bodySignalsTable.getColumn("Signal Type").setMaxWidth(150);
-        bodySignalsTable.getColumn("Signal Type").setMinWidth(150);
+        typeLocalisedColumn.setPreferredWidth(150);
+        typeLocalisedColumn.setMaxWidth(150);
+        typeLocalisedColumn.setMinWidth(150);
+
+
+        TableColumn countColumn = bodySignalsTable.getColumn("Count");
+
+        countColumn.setPreferredWidth(70);
+        countColumn.setMaxWidth(70);
+        countColumn.setMinWidth(70);
+
+        DefaultTableCellRenderer rightRenderer = new DefaultTableCellRenderer();
+        rightRenderer.setHorizontalAlignment(JLabel.RIGHT);
+        countColumn.setCellRenderer(rightRenderer);
+
+
+        TableColumn typeColumn = bodySignalsTable.getColumn("Type");
+        typeColumn.setPreferredWidth(40);
+        typeColumn.setMaxWidth(40);
+        typeColumn.setMinWidth(40);
+        typeColumn.setHeaderValue("");
+
 
         String query = "SELECT * FROM BODYSIGNAL WHERE SystemAddress = ? ORDER BY Count desc,BodyName";
         try (PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)) {
@@ -269,10 +352,37 @@ public class LogFrame {
 
             ResultSet resultSet = statement.executeQuery();
             int lastRow = 0;
+
+            int width = 15;
+            int height = 15;
+            final ImageIcon biologicalIcon = new ImageIcon(new ImageIcon("de.paesserver/signals/biological.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            final ImageIcon geologicalIcon = new ImageIcon(new ImageIcon("de.paesserver/signals/geological.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            final ImageIcon humanIcon = new ImageIcon(new ImageIcon("de.paesserver/signals/human.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            final ImageIcon xenoIcon = new ImageIcon(new ImageIcon("de.paesserver/signals/xeno.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+            final ImageIcon unknownIcon = new ImageIcon(new ImageIcon("de.paesserver/signals/unknown.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+
             while (resultSet.next() && resultSet.getRow() < bodySignalsTable.getRowCount()) {
                 tableModel.setValueAt(resultSet.getString("BodyName"), resultSet.getRow() - 1, 0);
                 tableModel.setValueAt(resultSet.getString("Type_Localised"), resultSet.getRow() - 1, 1);
                 tableModel.setValueAt(resultSet.getString("Count"), resultSet.getRow() - 1, 2);
+                //tableModel.setValueAt(resultSet.getString("Type_Localised"), resultSet.getRow() - 1, 1);
+                ImageIcon icon = unknownIcon;
+                switch (resultSet.getString("Type")) {
+                    case "$SAA_SignalType_Biological;":
+                        icon = biologicalIcon;
+                        break;
+                    case "$SAA_SignalType_Geological;":
+                        icon = geologicalIcon;
+                        break;
+                    case "$SAA_SignalType_Human;":
+                        icon = humanIcon;
+                        break;
+                    case "$SAA_SignalType_Guardian":
+                    case "$SAA_SignalType_Xenological":
+                        icon = xenoIcon;
+                        break;
+                }
+                tableModel.setValueAt(icon, resultSet.getRow() - 1, 3);
                 lastRow = resultSet.getRow();
             }
             for (int i = lastRow; i < tableModel.getRowCount(); i++) {
