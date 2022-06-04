@@ -126,7 +126,12 @@ public class JSONInterpreter {
                 logFrame.updateSystemTree(jsonObject.get("StarSystem").toString());
                 break;
 
-                //Mining
+            case "ScanOrganic":
+                database.addOrganic(jsonObject);
+                break;
+            //{ "timestamp":"2022-04-11T17:49:05Z", "event":"ScanOrganic", "ScanType":"Log", "Genus":"$Codex_Ent_Osseus_Genus_Name;", "Genus_Localised":"Osseus", "Species":"$Codex_Ent_Osseus_04_Name;", "Species_Localised":"Osseus Pumice", "SystemAddress":483852500641, "Body":4 }
+
+            //Mining
             case "LaunchDrone": break;
             case "MiningRefined": break;
             case "EjectCargo": break;

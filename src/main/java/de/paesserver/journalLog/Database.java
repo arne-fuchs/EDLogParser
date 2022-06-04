@@ -227,6 +227,21 @@ public class Database {
 
             statement.executeUpdate(sql);
 
+            sql = "CREATE TABLE IF NOT EXISTS ORGANIC(" +
+                    "timestamp TEXT, " +
+                    "event TEXT, " +
+                    "ScanType TEXT, " +
+                    "Genus TEXT," +
+                    "Genus_Localised TEXT," +
+                    "Species TEXT," +
+                    "Species_Localised TEXT," +
+                    "Body INTEGER, " +
+                    "SystemAddress TEXT, " +
+                    "PRIMARY KEY (SystemAddress,Body,Species)" +
+                    ");";
+
+            statement.executeUpdate(sql);
+
             statement.close();
 
         } catch (Exception e) {
@@ -784,7 +799,26 @@ public class Database {
                 JOptionPane.showMessageDialog(null,e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
             }
         }
+    }
 
+    public void addOrganic(JSONObject jsonObject){
+        String query = "INSERT INTO ORGANIC (timestamp,event,ScanType,Genus,Genus_Localised,Species,Species_Localised,SystemAddress,Body)" +
+                "VALUES (?,?,?,?,?,?,?,?,?) ON CONFLICT DO NOTHING";
+        try(PreparedStatement statement = DatabaseSingleton.getInstance().databaseConnection.prepareStatement(query)){
+            statement.setString(1,jsonObject.get("timestamp").toString());
+            statement.setString(2,jsonObject.get("event").toString());
+            statement.setString(3,jsonObject.get("ScanType").toString());
+            statement.setString(4,jsonObject.get("Genus").toString());
+            statement.setString(5,jsonObject.get("Genus_Localised").toString());
+            statement.setString(6,jsonObject.get("Species").toString());
+            statement.setString(7,jsonObject.get("Species_Localised").toString());
+            statement.setLong(8,(long)jsonObject.get("SystemAddress"));
+            statement.setLong(9,(long) jsonObject.get("Body"));
 
+            statement.executeUpdate();
+        }catch (SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage() + "\n" + Arrays.toString(e.getStackTrace()));
+
+        }
     }
 }
