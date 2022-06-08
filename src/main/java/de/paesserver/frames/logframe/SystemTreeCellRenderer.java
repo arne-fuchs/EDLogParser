@@ -12,32 +12,34 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 public class SystemTreeCellRenderer extends DefaultTreeCellRenderer {
-    final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/orrery_map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/planet.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconAmmonia = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-ammonia-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconEarthLike = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-earth-like-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiant = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantAmmoniabasedLife = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-ammoniabased-life.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantClassI = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-I.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantClassII = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-II.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantClassIII = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-III.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantClassIV = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-IV.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantClassV = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-V.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantHelium = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-helium.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantWater = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-water.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconGasGiantWaterbasedLife = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-waterbased-life.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+    private final int width = 20;
+    private final int height = 20;
+    final private ImageIcon galaxyIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Realistic-galaxy-map.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon systemIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/orrery_map.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/planet.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconAmmonia = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-ammonia-world.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconEarthLike = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-earth-like-world.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiant = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantAmmoniabasedLife = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-ammoniabased-life.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantClassI = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-I.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantClassII = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-II.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantClassIII = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-III.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantClassIV = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-IV.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantClassV = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-class-V.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantHelium = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-helium.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantWater = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-water.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconGasGiantWaterbasedLife = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-gas-giant-waterbased-life.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
 
-    final private ImageIcon planetIconIcy = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-icy.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconRocky = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconRockyIce = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky-ice.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconRockyTerraformable = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky-terraformable.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon planetIconWaterWorld = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-water-world.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
-    final private ImageIcon markerIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Map-galaxy-map.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconIcy = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-icy.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconRocky = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconRockyIce = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky-ice.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconRockyTerraformable = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-rocky-terraformable.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon planetIconWaterWorld = new ImageIcon(new ImageIcon("de.paesserver/planets/planet-water-world.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
+    final private ImageIcon markerIcon = new ImageIcon(new ImageIcon("org.edassets/galaxy-map/Map-galaxy-map.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
 
-    final private ImageIcon starIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/star.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+    final private ImageIcon starIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/star.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
 
-    final private ImageIcon asteroidIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/asteroids.png").getImage().getScaledInstance(15, 15, Image.SCALE_SMOOTH));
+    final private ImageIcon asteroidIcon = new ImageIcon(new ImageIcon("de.paesserver/galaxy-map/asteroids.png").getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH));
 
     @Override
     public Component getTreeCellRendererComponent(JTree tree,

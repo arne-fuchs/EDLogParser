@@ -85,6 +85,7 @@ public class LogFrame {
         });
 
 
+        //Adds icons to every tree row
         systemTree.setCellRenderer(new SystemTreeCellRenderer());
 
 
