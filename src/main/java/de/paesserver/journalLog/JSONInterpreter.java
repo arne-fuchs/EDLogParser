@@ -4,6 +4,8 @@ import de.paesserver.frames.logframe.*;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+import javax.swing.*;
+
 
 public class JSONInterpreter {
 
@@ -246,13 +248,20 @@ public class JSONInterpreter {
             case "PayFines": break;
             case "Music": break;
             case "Shutdown": break;
+            case "CodexEntry": break;
+            //{"SystemAddress":41884159891,"Category":"$Codex_Category_Biology;","Category_Localised":"Biological and Geological","Latitude":34.445961,"Longitude":25.760468,"System":"Boeff WP-X d1-1","Name":"$Codex_Ent_Shrubs_01_F_Name;","SubCategory_Localised":"Organic structures","EntryID":2440103,"SubCategory":"$Codex_SubCategory_Organic_Structures;","Region":"$Codex_RegionName_16;","event":"CodexEntry","Name_Localised":"Frutexa Flabellum - Green","timestamp":"2022-04-11T19:39:56Z","Region_Localised":"Orion-Cygnus Arm"}
+            case "HullDamage": break;
+            case "Liftoff": break;
+            case "Touchdown": break;
+            case "LaunchSRV": break;
+            case "DockSRV": break;
+            case "Synthesis": break;
 
             case "Fileheader": break;
             //{"gameversion":"4.0.0.1200","build":"r282108\/r0 ","part":1,"Odyssey":true,"language":"German\/DE","event":"Fileheader","timestamp":"2022-03-21T21:37:33Z"}
             default:
                 System.out.println("Not found: " + event);
-                System.out.println(jsonObject.toJSONString());
-        }
+                System.out.println(jsonObject.toJSONString());}
     }
 
     public static JSONObject extractJSONObjectFromString(String line){
