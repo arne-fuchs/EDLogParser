@@ -52,7 +52,6 @@ public class JSONInterpreter {
                 //((JTextArea)componentHashMap.get("logOutput")).append("Exited Supercruise"+ "\n");
                 break;
             case "MaterialCollected":
-                System.out.println("MaterialCollected");
                 //((JTextArea)componentHashMap.get("logOutput")).append("Material collected: " + jsonObject.get("Name_Localised")  + "\n");
                 //((JTextArea)componentHashMap.get("logOutput")).append("Count: " + jsonObject.get("Count")  + "\n");
                 break;
