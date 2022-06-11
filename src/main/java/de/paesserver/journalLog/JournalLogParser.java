@@ -69,6 +69,8 @@ public class JournalLogParser{
                                     database.insertPlanetSignals(jsonObject);
                                 case "FSDJump":
                                     database.insertSystem(jsonObject);
+                                case "ScanOrganic":
+                                    database.addOrganic(jsonObject);
                             }
                         }
                     } catch (IOException e) {
