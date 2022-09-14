@@ -11,7 +11,7 @@ Beside the usual planet and system information it will also show:
 
 # IN DEVELOPMENT
 
-## Release will be announced
+## Project will be moved to a rust version
 
 ## Planned Features:
 * -[ ] __LogParser__
